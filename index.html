@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>x402 Video — pay-per-call AI video generation</title>
+<meta name="description" content="Generate AI video over the x402 payment protocol. No accounts, no API keys: HTTP 402 → pay USDC on Base → generate. Built for developers and autonomous agents." />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebAPI",
+  "name": "x402 Video Gateway",
+  "description": "Pay-per-call AI video generation over the x402 payment protocol, settled in USDC on Base.",
+  "documentation": "https://github.com/x402-video",
+  "termsOfService": "https://github.com/x402-video/web#content-policy"
+}
+</script>
+<style>
+  :root {
+    --bg: #0b0e14; --panel: #11151f; --line: #1f2533;
+    --text: #e6e9f0; --dim: #8b93a7; --accent: #5b8cff; --ok: #3fcf8e; --warn: #f0b454;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.6 -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 20px 80px; }
+  header h1 { font-size: 34px; letter-spacing: -0.5px; }
+  header h1 .x { color: var(--accent); font-family: var(--mono); }
+  .tag { color: var(--dim); margin-top: 8px; font-size: 17px; }
+  .strip { display: flex; gap: 24px; flex-wrap: wrap; margin: 28px 0 8px; padding: 14px 18px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; font-family: var(--mono); font-size: 13px; }
+  .strip b { color: var(--ok); font-weight: 600; }
+  .strip span { color: var(--dim); }
+  h2 { font-size: 20px; margin: 40px 0 12px; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  th { color: var(--dim); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; }
+  td .price { color: var(--ok); font-family: var(--mono); }
+  td code, p code, li code { font-family: var(--mono); font-size: 13px; background: #1a2030; padding: 2px 6px; border-radius: 5px; }
+  pre { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; overflow-x: auto;
+    font-family: var(--mono); font-size: 13px; line-height: 1.55; }
+  .steps li { margin: 6px 0; }
+  .policy { border-left: 3px solid var(--warn); padding: 10px 16px; background: var(--panel); border-radius: 0 10px 10px 0; color: var(--dim); font-size: 14px; }
+  .policy b { color: var(--text); }
+  footer { margin-top: 56px; color: var(--dim); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .offline { color: var(--warn); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="x">x402</span>.video</h1>
+    <p class="tag">Pay-per-call AI video generation. No accounts, no API keys, no credit cards:<br/>
+    <code>HTTP 402 → pay USDC on Base → generate</code>. Built for developers and autonomous agents.</p>
+  </header>
+
+  <div class="strip" id="status-strip">
+    <span id="st-state">connecting to gateway…</span>
+  </div>
+
+  <h2>Models &amp; pricing</h2>
+  <table id="sku-table">
+    <thead><tr><th>SKU</th><th>Model</th><th>Output</th><th>Price / call</th><th>Endpoint</th></tr></thead>
+    <tbody id="sku-body">
+      <tr><td colspan="5" style="color:var(--dim)">loading from gateway…</td></tr>
+    </tbody>
+  </table>
+
+  <h2>How to buy (agents &amp; devs)</h2>
+  <ol class="steps">
+    <li><code>POST</code> a generation endpoint → you get <code>402</code> with payment requirements.</li>
+    <li>Pay with any x402 client and retry — <code>@x402/fetch</code> does both automatically.</li>
+    <li>Response returns <code>{ job_id, status_url }</code> immediately (async).</li>
+    <li>Poll <code>GET /jobs/:id</code> (free) until <code>succeeded</code> → download <code>video_url</code> within 24h.</li>
+  </ol>
+  <pre id="example-snippet">import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
+import { ExactEvmScheme, toClientEvmSigner } from "@x402/evm";
+
+const client = new x402Client().register("eip155:*", new ExactEvmScheme(signer));
+const fetchPay = wrapFetchWithPayment(fetch, client);
+
+const res = await fetchPay(GATEWAY + "/generate/seedance/5s-720p", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ prompt: "a corgi surfing a wave at sunset, cinematic" }),
+});
+const { job_id } = await res.json(); // then poll GATEWAY + "/jobs/" + job_id</pre>
+
+  <h2 id="content-policy">Content policy</h2>
+  <p class="policy">
+    Prompts are screened <b>before</b> payment — rejected requests are never charged.<br/>
+    Hard red lines: content involving <b>minors</b> and <b>real-person likeness / deepfakes</b>.
+    Sexually explicit content and graphic violence are rejected.
+  </p>
+
+  <footer>
+    <a href="https://github.com/x402-video">GitHub</a>
+    <a id="llms-link" href="#">llms.txt</a>
+    <a id="status-link" href="#">live status (JSON)</a>
+    <a href="https://docs.x402.org">about x402</a>
+    <span>independent gateway — not affiliated with model vendors</span>
+  </footer>
+</div>
+
+<script>
+  // Gateway base URL: ?api=https://... overrides the default.
+  const GATEWAY = new URLSearchParams(location.search).get("api") || "https://api.x402.video";
+  document.getElementById("llms-link").href = GATEWAY + "/llms.txt";
+  document.getElementById("status-link").href = GATEWAY + "/status";
+  document.getElementById("example-snippet").textContent =
+    document.getElementById("example-snippet").textContent.replace("GATEWAY", JSON.stringify(GATEWAY));
+
+  const FALLBACK_SKUS = [
+    { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 0.30, duration_seconds: 5, resolution: "720p" },
+    { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 0.19, duration_seconds: 5, resolution: "720p" },
+  ];
+
+  function renderSkus(skus) {
+    document.getElementById("sku-body").innerHTML = skus.map(s => `
+      <tr>
+        <td><code>${s.sku}</code></td>
+        <td>${s.model}</td>
+        <td>${s.duration_seconds}s ${s.resolution} MP4</td>
+        <td class="price">$${Number(s.price_usd).toFixed(2)} USDC</td>
+        <td><code>${s.endpoint}</code></td>
+      </tr>`).join("");
+  }
+
+  fetch(GATEWAY + "/")
+    .then(r => r.json())
+    .then(info => renderSkus(info.skus))
+    .catch(() => {
+      renderSkus(FALLBACK_SKUS);
+      document.getElementById("st-state").innerHTML =
+        '<span class="offline">gateway offline — showing reference prices; live endpoint coming online soon</span>';
+    });
+
+  fetch(GATEWAY + "/status")
+    .then(r => r.json())
+    .then(s => {
+      const rate = s.success_rate == null ? "—" : Math.round(s.success_rate * 100) + "%";
+      const p50 = s.p50_generation_seconds == null ? "—" : s.p50_generation_seconds + "s";
+      document.getElementById("status-strip").innerHTML =
+        `<span>delivered <b>${s.delivered}</b></span>` +
+        `<span>success rate <b>${rate}</b></span>` +
+        `<span>p50 generation <b>${p50}</b></span>` +
+        `<span>in flight <b>${s.in_flight}</b></span>`;
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

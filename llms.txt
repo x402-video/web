@@ -1,0 +1,23 @@
+# x402 Video
+
+> Pay-per-call AI video generation over the x402 payment protocol.
+> No accounts, no API keys, no credit cards: HTTP 402 -> pay USDC on Base -> generate.
+
+The canonical, always-current machine-readable storefront (SKUs, live prices, endpoints,
+content policy) is served by the gateway itself:
+
+- https://api.x402.video/llms.txt — agent-readable storefront (markdown)
+- https://api.x402.video/ — storefront (JSON)
+- https://api.x402.video/status — live success rate, p50 generation time, delivered count
+
+## How to buy
+
+1. POST a generation endpoint (e.g. /generate/seedance/5s-720p) -> HTTP 402 with payment requirements.
+2. Pay with any x402 client (`@x402/fetch` handles 402 -> pay -> retry automatically).
+3. Paid response returns { job_id, status_url } immediately.
+4. Poll GET /jobs/:id (free) until status is succeeded; download video_url within 24h.
+
+## Source
+
+- https://github.com/x402-video — organization
+- https://github.com/x402-video/web — this storefront
