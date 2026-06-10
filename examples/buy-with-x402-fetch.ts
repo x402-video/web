@@ -2,7 +2,7 @@
  * Minimal buyer: 402 -> pay USDC -> job_id -> poll until video URL.
  *
  * npm i @x402/fetch @x402/evm viem
- * BUYER_PRIVATE_KEY=0x... GATEWAY=https://api.x402.video npx tsx buy-with-x402-fetch.ts "your prompt"
+ * BUYER_PRIVATE_KEY=0x... GATEWAY=https://api.x402-video.com npx tsx buy-with-x402-fetch.ts "your prompt"
  */
 import { ExactEvmScheme, toClientEvmSigner } from "@x402/evm";
 import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
@@ -10,7 +10,7 @@ import { createPublicClient, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { base } from "viem/chains";
 
-const GATEWAY = process.env.GATEWAY ?? "https://api.x402.video";
+const GATEWAY = process.env.GATEWAY ?? "https://api.x402-video.com";
 const PROMPT = process.argv[2] ?? "a corgi surfing a small wave at sunset, cinematic";
 
 const account = privateKeyToAccount(process.env.BUYER_PRIVATE_KEY as `0x${string}`);

@@ -6,9 +6,9 @@
 The canonical, always-current machine-readable storefront (SKUs, live prices, endpoints,
 content policy) is served by the gateway itself:
 
-- https://api.x402.video/llms.txt — agent-readable storefront (markdown)
-- https://api.x402.video/ — storefront (JSON)
-- https://api.x402.video/status — live success rate, p50 generation time, delivered count
+- https://api.x402-video.com/llms.txt — agent-readable storefront (markdown)
+- https://api.x402-video.com/ — storefront (JSON)
+- https://api.x402-video.com/status — live success rate, p50 generation time, delivered count
 
 ## How to buy
 

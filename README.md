@@ -1,4 +1,4 @@
-# x402.video — web storefront
+# x402-video.com — web storefront
 
 Public storefront for the **x402 Video Gateway**: pay-per-call AI video generation over the
 [x402 payment protocol](https://docs.x402.org), settled in USDC on Base.
@@ -22,8 +22,8 @@ open "http://localhost:8080/?api=http://localhost:3000"
 
 ## Deploy
 
-Any static host (GitHub Pages / Cloudflare Pages / Railway). Canonical domain: `x402.video`,
-gateway at `api.x402.video`.
+Any static host (GitHub Pages / Cloudflare Pages / Railway). Canonical domain: `x402-video.com`,
+gateway at `api.x402-video.com`.
 
 ## Content policy
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>x402 Video — pay-per-call AI video generation</title>
+<title>x402-video.com — pay-per-call AI video generation</title>
 <meta name="description" content="Generate AI video over the x402 payment protocol. No accounts, no API keys: HTTP 402 → pay USDC on Base → generate. Built for developers and autonomous agents." />
 <script type="application/ld+json">
 {
@@ -51,7 +51,7 @@
 <body>
 <div class="wrap">
   <header>
-    <h1><span class="x">x402</span>.video</h1>
+    <h1><span class="x">x402</span>-video<span style="color:var(--dim)">.com</span></h1>
     <p class="tag">Pay-per-call AI video generation. No accounts, no API keys, no credit cards:<br/>
     <code>HTTP 402 → pay USDC on Base → generate</code>. Built for developers and autonomous agents.</p>
   </header>
@@ -106,7 +106,7 @@ const { job_id } = await res.json(); // then poll GATEWAY + "/jobs/" + job_id</p
 
 <script>
   // Gateway base URL: ?api=https://... overrides the default.
-  const GATEWAY = new URLSearchParams(location.search).get("api") || "https://api.x402.video";
+  const GATEWAY = new URLSearchParams(location.search).get("api") || "https://api.x402-video.com";
   document.getElementById("llms-link").href = GATEWAY + "/llms.txt";
   document.getElementById("status-link").href = GATEWAY + "/status";
   document.getElementById("example-snippet").textContent =
