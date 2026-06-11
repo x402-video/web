@@ -45,8 +45,8 @@ Pricing (live quotes at [api.x402-video.com](https://api.x402-video.com/)):
 |---|---|---|
 | `POST /generate/seedance-fast/5s-720p` | 5s 720p MP4 | ~$0.45 |
 | `POST /generate/seedance/5s-720p` | 5s 720p MP4 (highest quality) | ~$0.56 |
-| `POST /generate/seedance-fast/custom` | 4–15s, 480p/720p, audio… | $0.13–$2.03 |
-| `POST /generate/seedance/custom` | 4–15s, up to 1080p, audio… | $0.27–$6.30 |
+| `POST /generate/seedance-fast/custom` | 4–15s, 480p/720p, audio… | $0.13–$1.49 |
+| `POST /generate/seedance/custom` | 4–15s, up to 1080p, audio… | $0.27–$4.62 |
 
 The HTTP 402 response always quotes the **exact** price for your request
 before you pay.
@@ -148,7 +148,7 @@ const res = await fetchPay("https://api.x402-video.com/generate/seedance/custom"
     resolution: "1080p",    // seedance: "480p"|"720p"|"1080p" · fast: "480p"|"720p" (default "720p")
     ratio: "9:16",          // "16:9"|"4:3"|"1:1"|"3:4"|"9:16"|"21:9"|"adaptive" (default "adaptive")
     seed: 42,               // optional integer, -1..2^32-1 (reproducibility)
-    generate_audio: true,   // optional boolean (default false; audio multiplies cost ×1.5)
+    generate_audio: true,   // optional boolean (default false; audio multiplies cost ×1.1)
     camera_fixed: false,    // optional boolean
   }),
 });

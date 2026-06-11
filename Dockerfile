@@ -5,3 +5,4 @@ COPY assets /srv/assets
 COPY seedance /srv/seedance
 COPY kling /srv/kling
 COPY custom /srv/custom
+COPY use-cases /srv/use-cases

@@ -207,7 +207,7 @@
           <label class="check-row">
             <input type="checkbox" id="audio-check" onchange="scheduleQuote()" />
             <span class="check-label">Generate audio</span>
-            <span class="check-tag">×1.5 cost</span>
+            <span class="check-tag" id="audio-mult-tag">×1.1 cost</span>
           </label>
           <span class="hint">AI-generated background audio</span>
         </div>
@@ -352,13 +352,15 @@ async function fetchQuote() {
 
     if (resp.status === 402 && data.pricing) {
       const ratePerSec = data.pricing.retail_usd_per_second[resolution];
-      const audioMult = generateAudio ? (data.pricing.audio_surcharge_multiplier || 1.5) : 1;
+      const liveAudioMult = data.pricing.audio_surcharge_multiplier || 1.1;
+      document.getElementById('audio-mult-tag').textContent = '×' + liveAudioMult + ' cost';
+      const audioMult = generateAudio ? liveAudioMult : 1;
       const fixed = data.pricing.fixed_fee_usd || 0;
       const raw = ratePerSec * duration * audioMult + fixed;
       // round up to nearest cent (as the formula states)
       const priceUsd = Math.ceil(raw * 100) / 100;
       lastQuote = { priceUsd, ratePerSec, resolution, sku: data.sku };
-      showQuote(priceUsd, ratePerSec, data.sku);
+      showQuote(priceUsd, ratePerSec, data.sku, liveAudioMult);
     } else if (data.error) {
       showError('Validation error', data.error);
     } else {
@@ -371,10 +373,10 @@ async function fetchQuote() {
   updateCode();
 }
 
-function showQuote(price, rate, sku) {
+function showQuote(price, rate, sku, mult) {
   const box = document.getElementById('quote-box');
   box.className = 'quote-box ok';
-  const audioNote = generateAudio ? ' (incl. ×1.5 audio surcharge)' : '';
+  const audioNote = generateAudio ? ' (incl. ×' + mult + ' audio surcharge)' : '';
   box.innerHTML =
     '<div class="quote-price">$' + price.toFixed(2) + '</div>' +
     '<div class="quote-unit">USDC / call' + audioNote + '</div>' +

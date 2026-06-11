@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Video Generation Use Cases — Pay Per Call | x402-video.com</title>
+<meta name="description" content="See what you can build with pay-per-call AI video generation: ad creatives, product b-roll, social shorts, blog auto-b-roll, game previz, and autonomous agent commerce. No API key, from $0.45/call." />
+<link rel="canonical" href="https://x402-video.com/use-cases/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="x402-video.com" />
+<meta property="og:title" content="AI Video Generation Use Cases — Pay Per Call" />
+<meta property="og:description" content="6 real use cases for pay-per-call AI video generation via x402. Ad creatives, product b-roll, social shorts, autonomous agent pipelines, and more. From $0.45/call, no account needed." />
+<meta property="og:url" content="https://x402-video.com/use-cases/" />
+<meta property="og:image" content="https://x402-video.com/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "AI Video Generation Use Cases",
+  "url": "https://x402-video.com/use-cases/",
+  "description": "Six real-world use cases for pay-per-call AI video generation via the x402 protocol. No API key, no account — pay USDC on Base per request.",
+  "numberOfItems": 6,
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Ad Creative / Short-Form Advertising",
+      "url": "https://x402-video.com/use-cases/#ad-creative",
+      "description": "High-frequency ad iteration at $0.45–$0.56/clip — generate dozens of variants in a single pipeline run without committing to a subscription."
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Product Demo B-Roll",
+      "url": "https://x402-video.com/use-cases/#product-demo",
+      "description": "Product teams and landing-page builders pull cinematic b-roll on demand. Pay only when a new product ships."
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Social Shorts (9:16 Vertical)",
+      "url": "https://x402-video.com/use-cases/#social-shorts",
+      "description": "Social media managers generate native 9:16 clips for TikTok, Reels, and Shorts — per-post cost without a monthly seat."
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Blog & News Auto B-Roll",
+      "url": "https://x402-video.com/use-cases/#blog-broll",
+      "description": "LLM reads an article, writes a cinematic prompt, calls the video API — fully automated illustrated publishing pipeline."
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "Game / Film Previz & Storyboard",
+      "url": "https://x402-video.com/use-cases/#previz",
+      "description": "Writers and directors prototype scene motion and camera choreography without booking a production team."
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "name": "Agent-to-Agent Commerce",
+      "url": "https://x402-video.com/use-cases/#agent-commerce",
+      "description": "Autonomous agents purchase video clips as part of a multi-step pipeline — no human credit card or OAuth flow required."
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --card2: #f4f5f6; --hov: #f0f1f3;
+    --bd: #e2e2e6; --bd2: #e8e8ec; --bd3: #f0f0f2;
+    --tx: #18181b; --tx2: #52525b; --tx3: #87878f; --tx4: #c2c2c8;
+    --ac: #2563eb; --acBg: #e8efff; --acBd: #bcd2fb;
+    --ok: #16a34a; --warn: #a16207; --warnBg: #fdf6e3; --warnBd: #e6d399;
+    --mono: ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--ac); }
+  a:hover { opacity: 0.8; }
+  .topbar { border-bottom: 1px solid var(--bd2); background: rgba(250,250,250,0.92); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+  .topbar-in { max-width: 960px; margin: 0 auto; padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tx); }
+  .brand-glyph { width: 22px; height: 22px; border-radius: 5px; background: var(--ac); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .brand-name { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--tx2); text-decoration: none; }
+  .nav-links a:hover { color: var(--tx); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+  .hero { padding: 56px 0 40px; }
+  .badge { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--bd); border-radius: 999px; padding: 4px 14px; font-size: 12.5px; color: var(--tx2); margin-bottom: 20px; }
+  .dot-ok { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: inline-block; }
+  h1 { margin: 0 0 14px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+  .lead { margin: 0 0 28px; font-size: 17px; color: var(--tx2); max-width: 58ch; text-wrap: pretty; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-outline { text-decoration: none; border: 1px solid var(--bd); color: var(--tx); border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-outline:hover { border-color: var(--ac); }
+
+  /* use-case grid */
+  .uc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 24px; padding: 48px 0 72px; }
+  .uc-card { border: 1px solid var(--bd); border-radius: 14px; background: var(--card); overflow: hidden; display: flex; flex-direction: column; }
+  .uc-media { background: var(--card2); border-bottom: 1px solid var(--bd2); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .uc-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .uc-media.ratio-916 { aspect-ratio: 9/16; max-height: 320px; }
+  .uc-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 100%; padding: 28px; text-align: center; }
+  .uc-placeholder-icon { font-size: 36px; opacity: 0.22; }
+  .uc-placeholder-label { font-size: 12px; color: var(--tx3); font-family: var(--mono); line-height: 1.5; }
+  .uc-placeholder-note { font-size: 11px; color: var(--tx4); font-style: italic; }
+  .uc-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .uc-header { display: flex; align-items: flex-start; gap: 10px; }
+  .uc-num { font-family: var(--mono); font-size: 11px; color: var(--tx4); font-weight: 700; margin-top: 3px; flex-shrink: 0; }
+  .uc-title { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  .uc-desc { margin: 0; font-size: 14px; color: var(--tx2); line-height: 1.65; }
+  .uc-prompt-wrap { background: var(--card2); border: 1px solid var(--bd); border-radius: 8px; padding: 12px 14px; }
+  .uc-prompt-label { font-size: 10.5px; font-family: var(--mono); color: var(--tx3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 6px; }
+  .uc-prompt-text { margin: 0; font-size: 13px; color: var(--tx); font-style: italic; line-height: 1.5; }
+  .uc-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .uc-endpoint { font-family: var(--mono); font-size: 11.5px; background: var(--acBg); border: 1px solid var(--acBd); color: var(--ac); border-radius: 5px; padding: 3px 8px; white-space: nowrap; }
+  .uc-price { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--ok); }
+  .uc-curl-wrap { background: #111113; border-radius: 8px; overflow: hidden; }
+  .uc-curl-label { font-family: var(--mono); font-size: 10px; color: #666; letter-spacing: 0.07em; padding: 8px 14px 6px; border-bottom: 1px solid #222; }
+  .uc-curl-pre { margin: 0; padding: 12px 14px; font-family: var(--mono); font-size: 12px; line-height: 1.65; overflow-x: auto; color: #e2e8f0; white-space: pre; }
+
+  .footer { border-top: 1px solid var(--bd2); margin-top: 0; }
+  .footer-in { max-width: 960px; margin: 0 auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+  .foot-links a { color: var(--tx2); text-decoration: none; }
+  .foot-links a:hover { color: var(--tx); }
+  .foot-note { margin: 0; font-size: 12.5px; color: var(--tx4); }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 28px; }
+    .wrap { padding: 0 18px; }
+    .topbar-in { padding: 12px 18px; }
+    .footer-in { padding: 20px 18px; }
+    .uc-grid { grid-template-columns: 1fr; gap: 18px; padding: 32px 0 56px; }
+    .uc-body { padding: 18px 18px; }
+    .uc-curl-pre { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/">
+      <span class="brand-glyph">x</span>
+      <span class="brand-name">x402-video.com</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/seedance/">Seedance</a>
+      <a href="/kling/">Kling</a>
+      <a href="/custom/">Pricing</a>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <div class="badge"><span class="dot-ok"></span> 6 real use cases · prompts &amp; prices are live</div>
+      <h1>What people build with pay-per-call AI video</h1>
+      <p class="lead">No subscription. No account. Each use case below maps to a real endpoint with a real price. Copy the curl, swap the prompt, and ship.</p>
+      <div class="ctas">
+        <a class="btn-primary" href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Get started in 5 min</a>
+        <a class="btn-outline" href="/seedance/">Seedance API docs</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <div class="uc-grid">
+
+      <!-- 1. Ad Creative -->
+      <article class="uc-card" id="ad-creative">
+        <div class="uc-media">
+          <div class="uc-placeholder">
+            <div class="uc-placeholder-icon">&#9654;</div>
+            <div class="uc-placeholder-label">sample generating<br>prompt &amp; price are real</div>
+            <div class="uc-placeholder-note">run examples/generate-use-case-samples.ts to populate</div>
+          </div>
+        </div>
+        <div class="uc-body">
+          <div class="uc-header">
+            <span class="uc-num">01</span>
+            <h2 class="uc-title">Ad Creative</h2>
+          </div>
+          <p class="uc-desc">Performance marketers and creative agencies need dozens of ad variants per campaign cycle. Pay-per-call means you can spin up 20 cuts in a single pipeline run at under $10 — no seat licence, no overages, just USDC per clip.</p>
+          <div class="uc-prompt-wrap">
+            <div class="uc-prompt-label">Example prompt</div>
+            <p class="uc-prompt-text">"golden sneaker rotating on a clean white pedestal, dramatic product lighting, slow 360 spin, luxury feel, 5 seconds"</p>
+          </div>
+          <div class="uc-meta">
+            <span class="uc-endpoint">POST /generate/seedance-fast/5s-720p</span>
+            <span class="uc-price">~$0.45 / call</span>
+          </div>
+          <div class="uc-curl-wrap">
+            <div class="uc-curl-label">CURL</div>
+            <pre class="uc-curl-pre">curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"golden sneaker rotating on a clean white pedestal, dramatic product lighting, slow 360 spin, luxury feel, 5 seconds"}'</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. Product Demo B-Roll -->
+      <article class="uc-card" id="product-demo">
+        <div class="uc-media">
+          <video controls preload="metadata" playsinline>
+            <source src="/assets/samples/golden-retriever-autumn-leaves.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="uc-body">
+          <div class="uc-header">
+            <span class="uc-num">02</span>
+            <h2 class="uc-title">Product Demo B-Roll</h2>
+          </div>
+          <p class="uc-desc">Product teams and landing-page builders need cinematic b-roll the moment a new feature ships — not after a 2-week stock library search. Call the API with a scene description and get a ready-to-embed MP4 in minutes, paying only when you actually need a clip.</p>
+          <div class="uc-prompt-wrap">
+            <div class="uc-prompt-label">Example prompt</div>
+            <p class="uc-prompt-text">"golden retriever bounding joyfully through a sunlit park covered in autumn leaves, slow motion, warm bokeh, cinematic"</p>
+          </div>
+          <div class="uc-meta">
+            <span class="uc-endpoint">POST /generate/seedance/5s-720p</span>
+            <span class="uc-price">~$0.56 / call</span>
+          </div>
+          <div class="uc-curl-wrap">
+            <div class="uc-curl-label">CURL</div>
+            <pre class="uc-curl-pre">curl -i -X POST https://api.x402-video.com/generate/seedance/5s-720p \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"golden retriever bounding joyfully through a sunlit park covered in autumn leaves, slow motion, warm bokeh, cinematic"}'</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Social Shorts 9:16 -->
+      <article class="uc-card" id="social-shorts">
+        <div class="uc-media ratio-916">
+          <div class="uc-placeholder">
+            <div class="uc-placeholder-icon">&#9654;</div>
+            <div class="uc-placeholder-label">sample generating<br>prompt &amp; price are real</div>
+            <div class="uc-placeholder-note">run examples/generate-use-case-samples.ts to populate</div>
+          </div>
+        </div>
+        <div class="uc-body">
+          <div class="uc-header">
+            <span class="uc-num">03</span>
+            <h2 class="uc-title">Social Shorts (9:16 Vertical)</h2>
+          </div>
+          <p class="uc-desc">Social media managers and creators post daily to TikTok, Instagram Reels, and YouTube Shorts. The custom endpoint lets you specify <code style="font-family: var(--mono); font-size: 12px;">ratio: "9:16"</code> natively — no crop, no reframe. Pay per post, not per seat.</p>
+          <div class="uc-prompt-wrap">
+            <div class="uc-prompt-label">Example prompt</div>
+            <p class="uc-prompt-text">"aerial drone flyover of a neon-lit Tokyo street crossing at night, rain-slicked pavement reflections, vertical framing, vivid colors"</p>
+          </div>
+          <div class="uc-meta">
+            <span class="uc-endpoint">POST /generate/seedance-fast/custom</span>
+            <span class="uc-price">$0.13–$1.49</span>
+          </div>
+          <div class="uc-curl-wrap">
+            <div class="uc-curl-label">CURL</div>
+            <pre class="uc-curl-pre">curl -i -X POST https://api.x402-video.com/generate/seedance-fast/custom \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "prompt": "aerial drone flyover of a neon-lit Tokyo street crossing at night, rain-slicked pavement reflections, vertical framing, vivid colors",
+  "duration": 5,
+  "resolution": "720p",
+  "ratio": "9:16"
+}'</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Blog & News Auto B-Roll -->
+      <article class="uc-card" id="blog-broll">
+        <div class="uc-media">
+          <video controls preload="metadata" playsinline>
+            <source src="/assets/samples/tokyo-rain-neon.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="uc-body">
+          <div class="uc-header">
+            <span class="uc-num">04</span>
+            <h2 class="uc-title">Blog &amp; News Auto B-Roll</h2>
+          </div>
+          <p class="uc-desc">Publishers run an LLM over each article to extract the key visual scene, generate a cinematic prompt, and call our API in one pipeline step — articles ship illustrated without a single human touching a stock library. The agent pipeline is: LLM reads text → writes prompt → POST /generate → poll /jobs/:id → embed video_url.</p>
+          <div class="uc-prompt-wrap">
+            <div class="uc-prompt-label">Example prompt (LLM-generated from article about Tokyo urban planning)</div>
+            <p class="uc-prompt-text">"rain-soaked Tokyo intersection at dusk, neon signs reflected on wet asphalt, pedestrians with umbrellas, cinematic wide angle, moody atmosphere"</p>
+          </div>
+          <div class="uc-meta">
+            <span class="uc-endpoint">POST /generate/seedance-fast/5s-720p</span>
+            <span class="uc-price">~$0.45 / call</span>
+          </div>
+          <div class="uc-curl-wrap">
+            <div class="uc-curl-label">CURL</div>
+            <pre class="uc-curl-pre">curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"rain-soaked Tokyo intersection at dusk, neon signs reflected on wet asphalt, pedestrians with umbrellas, cinematic wide angle, moody atmosphere"}'</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. Game / Film Previz -->
+      <article class="uc-card" id="previz">
+        <div class="uc-media">
+          <div class="uc-placeholder">
+            <div class="uc-placeholder-icon">&#9654;</div>
+            <div class="uc-placeholder-label">sample generating<br>prompt &amp; price are real</div>
+            <div class="uc-placeholder-note">run examples/generate-use-case-samples.ts to populate</div>
+          </div>
+        </div>
+        <div class="uc-body">
+          <div class="uc-header">
+            <span class="uc-num">05</span>
+            <h2 class="uc-title">Game / Film Previz &amp; Storyboard</h2>
+          </div>
+          <p class="uc-desc">Writers and directors prototype camera moves, scene transitions, and lighting moods before committing to production. Generate 10–15 second cuts of key scenes at highest quality to present to a team or client. Pay only for the clips you keep — iterate fast, decide faster.</p>
+          <div class="uc-prompt-wrap">
+            <div class="uc-prompt-label">Example prompt</div>
+            <p class="uc-prompt-text">"epic fantasy castle interior, low camera tracking shot through stone corridor lined with torches, fog rolling on the floor, ominous orchestral mood, 10 seconds, cinematic 2.39:1"</p>
+          </div>
+          <div class="uc-meta">
+            <span class="uc-endpoint">POST /generate/seedance/custom</span>
+            <span class="uc-price">$0.27–$4.62</span>
+          </div>
+          <div class="uc-curl-wrap">
+            <div class="uc-curl-label">CURL</div>
+            <pre class="uc-curl-pre">curl -i -X POST https://api.x402-video.com/generate/seedance/custom \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "prompt": "epic fantasy castle interior, low camera tracking shot through stone corridor lined with torches, fog rolling on the floor, ominous orchestral mood, cinematic 2.39:1",
+  "duration": 10,
+  "resolution": "1080p"
+}'</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. Agent-to-Agent Commerce -->
+      <article class="uc-card" id="agent-commerce">
+        <div class="uc-media">
+          <div class="uc-placeholder">
+            <div class="uc-placeholder-icon">&#9654;</div>
+            <div class="uc-placeholder-label">sample generating<br>prompt &amp; price are real</div>
+            <div class="uc-placeholder-note">run examples/generate-use-case-samples.ts to populate</div>
+          </div>
+        </div>
+        <div class="uc-body">
+          <div class="uc-header">
+            <span class="uc-num">06</span>
+            <h2 class="uc-title">Agent-to-Agent Commerce</h2>
+          </div>
+          <p class="uc-desc">Autonomous agents can purchase video clips as part of a multi-step pipeline without a human handing over a credit card or OAuth token. The x402 protocol lets an agent hold a USDC wallet, see the exact price in the 402 challenge, decide to pay, and sign atomically — all in code. This is a unique capability of the x402 protocol not available with traditional API-key services.</p>
+          <div class="uc-prompt-wrap">
+            <div class="uc-prompt-label">Example prompt (agent-composed, part of a travel itinerary pipeline)</div>
+            <p class="uc-prompt-text">"smooth aerial reveal of Santorini whitewashed village at golden hour, camera slowly rising to show the caldera and sea, 8 seconds, dreamy travel vibe"</p>
+          </div>
+          <div class="uc-meta">
+            <span class="uc-endpoint">POST /generate/seedance-fast/5s-720p</span>
+            <span class="uc-price">~$0.45 / call</span>
+          </div>
+          <div class="uc-curl-wrap">
+            <div class="uc-curl-label">TYPESCRIPT (agent wallet — x402 autonomous payment)</div>
+            <pre class="uc-curl-pre">import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
+import { ExactEvmScheme, toClientEvmSigner } from "@x402/evm";
+import { privateKeyToAccount } from "viem/accounts";
+
+// Agent holds its own wallet — no human OAuth needed
+const account = privateKeyToAccount(process.env.AGENT_PRIVATE_KEY as `0x${string}`);
+const fetchPay = wrapFetchWithPayment(fetch,
+  new x402Client().register("eip155:*",
+    new ExactEvmScheme(toClientEvmSigner(account))));
+
+// 402 challenge -> agent inspects price -> signs USDC payment -> video
+const res = await fetchPay(
+  "https://api.x402-video.com/generate/seedance-fast/5s-720p",
+  { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: "smooth aerial reveal of Santorini whitewashed village at golden hour..." }) }
+);
+const { job_id } = await res.json();</pre>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /uc-grid -->
+  </div><!-- /wrap -->
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="foot-links">
+      <a href="/">← Home</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="/kling/">Kling API</a>
+      <a href="/custom/">Pricing calculator</a>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting started ↗</a>
+      <a href="https://api.x402-video.com/llms.txt">/llms.txt</a>
+      <a href="https://docs.x402.org">docs.x402.org ↗</a>
+    </div>
+    <p class="foot-note">x402-video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+  </div>
+</footer>
+
+</body>
+</html>
