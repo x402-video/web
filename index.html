@@ -123,7 +123,6 @@
   .feat-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 2; }
   .feat-dot { width: 6px; height: 6px; border-radius: 50%; border: none; padding: 0; background: rgba(255,255,255,0.45); box-shadow: 0 0 0 1px rgba(0,0,0,0.25); cursor: pointer; }
   .feat-dot.on { background: #fff; }
-  .thumb { width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0; background: var(--card2); background-image: repeating-linear-gradient(-45deg, transparent 0 8px, rgba(128,128,128,0.08) 8px 9px); }
 
   /* ---------- 402 stepper ---------- */
   .stepper-strip { border-top: 1px solid var(--bd2); border-bottom: 1px solid var(--bd2); background: var(--card); }
@@ -188,19 +187,20 @@
   /* ---------- pricing ---------- */
   .pr-sub { margin: 0 0 18px; color: var(--tx2); font-size: 14px; }
   .ref-banner { border: 1px solid var(--warnBd); background: var(--warnBg); color: var(--warn); font-size: 13px; border-radius: 8px; padding: 10px 16px; margin-bottom: 14px; }
-  .prow { display: grid; grid-template-columns: 1.8fr 1.1fr 0.8fr 1fr 0.6fr; gap: 16px; align-items: center; padding: 14px 20px; }
+  .prow { display: grid; grid-template-columns: 1.4fr 0.9fr 1.7fr 110px 92px; gap: 16px; align-items: center; padding: 14px 20px; }
   .th-row { padding: 11px 20px; font-size: 12px; color: var(--tx3); border-bottom: 1px solid var(--bd2); background: var(--card2); }
-  .fam-row { position: sticky; top: var(--hdrH); z-index: 5; display: flex; align-items: baseline; gap: 10px; padding: 9px 20px; background: var(--card2); border-bottom: 1px solid var(--bd2); }
+  .th-price { text-align: right; }
+  .fam-row { display: flex; align-items: baseline; gap: 10px; padding: 9px 20px; background: var(--card2); border-bottom: 1px solid var(--bd2); }
   .fam-name { font-weight: 600; font-size: 13.5px; }
   .fam-note { font-size: 12px; color: var(--tx3); }
   .sku-row { border-bottom: 1px solid var(--bd3); }
+  .sku-row:last-of-type { border-bottom: 1px solid var(--bd2); }
   .sku-row:hover { background: var(--hov); }
-  .sku-cell { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .sku-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   .sku-id { font-family: var(--mono); font-weight: 600; color: var(--tx); font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sku-model { font-size: 12.5px; color: var(--tx3); }
-  .c-out { font-size: 13.5px; color: var(--tx2); }
-  .c-price { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--tx); white-space: nowrap; }
+  .c-out { font-size: 13.5px; color: var(--tx2); white-space: nowrap; }
+  .c-price { font-family: var(--mono); font-size: 17px; font-weight: 700; color: var(--tx); white-space: nowrap; text-align: right; }
   .c-ep { font-family: var(--mono); font-size: 12.5px; color: var(--tx2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .try-btn { justify-self: end; text-decoration: none; border: 1px solid var(--bd); color: var(--tx); border-radius: 7px; padding: 6px 13px; font-size: 12.5px; white-space: nowrap; }
   .try-btn:hover { border-color: var(--ac); color: var(--ac); }
@@ -267,7 +267,7 @@
     .hero-title { font-size: 36px; }
   }
   @media (max-width: 900px) {
-    .prow { grid-template-columns: 1.8fr 1.1fr 0.8fr 0.6fr; }
+    .prow { grid-template-columns: 1.4fr 1fr 110px 92px; }
     .c-ep { display: none; }
   }
   @media (max-width: 860px) {
@@ -281,7 +281,7 @@
     .section, .hero, .topbar-in, .stepper, .footer-in { padding-left: 20px; padding-right: 20px; }
   }
   @media (max-width: 560px) {
-    .prow { grid-template-columns: 1.6fr 0.8fr 0.7fr; }
+    .prow { grid-template-columns: 1.6fr 90px 84px; }
     .c-out { display: none; }
     .hero-title { font-size: 31px; }
   }
@@ -385,7 +385,7 @@
     <div class="ref-banner" id="ref-banner" hidden data-i18n="prRef">⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.</div>
     <div class="card">
       <div class="prow th-row">
-        <span>SKU</span><span class="c-out" data-i18n="thOut">Output</span><span id="price-head" data-i18n="priceHeadLive">Price / call</span><span class="c-ep">Endpoint</span><span></span>
+        <span>SKU</span><span class="c-out" data-i18n="thOut">Output</span><span class="c-ep">Endpoint</span><span id="price-head" class="th-price" data-i18n="priceHeadLive">Price / call</span><span></span>
       </div>
       <div id="sku-body"><div class="loading-row mono" data-i18n="loadingSkus">loading from gateway…</div></div>
       <div class="roadmap" data-i18n="prRoadmap">More model families are on the roadmap — longer durations, higher resolutions, additional vendors. Rows group by family as the catalog grows.</div>
@@ -833,8 +833,6 @@ function renderPricing() {
     groups.get(fam).push(row);
   });
 
-  const THUMB_ART = ["assets/art-sprout.png", "assets/art-pasture.png"];
-  let rowIdx = 0;
   const html = [];
   groups.forEach((rows, fam) => {
     const note = dict.famNotes[fam] || dict.famFallback;
@@ -845,20 +843,15 @@ function renderPricing() {
       const out = [row.duration_seconds != null ? row.duration_seconds + "s" : null, row.resolution, "MP4"].filter(Boolean).join(" · ");
       const p = Number(row.price_usd);
       const price = Number.isFinite(p) ? "$" + p.toFixed(2) : "—";
-      const art = THUMB_ART[rowIdx++];
-      const thumbStyle = art ? ` style="background-image:url('${art}');background-size:cover;background-position:center"` : "";
       html.push(
         `<div class="prow sku-row">
-          <div class="sku-cell">
-            <div class="thumb" aria-hidden="true"${thumbStyle}></div>
-            <div class="sku-meta">
-              <span class="sku-id">${esc(row.sku)}</span>
-              <span class="sku-model">${esc(row.model)}</span>
-            </div>
+          <div class="sku-meta">
+            <span class="sku-id">${esc(row.sku)}</span>
+            <span class="sku-model">${esc(row.model)}</span>
           </div>
           <span class="c-out">${esc(out)}</span>
-          <span class="c-price">${esc(price)}</span>
           <span class="c-ep" title="${esc(row.endpoint)}">${esc(row.endpoint)}</span>
+          <span class="c-price">${esc(price)}</span>
           <a class="try-btn" href="#buy">${esc(dict.tryIt)}</a>
         </div>`
       );
