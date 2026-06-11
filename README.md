@@ -4,6 +4,9 @@ Public storefront for the **x402 Video Gateway**: pay-per-call AI video generati
 [x402 payment protocol](https://docs.x402.org), settled in USDC on Base.
 No accounts, no API keys: `HTTP 402 → pay → generate`.
 
+**New buyer? Start here → [GETTING-STARTED.md](GETTING-STARTED.md)** — zero to
+first video in 5 minutes (create a spending wallet, fund USDC on Base, pay per call).
+
 This is a single static page, no build step:
 
 - `index.html` — fetches the live SKU table from the gateway's `GET /` and live stats from

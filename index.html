@@ -393,6 +393,10 @@
   <!-- how to buy -->
   <section class="section" id="buy">
     <h2 class="sec-title" data-i18n="buyTitle">How to buy</h2>
+    <p class="ga-note" style="margin: -6px 0 18px;">
+      <span data-i18n="buyGuideLead">New to x402? No wallet yet? Follow the</span>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md" data-i18n="buyGuideLink">zero-to-first-video guide ↗</a>
+    </p>
     <div class="buy-grid">
       <ol class="steps" id="steps"></ol>
       <div class="card">
@@ -523,6 +527,8 @@ const I18N = {
     tryIt: "↗ Try it",
     prRoadmap: "image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.",
     buyTitle: "How to buy",
+    buyGuideLead: "New to x402? No wallet yet? Follow the",
+    buyGuideLink: "zero-to-first-video guide ↗",
     steps: [
       ["POST your prompt", "Send your prompt to a generation endpoint. The gateway screens it and replies 402 with a signed quote."],
       ["Pay & retry — automatic", "@x402/fetch signs the USDC transfer and retries the request for you. One line of setup."],
@@ -584,6 +590,8 @@ const I18N = {
     tryIt: "↗ 試試看",
     prRoadmap: "image-to-video 與 reference-to-video 上游已接通，等影像輸入審核上線即開賣 — 圖片輸入適用與 prompt 相同的紅線。更長時長與 1080p 現在就可透過 /custom 參數端點購買。",
     buyTitle: "怎麼購買",
+    buyGuideLead: "第一次接觸 x402、還沒有錢包?跟著",
+    buyGuideLink: "五分鐘上手指南 ↗",
     steps: [
       ["送出你的 prompt", "把 prompt POST 到生成端點。gateway 先審查內容,再回 402 報價。"],
       ["付款與重試 — 全自動", "@x402/fetch 會簽署 USDC 轉帳並自動重送請求。設定只要一行。"],
