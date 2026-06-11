@@ -28,8 +28,8 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": 0.19,
-    "highPrice": 0.30,
+    "lowPrice": 0.45,
+    "highPrice": 0.56,
     "offerCount": 2
   }
 }
@@ -186,28 +186,24 @@
   .bars > div { flex: 1; border-radius: 1.5px 1.5px 0 0; }
   .cold-note { margin: 12px 0 0; font-size: 13px; color: var(--tx3); }
 
-  /* ---------- pricing ---------- */
+  /* ---------- pricing (6-category model cards) ---------- */
   .pr-sub { margin: 0 0 18px; color: var(--tx2); font-size: 14px; }
   .ref-banner { border: 1px solid var(--warnBd); background: var(--warnBg); color: var(--warn); font-size: 13px; border-radius: 8px; padding: 10px 16px; margin-bottom: 14px; }
-  .prow { display: grid; grid-template-columns: 1.4fr 0.9fr 1.7fr 110px 92px; gap: 16px; align-items: center; padding: 14px 20px; }
-  .th-row { padding: 11px 20px; font-size: 12px; color: var(--tx3); border-bottom: 1px solid var(--bd2); background: var(--card2); }
-  .th-price { text-align: right; }
-  .fam-row { display: flex; align-items: baseline; gap: 10px; padding: 9px 20px; background: var(--card2); border-bottom: 1px solid var(--bd2); }
-  .fam-name { font-weight: 600; font-size: 13.5px; }
-  .fam-note { font-size: 12px; color: var(--tx3); }
-  .sku-row { border-bottom: 1px solid var(--bd3); }
-  .sku-row:last-of-type { border-bottom: 1px solid var(--bd2); }
-  .sku-row:hover { background: var(--hov); }
-  .sku-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-  .sku-id { font-family: var(--mono); font-weight: 600; color: var(--tx); font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .sku-model { font-size: 12.5px; color: var(--tx3); }
-  .c-out { font-size: 13.5px; color: var(--tx2); white-space: nowrap; }
-  .c-price { font-family: var(--mono); font-size: 17px; font-weight: 700; color: var(--tx); white-space: nowrap; text-align: right; }
-  .c-ep { font-family: var(--mono); font-size: 12.5px; color: var(--tx2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .try-btn { justify-self: end; text-decoration: none; border: 1px solid var(--bd); color: var(--tx); border-radius: 7px; padding: 6px 13px; font-size: 12.5px; white-space: nowrap; }
-  .try-btn:hover { border-color: var(--ac); color: var(--ac); }
-  .roadmap { padding: 13px 20px; font-size: 13px; color: var(--tx3); }
-  .loading-row { padding: 14px 20px; font-size: 13px; color: var(--tx3); }
+  .model-card { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); overflow: hidden; display: flex; flex-direction: column; }
+  .model-media { width: 100%; aspect-ratio: 16 / 9; background: var(--card2); }
+  .model-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .model-card.soon .model-media img { filter: grayscale(0.4); opacity: 0.75; }
+  .model-body { padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+  .model-name { font-weight: 600; font-size: 15px; }
+  .model-desc { margin: 0; font-size: 13px; color: var(--tx2); text-wrap: pretty; }
+  .model-ep { font-family: var(--mono); font-size: 11.5px; color: var(--tx3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .model-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--bd3); min-height: 58px; }
+  .model-price { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--ac); }
+  .model-per { font-size: 12px; color: var(--tx3); margin-left: 3px; }
+  .model-call { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--tx3); margin-top: 1px; }
+  .try-btn { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 7px; padding: 7px 16px; font-size: 13px; white-space: nowrap; flex-shrink: 0; }
+  .try-btn:hover { opacity: 0.9; }
+  .pr-note { margin: 14px 0 0; font-size: 13px; color: var(--tx3); max-width: 90ch; text-wrap: pretty; }
 
   /* ---------- how to buy ---------- */
   .buy-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr); gap: 36px; align-items: start; margin-top: 20px; }
@@ -276,8 +272,7 @@
     .hero-title { font-size: 36px; }
   }
   @media (max-width: 900px) {
-    .prow { grid-template-columns: 1.4fr 1fr 110px 92px; }
-    .c-ep { display: none; }
+    #sku-cards.grid3 { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 860px) {
     .stepper { grid-template-columns: 1fr; gap: 14px; }
@@ -290,8 +285,7 @@
     .section, .hero, .topbar-in, .stepper, .footer-in { padding-left: 20px; padding-right: 20px; }
   }
   @media (max-width: 560px) {
-    .prow { grid-template-columns: 1.6fr 90px 84px; }
-    .c-out { display: none; }
+    #sku-cards.grid3 { grid-template-columns: 1fr; }
     .hero-title { font-size: 31px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -392,13 +386,8 @@
     <h2 class="sec-title" style="margin-bottom: 4px;" data-i18n="prTitle">Models &amp; pricing</h2>
     <p class="pr-sub" data-i18n="prSub">Programmatic pricing — upstream cost × markup + network fee. Prices track upstream price cards automatically.</p>
     <div class="ref-banner" id="ref-banner" hidden data-i18n="prRef">⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.</div>
-    <div class="card">
-      <div class="prow th-row">
-        <span>SKU</span><span class="c-out" data-i18n="thOut">Output</span><span class="c-ep">Endpoint</span><span id="price-head" class="th-price" data-i18n="priceHeadLive">Price / call</span><span></span>
-      </div>
-      <div id="sku-body"><div class="loading-row mono" data-i18n="loadingSkus">loading from gateway…</div></div>
-      <div class="roadmap" data-i18n="prRoadmap">More model families are on the roadmap — longer durations, higher resolutions, additional vendors. Rows group by family as the catalog grows.</div>
-    </div>
+    <div class="grid3" id="sku-cards"></div>
+    <p class="pr-note" data-i18n="prRoadmap">image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.</p>
   </section>
 
   <!-- how to buy -->
@@ -478,8 +467,19 @@ const GATEWAY = apiParam && /^https?:\/\//i.test(apiParam)
   : "https://api.x402-video.com";
 
 const FALLBACK_SKUS = [
-  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 0.30, duration_seconds: 5, resolution: "720p" },
-  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 0.19, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 0.56, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 0.45, duration_seconds: 5, resolution: "720p" },
+];
+
+/* 2 tiers × 3 modalities — the catalog grid. Only text-to-video is sold today
+   (image inputs wait for image moderation); the rest render as coming-soon. */
+const MODEL_CARDS = [
+  { fast: false, mode: "text-to-video", img: "assets/art-portrait.png", live: true },
+  { fast: false, mode: "image-to-video", img: "assets/art-tree.png", live: false },
+  { fast: false, mode: "reference-to-video", img: "assets/art-meadow.png", live: false },
+  { fast: true, mode: "text-to-video", img: "assets/art-hills.png", live: true },
+  { fast: true, mode: "image-to-video", img: "assets/art-sprout.png", live: false },
+  { fast: true, mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
 ];
 
 /* ---------- copy (EN / ZH) ---------- */
@@ -499,7 +499,7 @@ const I18N = {
     obSkip: "Coming from x402scan or already on Base? Skip to pricing →",
     ob: [
       ["Your wallet is your account", "No signup. Any EVM wallet works — Coinbase Wallet takes about two minutes to set up."],
-      ["USDC is digital dollars", "1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $0.30."],
+      ["USDC is digital dollars", "1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $0.56."],
       ["Payment is automatic", "@x402/fetch handles 402 → pay → retry in one line of setup. You never touch the chain by hand."],
     ],
     stTitle: "Live gateway stats", stFrom: "Never cached, never edited. From",
@@ -510,13 +510,18 @@ const I18N = {
     statKeys: ["Videos delivered", "Success rate", "p50 generation", "In flight now"],
     connecting: "connecting to gateway…",
     prTitle: "Models & pricing",
-    prSub: "Programmatic pricing — upstream cost × markup + network fee. Prices track upstream price cards automatically.",
+    prSub: "Programmatic pricing — upstream cost × markup. Prices track upstream price cards automatically.",
     prRef: "⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.",
-    thOut: "Output", priceHeadLive: "Price / call", priceHeadRef: "Ref. price",
-    famNotes: { Seedance: "ByteDance video family" }, famFallback: "model family", skuCount: "SKUs",
+    modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video" },
+    modeDescs: {
+      "text-to-video": "Generate video from a text prompt — multi-shot narrative, cinematic motion.",
+      "image-to-video": "Animate a first-frame image (optional last-frame) into video.",
+      "reference-to-video": "Character-driven video from reference images and clips.",
+    },
+    sec: "sec", refMark: "(ref)", perCallShort: "per call",
+    soonNote: "after image moderation ships",
     tryIt: "↗ Try it",
-    prRoadmap: "More model families are on the roadmap — longer durations, higher resolutions, additional vendors. Rows group by family as the catalog grows.",
-    loadingSkus: "loading from gateway…",
+    prRoadmap: "image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.",
     buyTitle: "How to buy",
     steps: [
       ["POST your prompt", "Send your prompt to a generation endpoint. The gateway screens it and replies 402 with a signed quote."],
@@ -555,7 +560,7 @@ const I18N = {
     obSkip: "從 x402scan 來、或已經在用 Base?直接看價格 →",
     ob: [
       ["錢包就是你的帳號", "不用註冊。任何 EVM 錢包都可以 — Coinbase Wallet 約兩分鐘就能設定好。"],
-      ["USDC 就是數位美元", "1 USDC = 1 美元,跑在 Coinbase 的 Base 網路上。一支 5 秒影片約 $0.30。"],
+      ["USDC 就是數位美元", "1 USDC = 1 美元,跑在 Coinbase 的 Base 網路上。一支 5 秒影片約 $0.56。"],
       ["付款全自動", "@x402/fetch 一行設定就處理 402 → 付款 → 重試。你完全不用手動碰鏈。"],
     ],
     stTitle: "即時 gateway 統計", stFrom: "永不快取、永不修飾。來自",
@@ -566,13 +571,18 @@ const I18N = {
     statKeys: ["累計交付", "成功率", "p50 生成時間", "進行中"],
     connecting: "連線 gateway 中…",
     prTitle: "模型與價格",
-    prSub: "公式定價 — 上游成本 × markup + 網路費。價格自動跟隨上游價卡。",
+    prSub: "公式定價 — 上游成本 × markup。價格自動跟隨上游價卡。",
     prRef: "⚠ 參考價 — gateway 離線。付款前請以即時 402 報價為準。",
-    thOut: "輸出", priceHeadLive: "單次價格", priceHeadRef: "參考價",
-    famNotes: { Seedance: "ByteDance 影片系列" }, famFallback: "模型系列", skuCount: "個 SKU",
+    modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video" },
+    modeDescs: {
+      "text-to-video": "文字 prompt 生成影片 — 多鏡頭敘事、電影感運鏡。",
+      "image-to-video": "以首幀圖片（可選尾幀）生成動態影片。",
+      "reference-to-video": "以參考圖片與影片驅動角色生成。",
+    },
+    sec: "秒", refMark: "(參考)", perCallShort: "/ 次",
+    soonNote: "影像審核上線後開賣",
     tryIt: "↗ 試試看",
-    prRoadmap: "更多模型系列在 roadmap 上 — 更長時長、更高解析度、更多廠商。目錄成長時會依系列分組。",
-    loadingSkus: "從 gateway 載入中…",
+    prRoadmap: "image-to-video 與 reference-to-video 上游已接通，等影像輸入審核上線即開賣 — 圖片輸入適用與 prompt 相同的紅線。更長時長與 1080p 現在就可透過 /custom 參數端點購買。",
     buyTitle: "怎麼購買",
     steps: [
       ["送出你的 prompt", "把 prompt POST 到生成端點。gateway 先審查內容,再回 402 報價。"],
@@ -633,7 +643,7 @@ content-type: application/json
     "scheme": "exact",
     "network": "base",
     "asset": "USDC",
-    "maxAmountRequired": "300000",
+    "maxAmountRequired": "560000",
     "payTo": "0x7f3a…c21e",
     "description": "Seedance 2.0 · 5s 720p MP4"
   }]
@@ -678,13 +688,13 @@ const TRACE = [
   { t: '  {"prompt":"aerial coastline at dawn"}', c: "c-tx3" },
   { t: "← HTTP/1.1 402 Payment Required", c: "c-warn" },
   { t: "  accepts: USDC on Base · scheme exact (eip-3009)", c: "c-tx3" },
-  { t: "  amount: $0.30", c: "c-warn" },
+  { t: "  amount: $0.56", c: "c-warn" },
   { t: "  signing payment authorization… 0x7f3a…c21e", c: "c-tx3" },
   { t: "→ POST /generate/seedance/5s-720p · x-payment: signed", c: "c-tx" },
   { t: "← HTTP/1.1 200 OK · job_9f2e queued", c: "c-ac" },
   { t: "  GET /jobs/job_9f2e … generating", c: "c-tx3" },
   { t: "← status: succeeded · video_url ready (expires 24h)", c: "c-ac" },
-  { t: "✓ delivered — 5s 720p MP4 · total cost $0.30", c: "c-ok" },
+  { t: "✓ delivered — 5s 720p MP4 · total cost $0.56", c: "c-ok" },
 ];
 const STAGE_DESCS = ["POST /generate/…", "price + pay-to address", "auto via @x402/fetch", "signed URL · 24h"];
 
@@ -859,49 +869,46 @@ function renderTrust() {
   }
 }
 
-/* ---------- pricing ---------- */
+/* ---------- pricing (6-category cards) ---------- */
+function perSecLabel(sku) {
+  const p = Number(sku && sku.price_usd);
+  const d = Number(sku && sku.duration_seconds);
+  if (!Number.isFinite(p) || !(d > 0)) return null;
+  return "$" + String(+(p / d).toFixed(4));
+}
+
 function renderPricing() {
   const dict = t();
-  $("price-head").textContent = state.root === "fail" ? dict.priceHeadRef : dict.priceHeadLive;
   $("ref-banner").hidden = state.root !== "fail";
+  const ref = state.root === "fail";
 
-  if (!state.skus) {
-    $("sku-body").innerHTML = `<div class="loading-row mono">${esc(dict.loadingSkus)}</div>`;
-    return;
-  }
-
-  const groups = new Map();
-  state.skus.forEach((row) => {
-    const fam = String(row.model || "").split(/\s+/)[0] || "Models";
-    if (!groups.has(fam)) groups.set(fam, []);
-    groups.get(fam).push(row);
-  });
-
-  const html = [];
-  groups.forEach((rows, fam) => {
-    const note = dict.famNotes[fam] || dict.famFallback;
-    html.push(
-      `<div class="fam-row"><span class="fam-name">${esc(fam)}</span><span class="fam-note">${esc(note)} · ${rows.length} ${esc(dict.skuCount)}</span></div>`
-    );
-    rows.forEach((row) => {
-      const out = [row.duration_seconds != null ? row.duration_seconds + "s" : null, row.resolution, "MP4"].filter(Boolean).join(" · ");
-      const p = Number(row.price_usd);
-      const price = Number.isFinite(p) ? "$" + p.toFixed(2) : "—";
-      html.push(
-        `<div class="prow sku-row">
-          <div class="sku-meta">
-            <span class="sku-id">${esc(row.sku)}</span>
-            <span class="sku-model">${esc(row.model)}</span>
-          </div>
-          <span class="c-out">${esc(out)}</span>
-          <span class="c-ep" title="${esc(row.endpoint)}">${esc(row.endpoint)}</span>
-          <span class="c-price">${esc(price)}</span>
-          <a class="try-btn" href="#buy">${esc(dict.tryIt)}</a>
-        </div>`
-      );
-    });
-  });
-  $("sku-body").innerHTML = html.join("");
+  $("sku-cards").innerHTML = MODEL_CARDS.map((card) => {
+    const name = (card.fast ? "Seedance 2.0 Fast" : "Seedance 2.0") + " " + dict.modeNames[card.mode];
+    const desc = dict.modeDescs[card.mode];
+    const sku = card.live ? tierSku(card.fast) : null;
+    const perSec = sku && perSecLabel(sku);
+    const callP = sku && Number.isFinite(Number(sku.price_usd))
+      ? "$" + Number(sku.price_usd).toFixed(2) + " · " + (sku.duration_seconds || 5) + "s " + (sku.resolution || "720p")
+      : null;
+    const foot = card.live
+      ? `<div>
+          <span class="model-price">${perSec ? esc(perSec) : "$—"}</span><span class="model-per">/ ${esc(dict.sec)}${ref ? " " + esc(dict.refMark) : ""}</span>
+          ${callP ? `<span class="model-call">${esc(callP)} ${esc(dict.perCallShort)}</span>` : ""}
+        </div>
+        <a class="try-btn" href="#buy">${esc(dict.tryIt)}</a>`
+      : `<span class="model-per">${esc(dict.soonNote)}</span>
+        <span class="soon-pill">${esc(dict.gaSoon)}</span>`;
+    return `<div class="model-card${card.live ? "" : " soon"}">
+      <div class="model-media"><img src="${card.img}" alt="${esc(name)} — illustration" loading="lazy" /></div>
+      <div class="model-body">
+        <span class="feat-tag">${card.mode}</span>
+        <span class="model-name">${esc(name)}</span>
+        <p class="model-desc">${esc(desc)}</p>
+        ${card.live && sku ? `<span class="model-ep" title="${esc(sku.endpoint)}">${esc(sku.endpoint)}</span>` : ""}
+      </div>
+      <div class="model-foot">${foot}</div>
+    </div>`;
+  }).join("");
 }
 
 function buildFeatured() {
