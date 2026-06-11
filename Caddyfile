@@ -1,0 +1,8 @@
+:{$PORT:8080}
+
+root * /srv
+encode gzip
+file_server
+
+header /assets/* Cache-Control "public, max-age=86400"
+header /favicon.svg Cache-Control "public, max-age=86400"
