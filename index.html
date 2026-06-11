@@ -44,6 +44,7 @@
     --bad: #ef4444; --toolbarBg: rgba(15,15,17,0.9);
     --mono: ui-monospace, Menlo, monospace;
     --hdrH: 53px;
+    --syn-key: #c084fc; --syn-str: #4ade80; --syn-com: #6f7480; --syn-num: #fb923c;
   }
   :root.light {
     --bg: #fafafa; --card: #ffffff; --card2: #f4f5f6; --hov: #f0f1f3;
@@ -52,6 +53,7 @@
     --ac: #2563eb; --acBg: #e8efff; --acBd: #bcd2fb; --acSoft: rgba(37,99,235,0.35);
     --ok: #16a34a; --warn: #a16207; --warnBg: #fdf6e3; --warnBd: #e6d399; --warnTx: #4b4b53;
     --bad: #dc2626; --toolbarBg: rgba(255,255,255,0.92);
+    --syn-key: #7c3aed; --syn-str: #15803d; --syn-com: #9aa0ab; --syn-num: #c2410c;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
@@ -221,7 +223,14 @@
   .copy-btn { font-family: var(--mono); font-size: 12px; padding: 6px 14px; border-radius: 7px; border: 1px solid var(--bd); background: transparent; color: var(--tx2); cursor: pointer; white-space: nowrap; }
   .copy-btn:hover { border-color: var(--ac); }
   .copy-btn.copied { color: var(--ac); }
-  .code { margin: 0; padding: 20px; font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--tx2); overflow-x: auto; }
+  .code { margin: 0; padding: 20px; font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--tx); background: var(--card2); overflow-x: auto; }
+  .tok-com { color: var(--syn-com); font-style: italic; }
+  .tok-str { color: var(--syn-str); }
+  .tok-key { color: var(--syn-key); }
+  .tok-prop { color: var(--ac); }
+  .tok-num { color: var(--syn-num); }
+  .tok-402 { color: var(--warn); font-weight: 700; }
+  .tok-prm { color: var(--tx4); user-select: none; }
 
   /* ---------- samples ---------- */
   .ga-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
@@ -613,6 +622,8 @@ const CURL_CODE = `$ curl -i -X POST ${GATEWAY}/generate/seedance/5s-720p \\
     -H 'content-type: application/json' \\
     -d '{"prompt":"aerial coastline at dawn"}'
 
+# no payment attached yet — the gateway answers with a signed quote:
+
 HTTP/1.1 402 Payment Required
 content-type: application/json
 
@@ -627,6 +638,39 @@ content-type: application/json
     "description": "Seedance 2.0 · 5s 720p MP4"
   }]
 }`;
+
+/* ---------- syntax highlighting (tiny, content-scoped) ---------- */
+const HL_RULES = {
+  ts: [
+    { re: /"(?:[^"\\\n]|\\.)*"/, cls: "tok-str" },
+    { re: /\/\/[^\n]*/, cls: "tok-com" },
+    { re: /\b(?:import|from|const|await|new)\b/, cls: "tok-key" },
+  ],
+  sh: [
+    { re: /^\$ /, cls: "tok-prm" },
+    { re: /'(?:[^'\\\n]|\\.)*'/, cls: "tok-str" },
+    { re: /"(?:[^"\\\n]|\\.)*"(?=\s*:)/, cls: "tok-prop" },
+    { re: /"(?:[^"\\\n]|\\.)*"/, cls: "tok-str" },
+    { re: /#[^\n]*/, cls: "tok-com" },
+    { re: /HTTP\/1\.1 402 Payment Required/, cls: "tok-402" },
+    { re: /\b\d+(?:\.\d+)?\b/, cls: "tok-num" },
+  ],
+};
+
+function highlight(code, lang) {
+  const rules = HL_RULES[lang];
+  const master = new RegExp(rules.map((r) => "(" + r.re.source + ")").join("|"), "gm");
+  let out = "";
+  let last = 0;
+  let m;
+  while ((m = master.exec(code)) !== null) {
+    out += esc(code.slice(last, m.index));
+    const gi = m.slice(1).findIndex((g) => g !== undefined);
+    out += `<span class="${rules[gi].cls}">${esc(m[0])}</span>`;
+    last = m.index + m[0].length;
+  }
+  return out + esc(code.slice(last));
+}
 
 /* ---------- protocol trace (illustrative replay of one paid call) ---------- */
 const TRACE = [
@@ -904,7 +948,13 @@ function renderSteps() {
 function renderCode() {
   $("tab-ts").classList.toggle("on", state.tab === "ts");
   $("tab-curl").classList.toggle("on", state.tab === "curl");
-  $("code-block").textContent = state.tab === "ts" ? TS_CODE : CURL_CODE;
+  $("code-block").innerHTML = state.tab === "ts" ? highlight(TS_CODE, "ts") : highlight(CURL_CODE, "sh");
+}
+
+function copyPayload() {
+  if (state.tab === "ts") return TS_CODE;
+  // curl tab: copy just the runnable command — no shell prompt, no response dump
+  return CURL_CODE.split("\n\n#")[0].replace(/^\$ /, "");
 }
 
 /* ---------- samples ---------- */
@@ -973,7 +1023,7 @@ $("tab-ts").addEventListener("click", () => { state.tab = "ts"; resetCopy(); ren
 $("tab-curl").addEventListener("click", () => { state.tab = "curl"; resetCopy(); renderCode(); });
 
 $("copy-btn").addEventListener("click", () => {
-  const text = state.tab === "ts" ? TS_CODE : CURL_CODE;
+  const text = copyPayload();
   if (!navigator.clipboard || !navigator.clipboard.writeText) return;
   navigator.clipboard.writeText(text).then(() => {
     $("copy-btn").textContent = t().copied;
