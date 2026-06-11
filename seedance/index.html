@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Seedance API — Pay-Per-Call, No API Key | x402-video.com</title>
+<meta name="description" content="Use the Seedance 2.0 API without an API key or account. Pay per call in USDC on Base via the x402 protocol. From $0.45/call — first video in under 5 minutes." />
+<link rel="canonical" href="https://x402-video.com/seedance/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="x402-video.com" />
+<meta property="og:title" content="Seedance API — No API Key, Pay Per Call" />
+<meta property="og:description" content="Call Seedance 2.0 text-to-video with no account and no API key. HTTP 402 → pay USDC on Base → get your video. From $0.45/call." />
+<meta property="og:url" content="https://x402-video.com/seedance/" />
+<meta property="og:image" content="https://x402-video.com/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Seedance 2.0 API via x402",
+  "url": "https://x402-video.com/seedance/",
+  "description": "Pay-per-call access to Seedance 2.0 and Seedance 2.0 Fast text-to-video generation via the x402 payment protocol. No account, no API key — pay USDC on Base per request.",
+  "provider": {
+    "@type": "Organization",
+    "name": "x402-video.com",
+    "url": "https://x402-video.com"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Seedance 2.0 Fast · 5s 720p",
+      "price": "0.45",
+      "priceCurrency": "USD",
+      "description": "5-second 720p MP4 via POST /generate/seedance-fast/5s-720p"
+    },
+    {
+      "@type": "Offer",
+      "name": "Seedance 2.0 · 5s 720p",
+      "price": "0.56",
+      "priceCurrency": "USD",
+      "description": "5-second 720p MP4 (highest quality) via POST /generate/seedance/5s-720p"
+    },
+    {
+      "@type": "AggregateOffer",
+      "name": "Seedance 2.0 Fast · Custom",
+      "lowPrice": "0.13",
+      "highPrice": "2.03",
+      "priceCurrency": "USD",
+      "description": "4–15s, 480p/720p, optional audio via POST /generate/seedance-fast/custom"
+    },
+    {
+      "@type": "AggregateOffer",
+      "name": "Seedance 2.0 · Custom",
+      "lowPrice": "0.27",
+      "highPrice": "6.30",
+      "priceCurrency": "USD",
+      "description": "4–15s, up to 1080p, optional audio via POST /generate/seedance/custom"
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --card2: #f4f5f6; --hov: #f0f1f3;
+    --bd: #e2e2e6; --bd2: #e8e8ec; --bd3: #f0f0f2;
+    --tx: #18181b; --tx2: #52525b; --tx3: #87878f; --tx4: #c2c2c8;
+    --ac: #2563eb; --acBg: #e8efff; --acBd: #bcd2fb;
+    --ok: #16a34a; --warn: #a16207; --warnBg: #fdf6e3; --warnBd: #e6d399;
+    --mono: ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--ac); }
+  a:hover { opacity: 0.8; }
+  .topbar { border-bottom: 1px solid var(--bd2); background: rgba(250,250,250,0.92); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+  .topbar-in { max-width: 900px; margin: 0 auto; padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tx); }
+  .brand-glyph { width: 22px; height: 22px; border-radius: 5px; background: var(--ac); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .brand-name { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--tx2); text-decoration: none; }
+  .nav-links a:hover { color: var(--tx); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+  .hero { padding: 56px 0 40px; }
+  .badge { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--bd); border-radius: 999px; padding: 4px 14px; font-size: 12.5px; color: var(--tx2); margin-bottom: 20px; }
+  .dot-ok { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: inline-block; }
+  h1 { margin: 0 0 14px; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+  .lead { margin: 0 0 28px; font-size: 17px; color: var(--tx2); max-width: 56ch; text-wrap: pretty; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-outline { text-decoration: none; border: 1px solid var(--bd); color: var(--tx); border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-outline:hover { border-color: var(--ac); }
+  section { padding: 44px 0 0; }
+  section:last-of-type { padding-bottom: 72px; }
+  h2 { margin: 0 0 18px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  h3 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+  .pricing-table { width: 100%; border-collapse: collapse; border: 1px solid var(--bd); border-radius: 10px; overflow: hidden; font-size: 14px; }
+  .pricing-table th { background: var(--card2); padding: 11px 16px; text-align: left; font-weight: 600; color: var(--tx2); border-bottom: 1px solid var(--bd); }
+  .pricing-table td { padding: 11px 16px; border-bottom: 1px solid var(--bd2); vertical-align: top; }
+  .pricing-table tr:last-child td { border-bottom: none; }
+  .pricing-table code { font-family: var(--mono); font-size: 12.5px; background: var(--card2); border: 1px solid var(--bd); padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+  .price { font-family: var(--mono); font-weight: 700; color: var(--ac); font-size: 15px; }
+  .code-block { background: var(--card2); border: 1px solid var(--bd); border-radius: 10px; overflow: hidden; margin: 0; }
+  .code-label { font-family: var(--mono); font-size: 11px; color: var(--tx3); letter-spacing: 0.07em; padding: 9px 16px 8px; border-bottom: 1px solid var(--bd2); }
+  .code-block pre { margin: 0; padding: 18px; font-family: var(--mono); font-size: 13px; line-height: 1.7; overflow-x: auto; color: var(--tx); }
+  .faq-item { border-bottom: 1px solid var(--bd2); padding: 18px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { margin: 0 0 7px; font-size: 15px; font-weight: 600; }
+  .faq-a { margin: 0; font-size: 14px; color: var(--tx2); max-width: 72ch; text-wrap: pretty; }
+  .card { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); padding: 22px 24px; }
+  .footer { border-top: 1px solid var(--bd2); margin-top: 60px; }
+  .footer-in { max-width: 900px; margin: 0 auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+  .foot-links a { color: var(--tx2); text-decoration: none; }
+  .foot-links a:hover { color: var(--tx); }
+  .foot-note { margin: 0; font-size: 12.5px; color: var(--tx4); }
+  .tag { display: inline-block; font-size: 11.5px; border: 1px solid var(--acBd); color: var(--ac); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+  @media (max-width: 640px) {
+    h1 { font-size: 30px; }
+    .wrap { padding: 0 18px; }
+    .topbar-in { padding: 12px 18px; }
+    .footer-in { padding: 20px 18px; }
+    .pricing-table { font-size: 13px; }
+    .pricing-table td, .pricing-table th { padding: 9px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/">
+      <span class="brand-glyph">x</span>
+      <span class="brand-name">x402-video.com</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/kling/">Kling</a>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- hero -->
+    <section class="hero">
+      <div class="badge"><span class="dot-ok"></span> Seedance 2.0 · live · from $0.45/call</div>
+      <h1>Seedance API — no API key, pay per call</h1>
+      <p class="lead">Access Seedance 2.0 and Seedance 2.0 Fast text-to-video without an account or API key. Your code pays in USDC on Base via HTTP 402 — exact price quoted before every charge.</p>
+      <div class="ctas">
+        <a class="btn-primary" href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Get started in 5 min</a>
+        <a class="btn-outline" href="https://api.x402-video.com/llms.txt">/llms.txt (machine-readable)</a>
+      </div>
+    </section>
+
+    <!-- pricing table -->
+    <section id="pricing">
+      <h2>Endpoint pricing</h2>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Live quotes always at <a href="https://api.x402-video.com/">api.x402-video.com</a>. The 402 response quotes the exact USDC amount before you pay — never a surprise charge.</p>
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Output</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>POST /generate/seedance-fast/5s-720p</code></td>
+            <td>5s 720p MP4</td>
+            <td><span class="price">~$0.45</span> / call</td>
+          </tr>
+          <tr>
+            <td><code>POST /generate/seedance/5s-720p</code></td>
+            <td>5s 720p MP4 (highest quality)</td>
+            <td><span class="price">~$0.56</span> / call</td>
+          </tr>
+          <tr>
+            <td><code>POST /generate/seedance-fast/custom</code></td>
+            <td>4–15s, 480p/720p, optional audio</td>
+            <td><span class="price">$0.13–$2.03</span></td>
+          </tr>
+          <tr>
+            <td><code>POST /generate/seedance/custom</code></td>
+            <td>4–15s, up to 1080p, optional audio</td>
+            <td><span class="price">$0.27–$6.30</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--tx3);">Custom body fields: <code>prompt</code>, <code>duration</code> (4–15 s), <code>resolution</code> ("480p"|"720p"|"1080p"), <code>ratio</code>, <code>seed</code>, <code>generate_audio</code>, <code>camera_fixed</code>. Rejected requests (403/429/503) are never charged.</p>
+    </section>
+
+    <!-- curl example -->
+    <section id="curl">
+      <h2>Try it with curl — see the raw 402 flow</h2>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">No client library needed to understand the protocol. Run this command and observe the 402 payment challenge before any charge occurs.</p>
+
+      <h3>Step 1 — POST your prompt (no payment yet)</h3>
+      <div class="code-block">
+        <div class="code-label">BASH</div>
+        <pre>curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"a corgi surfing a wave at sunset"}'</pre>
+      </div>
+
+      <h3 style="margin-top: 22px;">Response — HTTP 402 Payment Required</h3>
+      <div class="code-block">
+        <div class="code-label">HTTP RESPONSE</div>
+        <pre>HTTP/1.1 402 Payment Required
+content-type: application/json
+
+{
+  "x402Version": 1,
+  "accepts": [{
+    "scheme": "exact",
+    "network": "base",
+    "asset": "USDC",
+    "maxAmountRequired": "450000",
+    "payTo": "0x7f3a…c21e",
+    "description": "Seedance 2.0 Fast · 5s 720p MP4"
+  }]
+}</pre>
+      </div>
+
+      <p style="margin: 14px 0 0; font-size: 14px; color: var(--tx2);">
+        The gateway quoted the exact USDC amount before any payment occurred. An x402 client (like <code style="font-family: var(--mono); font-size: 13px;">@x402/fetch</code>) signs the EIP-3009 authorization and retries automatically. Gasless for you — the facilitator submits the transaction on-chain.
+      </p>
+    </section>
+
+    <!-- TypeScript example -->
+    <section id="typescript">
+      <h2>TypeScript / Node.js — @x402/fetch</h2>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Install once, then every call auto-handles the 402 → sign → retry loop. No HTTP boilerplate required.</p>
+
+      <div class="code-block">
+        <div class="code-label">BASH — INSTALL</div>
+        <pre>npm i @x402/fetch @x402/evm viem</pre>
+      </div>
+
+      <div class="code-block" style="margin-top: 14px;">
+        <div class="code-label">TYPESCRIPT</div>
+        <pre>import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
+import { ExactEvmScheme, toClientEvmSigner } from "@x402/evm";
+import { privateKeyToAccount } from "viem/accounts";
+
+const account = privateKeyToAccount(process.env.BUYER_PRIVATE_KEY as `0x${string}`);
+const signer = toClientEvmSigner(account);
+const client = new x402Client().register("eip155:*", new ExactEvmScheme(signer));
+const fetchPay = wrapFetchWithPayment(fetch, client);
+
+// 402 → sign USDC payment → retry all happens automatically:
+const res = await fetchPay("https://api.x402-video.com/generate/seedance-fast/5s-720p", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ prompt: "a corgi surfing a wave at sunset" }),
+});
+
+const { job_id } = await res.json();
+
+// Poll until done (free endpoint):
+let video;
+while (true) {
+  const status = await fetch(`https://api.x402-video.com/jobs/${job_id}`).then(r => r.json());
+  if (status.status === "succeeded") { video = status.video_url; break; }
+  if (status.status === "failed" || status.status === "cancelled") throw new Error(status.status);
+  await new Promise(r => setTimeout(r, 5000)); // poll every 5s
+}
+// Download video_url within 24h — link expires after that</pre>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2>FAQ</h2>
+      <div class="card">
+
+        <div class="faq-item">
+          <p class="faq-q">What is x402 and why does it replace an API key?</p>
+          <p class="faq-a">x402 is an open protocol that uses the HTTP 402 status code to quote and settle payments inline with each request. Instead of registering for an API key and pre-paying a subscription, your code holds a small wallet of USDC on Base and pays the exact quoted amount per call. No account, no billing page, no rate-limit tiers — just per-request USDC settlement.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What do I need to get started?</p>
+          <p class="faq-a">Node 20+ (for <code style="font-family: var(--mono); font-size: 13px;">@x402/fetch</code>) and roughly $1 of USDC on the Base network. Generate a wallet keypair locally (see the <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">getting-started guide</a>), fund it with USDC from Coinbase/Binance/OKX on the Base network, and you're ready. You do not need ETH — payments are gasless for the buyer.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">How fast does Seedance generation take?</p>
+          <p class="faq-a">Generation is asynchronous and typically completes in 1–3 minutes. Your first call returns a <code style="font-family: var(--mono); font-size: 13px;">job_id</code>; poll <code style="font-family: var(--mono); font-size: 13px;">GET /jobs/:id</code> (free, no auth) until <code style="font-family: var(--mono); font-size: 13px;">status</code> is <code style="font-family: var(--mono); font-size: 13px;">succeeded</code>, then download <code style="font-family: var(--mono); font-size: 13px;">video_url</code>. The link expires ~24h after delivery, so store the file promptly.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What if generation fails — am I charged?</p>
+          <p class="faq-a">Prompts are screened before payment — rejected requests (403) are never charged. Rate-limit (429) and capacity (503) responses also happen pre-payment. If on-chain settlement fails, the job is <code style="font-family: var(--mono); font-size: 13px;">cancelled</code> and you are not charged. If the upstream model fails after successful payment, contact us with your <code style="font-family: var(--mono); font-size: 13px;">job_id</code> — every outcome is in an audit log.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Which network and token is used?</p>
+          <p class="faq-a">USDC on Base (<code style="font-family: var(--mono); font-size: 13px;">eip155:8453</code>). The 402 quote always specifies the exact asset, amount, and recipient — you can verify before signing. Payments are EIP-3009 authorizations signed locally; only the signature travels over the network.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- links -->
+    <section id="resources" style="padding-bottom: 0;">
+      <h2>Resources</h2>
+      <ul style="margin: 0; padding: 0 0 0 20px; color: var(--tx2); font-size: 14px; line-height: 2;">
+        <li><a href="/">x402-video.com — main landing page</a></li>
+        <li><a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting Started Guide — zero to first video in 5 minutes</a></li>
+        <li><a href="https://api.x402-video.com/llms.txt">api.x402-video.com/llms.txt — machine-readable catalog (for AI agents)</a></li>
+        <li><a href="https://api.x402-video.com/openapi.json">api.x402-video.com/openapi.json — OpenAPI spec with x-payment-info pricing</a></li>
+        <li><a href="https://docs.x402.org">docs.x402.org — x402 protocol documentation</a></li>
+        <li><a href="/custom/">Pricing calculator — interactive live quotes for custom parameters</a></li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="foot-links">
+      <a href="/">← Home</a>
+      <a href="/kling/">Kling page</a>
+      <a href="https://github.com/x402-video">GitHub ↗</a>
+      <a href="https://api.x402-video.com/llms.txt">/llms.txt</a>
+      <a href="https://docs.x402.org">docs.x402.org ↗</a>
+    </div>
+    <p class="foot-note">x402-video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+  </div>
+</footer>
+
+</body>
+</html>

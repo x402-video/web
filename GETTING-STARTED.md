@@ -76,6 +76,24 @@ const res = await fetchPay("https://api.x402-video.com/generate/seedance-fast/5s
 const { job_id } = await res.json();
 ```
 
+### Option B — curl (see the raw 402 flow)
+
+Not on Node? Probe the endpoint with plain curl to see exactly what the
+protocol looks like:
+
+```bash
+curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"a corgi surfing a wave at sunset"}'
+```
+
+You'll get `HTTP/1.1 402 Payment Required` with a JSON body quoting the
+exact USDC amount, the recipient, and the payment scheme (`exact`, USDC on
+Base). An x402 client signs that quote (EIP-3009 — gasless for you) and
+retries with an `X-PAYMENT` header; the paid response is `200 { job_id }`.
+`@x402/fetch` (Option A) does the sign-and-retry automatically; for manual
+signing in other languages see [docs.x402.org](https://docs.x402.org).
+
 ## Step 4 — Poll and download
 
 Generation is async (~1–3 minutes). Poll the free status endpoint:
@@ -84,8 +102,62 @@ Generation is async (~1–3 minutes). Poll the free status endpoint:
 curl https://api.x402-video.com/jobs/<job_id>
 ```
 
+Response shape:
+
+```json
+{
+  "job_id": "3f6e9a3a-…",
+  "sku": "seedance-fast-5s-720p",
+  "status": "succeeded",
+  "created_at": "2026-06-11T08:00:00.000Z",
+  "updated_at": "2026-06-11T08:02:10.000Z",
+  "attempts": 1,
+  "video_url": "https://…",
+  "video_expires_at": "2026-06-12T08:02:10.000Z",
+  "seed": 1234567,
+  "frames_per_second": 24,
+  "error": null
+}
+```
+
+`status` walks through `pending_settlement → queued → generating →
+succeeded`. Two other terminal states:
+
+- **`cancelled`** — on-chain settlement failed. Nothing was generated and
+  **you were not charged**.
+- **`failed`** — generation failed after payment. Contact us with your
+  `job_id` (every outcome is recorded in an audit log).
+
 When `status` is `succeeded`, download `video_url` — the link **expires
-~24h** after completion, so store the file, not the URL.
+~24h** after completion (see `video_expires_at`), so store the file, not
+the URL.
+
+## Custom endpoints — full parameter reference
+
+`/generate/seedance/custom` and `/generate/seedance-fast/custom` let you
+pick duration, resolution, ratio, and audio. The 402 quote is computed from
+**your** parameters, so you only pay for what you requested.
+
+```ts
+const res = await fetchPay("https://api.x402-video.com/generate/seedance/custom", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    prompt: "a corgi surfing a wave, slow motion", // required
+    duration: 8,            // integer 4–15 seconds (default 5)
+    resolution: "1080p",    // seedance: "480p"|"720p"|"1080p" · fast: "480p"|"720p" (default "720p")
+    ratio: "9:16",          // "16:9"|"4:3"|"1:1"|"3:4"|"9:16"|"21:9"|"adaptive" (default "adaptive")
+    seed: 42,               // optional integer, -1..2^32-1 (reproducibility)
+    generate_audio: true,   // optional boolean (default false; audio multiplies cost ×1.5)
+    camera_fixed: false,    // optional boolean
+  }),
+});
+```
+
+Body validation is strict and happens **before** payment: unknown fields
+are rejected, `duration` must be an explicit integer (auto-duration `-1`
+is not sold — the price depends on duration), and `--flag` directives
+inside the prompt are rejected too. A rejected request is never charged.
 
 ---
 
@@ -103,6 +175,19 @@ When `status` is `succeeded`, download `video_url` — the link **expires
   [`/.well-known/x402`](https://api.x402-video.com/.well-known/x402).
 - **Live reliability stats**: [`/status`](https://api.x402-video.com/status) —
   success rate, p50 generation time, delivered count.
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `@x402/fetch` throws an insufficient-funds error | Not enough USDC on Base in your wallet | Check the balance on [basescan.org](https://basescan.org); top up USDC **on Base** |
+| Sent USDC but the wallet shows zero | Sent on the wrong network (Ethereum mainnet, etc.) | Withdraw again choosing **Base**, or bridge via [bridge.base.org](https://bridge.base.org) |
+| Job sits in `pending_settlement` | On-chain settlement takes a few seconds | Normal — keep polling |
+| `status` is `cancelled` | Settlement failed | You were **not** charged; just retry the request |
+| HTTP 403 before any payment | Prompt rejected by the content filter | Rewrite the prompt — you were not charged. Repeated rejections temporarily block your IP |
+| HTTP 429 | >20 generation POSTs/min per IP, or >5 in-flight jobs per wallet | Back off and retry; limits reset per minute |
+| HTTP 503 | Queue at capacity | Retry with exponential backoff — you were not charged |
+| `npx tsx` fails with a module error | Missing `"type": "module"` in your `package.json` | Add it, or run the examples inside this repo's `web/` folder |
 
 ## FAQ
 

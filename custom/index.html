@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Custom Video Generation Pricing Calculator — Seedance API | x402-video.com</title>
+<meta name="description" content="Estimate your exact cost for custom Seedance video generation. Adjust duration, resolution, ratio, and audio — see live USDC pricing from the real 402 API response before paying a cent." />
+<link rel="canonical" href="https://x402-video.com/custom/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="x402-video.com" />
+<meta property="og:title" content="Custom Video Pricing Calculator — Seedance API | x402-video.com" />
+<meta property="og:description" content="Interactive pricing calculator for Seedance custom video generation. Live quotes from the 402 API — exactly what you'd pay per call." />
+<meta property="og:url" content="https://x402-video.com/custom/" />
+<meta property="og:image" content="https://x402-video.com/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --card2: #f4f5f6; --hov: #f0f1f3;
+    --bd: #e2e2e6; --bd2: #e8e8ec; --bd3: #f0f0f2;
+    --tx: #18181b; --tx2: #52525b; --tx3: #87878f; --tx4: #c2c2c8;
+    --ac: #2563eb; --acBg: #e8efff; --acBd: #bcd2fb;
+    --ok: #16a34a; --warn: #a16207; --warnBg: #fdf6e3; --warnBd: #e6d399;
+    --err: #dc2626; --errBg: #fef2f2; --errBd: #fecaca;
+    --mono: ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--ac); }
+  a:hover { opacity: 0.8; }
+  .topbar { border-bottom: 1px solid var(--bd2); background: rgba(250,250,250,0.92); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+  .topbar-in { max-width: 900px; margin: 0 auto; padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tx); }
+  .brand-glyph { width: 22px; height: 22px; border-radius: 5px; background: var(--ac); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .brand-name { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--tx2); text-decoration: none; }
+  .nav-links a:hover { color: var(--tx); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+  .hero { padding: 48px 0 32px; }
+  .badge { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--bd); border-radius: 999px; padding: 4px 14px; font-size: 12.5px; color: var(--tx2); margin-bottom: 20px; }
+  .dot-ok { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: inline-block; }
+  h1 { margin: 0 0 12px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+  .lead { margin: 0 0 0; font-size: 16px; color: var(--tx2); max-width: 58ch; text-wrap: pretty; }
+  section { padding: 40px 0 0; }
+  section:last-of-type { padding-bottom: 72px; }
+  h2 { margin: 0 0 18px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* ── calculator card ── */
+  .calc-card { background: var(--card); border: 1px solid var(--bd); border-radius: 14px; padding: 28px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; }
+  @media (max-width: 640px) { .calc-card { grid-template-columns: 1fr; padding: 20px 18px; } }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--tx2); letter-spacing: 0.01em; }
+  .field .hint { font-size: 12px; color: var(--tx3); margin-top: 2px; }
+
+  /* model toggle */
+  .model-toggle { display: flex; border: 1px solid var(--bd); border-radius: 8px; overflow: hidden; width: fit-content; }
+  .model-toggle button { padding: 8px 20px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; background: transparent; color: var(--tx2); transition: background 0.12s, color 0.12s; }
+  .model-toggle button.active { background: var(--ac); color: #fff; }
+  .model-toggle button:not(.active):hover { background: var(--hov); color: var(--tx); }
+
+  /* slider */
+  .slider-row { display: flex; align-items: center; gap: 12px; }
+  .slider-row input[type=range] { flex: 1; accent-color: var(--ac); cursor: pointer; }
+  .slider-val { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--ac); min-width: 32px; text-align: right; }
+
+  /* resolution pills */
+  .res-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .res-pills button { padding: 6px 16px; font-size: 13.5px; font-weight: 600; border: 1px solid var(--bd); border-radius: 6px; cursor: pointer; background: transparent; color: var(--tx2); transition: background 0.12s, border-color 0.12s, color 0.12s; }
+  .res-pills button.active { border-color: var(--ac); background: var(--acBg); color: var(--ac); }
+  .res-pills button:not(.active):not(:disabled):hover { border-color: var(--ac); color: var(--tx); }
+  .res-pills button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* select */
+  .field select { padding: 8px 12px; border: 1px solid var(--bd); border-radius: 7px; font-size: 14px; background: var(--card); color: var(--tx); appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2387878f' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+  .field select:focus { outline: 2px solid var(--ac); outline-offset: 1px; }
+
+  /* checkbox */
+  .check-row { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+  .check-row input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--ac); cursor: pointer; }
+  .check-label { font-size: 14px; }
+  .check-tag { font-size: 11.5px; border: 1px solid var(--warnBd); background: var(--warnBg); color: var(--warn); border-radius: 999px; padding: 2px 9px; font-weight: 600; }
+
+  /* quote display */
+  .quote-area { grid-column: 1 / -1; margin-top: 6px; }
+  .quote-box { border: 1px solid var(--bd); border-radius: 12px; padding: 22px 28px; text-align: center; min-height: 104px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transition: border-color 0.2s; }
+  .quote-box.loading { border-color: var(--acBd); background: var(--acBg); }
+  .quote-box.error { border-color: var(--errBd); background: var(--errBg); }
+  .quote-box.ok { border-color: #bbf7d0; background: #f0fdf4; }
+  .quote-price { font-family: var(--mono); font-size: 38px; font-weight: 800; color: var(--ac); letter-spacing: -0.03em; line-height: 1; }
+  .quote-unit { font-size: 14px; color: var(--tx2); }
+  .quote-meta { font-size: 12.5px; color: var(--tx3); }
+  .quote-loading { font-size: 14px; color: var(--ac); }
+  .quote-error-title { font-size: 14px; font-weight: 700; color: var(--err); }
+  .quote-error-msg { font-size: 13px; color: var(--err); max-width: 48ch; text-wrap: pretty; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner { width: 20px; height: 20px; border: 2.5px solid var(--acBd); border-top-color: var(--ac); border-radius: 50%; animation: spin 0.7s linear infinite; }
+
+  /* code blocks */
+  .code-block { background: var(--card2); border: 1px solid var(--bd); border-radius: 10px; overflow: hidden; margin: 0; }
+  .code-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px 7px; border-bottom: 1px solid var(--bd2); }
+  .code-label { font-family: var(--mono); font-size: 11px; color: var(--tx3); letter-spacing: 0.07em; }
+  .copy-btn { font-size: 12px; padding: 3px 11px; border: 1px solid var(--bd); border-radius: 5px; background: var(--card); color: var(--tx2); cursor: pointer; font-family: var(--mono); transition: background 0.12s; }
+  .copy-btn:hover { background: var(--hov); }
+  .copy-btn.copied { border-color: var(--ok); color: var(--ok); }
+  .code-block pre { margin: 0; padding: 16px 18px; font-family: var(--mono); font-size: 13px; line-height: 1.7; overflow-x: auto; color: var(--tx); white-space: pre; }
+  .codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .codes-grid { grid-template-columns: 1fr; } }
+
+  .footer { border-top: 1px solid var(--bd2); margin-top: 60px; }
+  .footer-in { max-width: 900px; margin: 0 auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+  .foot-links a { color: var(--tx2); text-decoration: none; }
+  .foot-links a:hover { color: var(--tx); }
+  .foot-note { margin: 0; font-size: 12.5px; color: var(--tx4); }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 28px; }
+    .wrap { padding: 0 18px; }
+    .topbar-in { padding: 12px 18px; }
+    .footer-in { padding: 20px 18px; }
+    .quote-price { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/">
+      <span class="brand-glyph">x</span>
+      <span class="brand-name">x402-video.com</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/seedance/">Seedance</a>
+      <a href="/kling/">Kling</a>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <section class="hero" style="padding-bottom: 0;">
+      <div class="badge"><span class="dot-ok"></span> Live quotes · exact 402 pricing</div>
+      <h1>Custom video pricing calculator</h1>
+      <p class="lead">Pick your parameters and get the exact USDC price — fetched live from the <code style="font-family: var(--mono);">402</code> API response, not estimated locally. This is precisely what you'd pay per call.</p>
+    </section>
+
+    <!-- calculator -->
+    <section id="calculator">
+      <div class="calc-card">
+
+        <!-- model -->
+        <div class="field">
+          <label>Model</label>
+          <div class="model-toggle">
+            <button id="btn-fast" class="active" onclick="setModel('fast')">seedance-fast</button>
+            <button id="btn-std" onclick="setModel('std')">seedance</button>
+          </div>
+          <span class="hint" id="model-hint">Seedance 2.0 Fast · 480p / 720p</span>
+        </div>
+
+        <!-- resolution -->
+        <div class="field">
+          <label>Resolution</label>
+          <div class="res-pills">
+            <button id="res-480p" onclick="setResolution('480p')">480p</button>
+            <button id="res-720p" class="active" onclick="setResolution('720p')">720p</button>
+            <button id="res-1080p" disabled onclick="setResolution('1080p')">1080p</button>
+          </div>
+          <span class="hint" id="res-hint">1080p requires seedance (not fast)</span>
+        </div>
+
+        <!-- duration -->
+        <div class="field">
+          <label>Duration</label>
+          <div class="slider-row">
+            <input type="range" id="dur-slider" min="4" max="15" value="8" step="1" oninput="onDurationInput()" />
+            <span class="slider-val" id="dur-label">8s</span>
+          </div>
+          <span class="hint">4 – 15 seconds</span>
+        </div>
+
+        <!-- ratio -->
+        <div class="field">
+          <label>Aspect ratio</label>
+          <select id="ratio-select" onchange="scheduleQuote()">
+            <option value="adaptive" selected>adaptive (default)</option>
+            <option value="16:9">16:9 — landscape</option>
+            <option value="4:3">4:3 — standard</option>
+            <option value="1:1">1:1 — square</option>
+            <option value="3:4">3:4 — portrait</option>
+            <option value="9:16">9:16 — vertical</option>
+            <option value="21:9">21:9 — ultrawide</option>
+          </select>
+          <span class="hint">Ratio does not affect price</span>
+        </div>
+
+        <!-- audio -->
+        <div class="field" style="justify-content: center;">
+          <label>Audio</label>
+          <label class="check-row">
+            <input type="checkbox" id="audio-check" onchange="scheduleQuote()" />
+            <span class="check-label">Generate audio</span>
+            <span class="check-tag">×1.5 cost</span>
+          </label>
+          <span class="hint">AI-generated background audio</span>
+        </div>
+
+        <!-- quote display -->
+        <div class="quote-area">
+          <div class="quote-box" id="quote-box">
+            <div class="quote-loading">Adjust parameters to fetch a live quote…</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- code snippets -->
+    <section id="code-examples">
+      <h2>Ready-to-use code</h2>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Reflects the current parameter selection. The URL is hardcoded to <code style="font-family: var(--mono);">https://api.x402-video.com</code>.</p>
+      <div class="codes-grid">
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">CURL</span>
+            <button class="copy-btn" id="copy-curl" onclick="copyCode('curl')">Copy</button>
+          </div>
+          <pre id="code-curl">—</pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">TYPESCRIPT — @x402/fetch</span>
+            <button class="copy-btn" id="copy-ts" onclick="copyCode('ts')">Copy</button>
+          </div>
+          <pre id="code-ts">—</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- how it works -->
+    <section id="how">
+      <h2>How the live quote works</h2>
+      <div style="background: var(--card); border: 1px solid var(--bd); border-radius: 12px; padding: 22px 26px;">
+        <p style="margin: 0 0 12px; font-size: 14px; color: var(--tx2);">Every time you change a parameter, this page sends a real <code style="font-family: var(--mono);">POST</code> to <code style="font-family: var(--mono);">https://api.x402-video.com/generate/{model}/custom</code> <em>without</em> a payment header. The server responds with HTTP 402 and a JSON body that includes the per-second rate for your chosen resolution. The price you see is computed from that live response — not a static table.</p>
+        <p style="margin: 0; font-size: 14px; color: var(--tx2);">When you actually call the API with payment, the 402 quote will match exactly. You sign the EIP-3009 USDC authorization for precisely that amount — no overcharging, no rounding surprises.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="foot-links">
+      <a href="/">&#8592; Home</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="/kling/">Kling API</a>
+      <a href="https://github.com/x402-video">GitHub &#8599;</a>
+      <a href="https://api.x402-video.com/llms.txt">/llms.txt</a>
+      <a href="https://docs.x402.org">docs.x402.org &#8599;</a>
+    </div>
+    <p class="foot-note">x402-video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+// ── state ──────────────────────────────────────────────────────────────────
+let model = 'fast';        // 'fast' | 'std'
+let resolution = '720p';
+let duration = 8;
+let ratio = 'adaptive';
+let generateAudio = false;
+
+let debounceTimer = null;
+let lastQuote = null;       // { priceUsd, ratePerSec, resolution }
+
+// ── model toggle ───────────────────────────────────────────────────────────
+function setModel(m) {
+  model = m;
+  document.getElementById('btn-fast').classList.toggle('active', m === 'fast');
+  document.getElementById('btn-std').classList.toggle('active', m === 'std');
+  document.getElementById('model-hint').textContent =
+    m === 'fast' ? 'Seedance 2.0 Fast · 480p / 720p' : 'Seedance 2.0 · 480p / 720p / 1080p';
+
+  const btn1080 = document.getElementById('res-1080p');
+  btn1080.disabled = (m === 'fast');
+  if (m === 'fast' && resolution === '1080p') setResolution('720p');
+  else scheduleQuote();
+}
+
+// ── resolution ─────────────────────────────────────────────────────────────
+function setResolution(r) {
+  resolution = r;
+  ['480p','720p','1080p'].forEach(res => {
+    document.getElementById('res-' + res).classList.toggle('active', res === r);
+  });
+  scheduleQuote();
+}
+
+// ── duration ───────────────────────────────────────────────────────────────
+function onDurationInput() {
+  duration = parseInt(document.getElementById('dur-slider').value, 10);
+  document.getElementById('dur-label').textContent = duration + 's';
+  scheduleQuote();
+}
+
+// ── debounced quote fetch ──────────────────────────────────────────────────
+function scheduleQuote() {
+  ratio = document.getElementById('ratio-select').value;
+  generateAudio = document.getElementById('audio-check').checked;
+  clearTimeout(debounceTimer);
+  showLoading();
+  debounceTimer = setTimeout(fetchQuote, 500);
+}
+
+function showLoading() {
+  const box = document.getElementById('quote-box');
+  box.className = 'quote-box loading';
+  box.innerHTML = '<div class="spinner"></div><div class="quote-loading">Fetching live quote…</div>';
+}
+
+async function fetchQuote() {
+  const endpoint = model === 'fast' ? 'seedance-fast' : 'seedance';
+  const url = 'https://api.x402-video.com/generate/' + endpoint + '/custom';
+  const body = {
+    prompt: 'pricing probe',
+    duration: duration,
+    resolution: resolution,
+    ratio: ratio !== 'adaptive' ? ratio : undefined,
+    generate_audio: generateAudio || undefined,
+  };
+  // strip undefined keys
+  Object.keys(body).forEach(k => body[k] === undefined && delete body[k]);
+
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    const data = await resp.json();
+
+    if (resp.status === 402 && data.pricing) {
+      const ratePerSec = data.pricing.retail_usd_per_second[resolution];
+      const audioMult = generateAudio ? (data.pricing.audio_surcharge_multiplier || 1.5) : 1;
+      const fixed = data.pricing.fixed_fee_usd || 0;
+      const raw = ratePerSec * duration * audioMult + fixed;
+      // round up to nearest cent (as the formula states)
+      const priceUsd = Math.ceil(raw * 100) / 100;
+      lastQuote = { priceUsd, ratePerSec, resolution, sku: data.sku };
+      showQuote(priceUsd, ratePerSec, data.sku);
+    } else if (data.error) {
+      showError('Validation error', data.error);
+    } else {
+      showError('Unexpected response', 'HTTP ' + resp.status + ': ' + JSON.stringify(data).slice(0, 120));
+    }
+  } catch (err) {
+    showError('Network error', err.message || String(err));
+  }
+
+  updateCode();
+}
+
+function showQuote(price, rate, sku) {
+  const box = document.getElementById('quote-box');
+  box.className = 'quote-box ok';
+  const audioNote = generateAudio ? ' (incl. ×1.5 audio surcharge)' : '';
+  box.innerHTML =
+    '<div class="quote-price">$' + price.toFixed(2) + '</div>' +
+    '<div class="quote-unit">USDC / call' + audioNote + '</div>' +
+    '<div class="quote-meta">exact quote from the live 402 response — this is what you\'d pay &nbsp;·&nbsp; ' +
+    '$' + rate.toFixed(4) + '/sec @ ' + resolution + ' &nbsp;·&nbsp; SKU: ' + sku + '</div>';
+}
+
+function showError(title, msg) {
+  const box = document.getElementById('quote-box');
+  box.className = 'quote-box error';
+  box.innerHTML =
+    '<div class="quote-error-title">' + escHtml(title) + '</div>' +
+    '<div class="quote-error-msg">' + escHtml(msg) + '</div>';
+  lastQuote = null;
+  updateCode();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── code generation ────────────────────────────────────────────────────────
+function buildBodyObj() {
+  const b = { prompt: 'YOUR PROMPT HERE', duration, resolution };
+  if (ratio !== 'adaptive') b.ratio = ratio;
+  if (generateAudio) b.generate_audio = true;
+  return b;
+}
+
+function updateCode() {
+  const endpoint = model === 'fast' ? 'seedance-fast' : 'seedance';
+  const b = buildBodyObj();
+  const bodyStr = JSON.stringify(b, null, 2);
+
+  // curl
+  const curlLines = [
+    "curl -X POST https://api.x402-video.com/generate/" + endpoint + "/custom \\",
+    "  -H 'Content-Type: application/json' \\",
+    "  -H 'X-PAYMENT: $PAYMENT_HEADER' \\",
+    "  -d '" + JSON.stringify(b) + "'",
+  ];
+  document.getElementById('code-curl').textContent = curlLines.join('\n');
+
+  // typescript
+  const tsParams = Object.entries(b).map(([k,v]) => '    ' + k + ': ' + JSON.stringify(v) + ',').join('\n');
+  const tsCode = [
+    'import { wrapFetchWithPayment, x402Client } from "@x402/fetch";',
+    'import { ExactEvmScheme, toClientEvmSigner } from "@x402/evm";',
+    'import { privateKeyToAccount } from "viem/accounts";',
+    '',
+    'const account = privateKeyToAccount(process.env.BUYER_PRIVATE_KEY as `0x${string}`);',
+    'const signer = toClientEvmSigner(account);',
+    'const client = new x402Client().register("eip155:*", new ExactEvmScheme(signer));',
+    'const fetchPay = wrapFetchWithPayment(fetch, client);',
+    '',
+    'const res = await fetchPay(',
+    '  "https://api.x402-video.com/generate/' + endpoint + '/custom",',
+    '  {',
+    '    method: "POST",',
+    '    headers: { "Content-Type": "application/json" },',
+    '    body: JSON.stringify({',
+    tsParams,
+    '    }),',
+    '  }',
+    ');',
+    '',
+    'const { job_id } = await res.json();',
+    '// Poll GET /jobs/:id (free) until status === "succeeded"',
+  ].join('\n');
+  document.getElementById('code-ts').textContent = tsCode;
+}
+
+// ── copy ───────────────────────────────────────────────────────────────────
+function copyCode(which) {
+  const id = which === 'curl' ? 'code-curl' : 'code-ts';
+  const btnId = which === 'curl' ? 'copy-curl' : 'copy-ts';
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+// ── init ───────────────────────────────────────────────────────────────────
+updateCode();
+scheduleQuote();
+</script>
+</body>
+</html>

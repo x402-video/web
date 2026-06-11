@@ -91,6 +91,8 @@
   .dot.bad { background: var(--bad); }
   .hero-title { margin: 0; font-size: 44px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
   .hero-sub { margin: 0; color: var(--tx2); font-size: 16.5px; max-width: 48ch; text-wrap: pretty; }
+  .hero-endpoint { font-family: var(--mono); font-size: 13px; color: var(--tx2); }
+  .hero-endpoint code { user-select: all; }
   .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
   .btn-primary { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 8px; padding: 10px 20px; font-size: 15px; white-space: nowrap; }
   .btn-primary:hover { opacity: 0.9; }
@@ -315,9 +317,10 @@
   <!-- hero -->
   <section class="hero">
     <div class="hero-left">
-      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">pay-per-call · USDC on Base · no accounts</span></div>
-      <h1 class="hero-title" data-i18n="heroTitle">AI video generation, paid per call.</h1>
-      <p class="hero-sub" data-i18n="heroSub">No accounts, no API keys, no credit cards. Your client gets an HTTP 402 quote, pays USDC on Base, and the video generates.</p>
+      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $0.45/call · USDC on Base · no signup</span></div>
+      <h1 class="hero-title" data-i18n="heroTitle">Your AI agent pays for video. No signup, no API key.</h1>
+      <p class="hero-sub" data-i18n="heroSub">Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.</p>
+      <div class="hero-endpoint"><code>POST https://api.x402-video.com/generate/seedance-fast/5s-720p</code> · $0.45/call</div>
       <div class="hero-ctas">
         <a class="btn-primary" href="#buy" data-i18n="ctaCode">See the code</a>
         <a class="btn-outline" href="#pricing" data-i18n="navPricing">Pricing</a>
@@ -448,6 +451,9 @@
           <a class="mono" id="foot-llms" href="#">/llms.txt</a>
           <a class="mono" id="foot-status" href="#">/status (live JSON)</a>
           <a href="https://docs.x402.org">docs.x402.org ↗</a>
+          <a href="/seedance/">Seedance API</a>
+          <a href="/kling/">Kling API</a>
+          <a href="/custom/">Pricing calculator</a>
         </div>
         <div class="foot-lang" id="foot-lang" role="group" aria-label="Language">
           <span class="foot-lang-label" data-i18n="langLabel">Language</span>
@@ -490,9 +496,9 @@ const MODEL_CARDS = [
 const I18N = {
   en: {
     navPricing: "Pricing", navPolicy: "Policy",
-    badge: "pay-per-call · USDC on Base · no accounts",
-    heroTitle: "AI video generation, paid per call.",
-    heroSub: "No accounts, no API keys, no credit cards. Your client gets an HTTP 402 quote, pays USDC on Base, and the video generates.",
+    badge: "from $0.45/call · USDC on Base · no signup",
+    heroTitle: "Your AI agent pays for video. No signup, no API key.",
+    heroSub: "Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.",
     ctaCode: "See the code", ctaWhat: "What is x402? ↗",
     agents: "For agents:",
     featLabel: "FEATURED MODEL", perCall: "/ call", perCallRef: "/ call (ref)",
@@ -553,9 +559,9 @@ const I18N = {
   },
   zh: {
     navPricing: "價格", navPolicy: "政策",
-    badge: "按次付費 · Base 上的 USDC · 免帳號",
-    heroTitle: "AI 影片生成,一次一付。",
-    heroSub: "不用開帳號、不用 API key、不用信用卡。你的程式收到 HTTP 402 報價,用 Base 上的 USDC 付款,影片就開始生成。",
+    badge: "每次 $0.45 起 · Base 上的 USDC · 免註冊",
+    heroTitle: "讓你的 AI agent 直接付款生成影片。免註冊、免 API key。",
+    heroSub: "接上 @x402/fetch,402 → 付款 → 重試全自動:付款前先拿到精確 USDC 報價,在 Base 上結算,5 分鐘內出第一支影片。",
     ctaCode: "看程式碼", ctaWhat: "什麼是 x402?↗",
     agents: "給 agent:",
     featLabel: "主打模型", perCall: "/ 次", perCallRef: "/ 次(參考)",
@@ -625,7 +631,7 @@ const fetchPay = wrapFetchWithPayment(
   new x402Client().register("eip155:*", new ExactEvmScheme(signer)),
 );
 
-const res = await fetchPay("${GATEWAY}/generate/seedance/5s-720p", {
+const res = await fetchPay("https://api.x402-video.com/generate/seedance/5s-720p", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -636,7 +642,7 @@ const res = await fetchPay("${GATEWAY}/generate/seedance/5s-720p", {
 const { job_id } = await res.json();
 // poll GET /jobs/:id (free) until "succeeded" → download video_url within 24h`;
 
-const CURL_CODE = `$ curl -i -X POST ${GATEWAY}/generate/seedance/5s-720p \\
+const CURL_CODE = `$ curl -i -X POST https://api.x402-video.com/generate/seedance/5s-720p \\
     -H 'content-type: application/json' \\
     -d '{"prompt":"aerial coastline at dawn"}'
 
