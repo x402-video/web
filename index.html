@@ -232,6 +232,7 @@
   .ga-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
   .soon-pill { font-size: 12px; border: 1px solid var(--bd); color: var(--tx2); border-radius: 999px; padding: 2px 11px; white-space: nowrap; }
   .sample-card { border: 1px solid var(--bd2); border-radius: 12px; overflow: hidden; background: var(--card); }
+  .sample-video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--card2); }
   .sample-prompt { padding: 11px 14px; font-family: var(--mono); font-size: 12px; color: var(--tx3); }
   .ga-note { margin: 12px 0 0; font-size: 13px; color: var(--tx3); }
 
@@ -416,10 +417,9 @@
   <section class="section">
     <div class="ga-head">
       <h2 class="sec-title" data-i18n="gaTitle">Sample outputs</h2>
-      <span class="soon-pill" data-i18n="gaSoon">Coming soon</span>
     </div>
     <div class="grid3" id="samples-grid"></div>
-    <p class="ga-note" data-i18n="gaNote">Every sample shown here will be a real, unedited generation from this gateway — posted after launch.</p>
+    <p class="ga-note" data-i18n="gaNote">Every sample is a real, unedited generation from this gateway — bought through the same 402 flow you'd use.</p>
   </section>
 
   <!-- content policy -->
@@ -537,7 +537,7 @@ const I18N = {
     ],
     copy: "copy", copied: "copied ✓",
     gaTitle: "Sample outputs", gaSoon: "Coming soon",
-    gaNote: "Every sample shown here will be a real, unedited generation from this gateway — posted after launch.",
+    gaNote: "Every sample is a real, unedited generation from this gateway — bought through the same 402 flow you'd use.",
     poTitle: "Content policy — screened before payment",
     poRed: "Refused, always: minors; real-person likeness or deepfakes; sexual content; graphic violence.",
     poNote: "Prompts are screened before the 402 quote is issued. A rejected request is never charged — not partially, not ever.",
@@ -600,7 +600,7 @@ const I18N = {
     ],
     copy: "複製", copied: "已複製 ✓",
     gaTitle: "樣片展示", gaSoon: "即將推出",
-    gaNote: "此處每支樣片都會是本 gateway 真實、未經修飾的生成結果 — 上線後發布。",
+    gaNote: "此處每支樣片都是本 gateway 真實、未經修飾的生成結果 — 用和你一樣的 402 流程買來的。",
     poTitle: "內容政策 — 付款前審查",
     poRed: "一律拒絕:未成年人;真人肖像或 deepfake;色情內容;血腥暴力。",
     poNote: "Prompt 在發出 402 報價前就先審查。被拒絕的請求永遠不會被收費 — 一毛都不會。",
@@ -973,14 +973,33 @@ function copyPayload() {
 }
 
 /* ---------- samples ---------- */
-const SAMPLE_PROMPTS = ["prompt: aerial coastline at dawn", "prompt: macro shot of ink in water", "prompt: timelapse of a city at night"];
+const SAMPLES = [
+  {
+    src: "assets/samples/golden-retriever-autumn-leaves.mp4",
+    prompt: "golden retriever puppy chasing autumn leaves in a park, cinematic morning light",
+    sku: "seedance-fast-5s-720p",
+  },
+  {
+    src: "assets/samples/tokyo-rain-neon.mp4",
+    prompt: "neon-lit tokyo street at night in the rain, reflections on wet asphalt, cinematic slow push-in",
+    sku: "seedance-fast-5s-720p",
+  },
+];
+const SAMPLE_SLOTS = 3;
 function renderSamples() {
-  $("samples-grid").innerHTML = SAMPLE_PROMPTS.map((p) =>
-    `<div class="sample-card">
+  const cards = SAMPLES.map(
+    (s) => `<div class="sample-card">
+      <video class="sample-video" src="${esc(s.src)}" autoplay loop muted playsinline preload="metadata" aria-label="${esc(s.prompt)}"></video>
+      <div class="sample-prompt">prompt: ${esc(s.prompt)} <span class="model-per">· ${esc(s.sku)}</span></div>
+    </div>`,
+  );
+  for (let i = SAMPLES.length; i < SAMPLE_SLOTS; i++) {
+    cards.push(`<div class="sample-card">
       <div class="media-slot media-169"><span class="slot-cap">${esc(t().slotSoon)}</span></div>
-      <div class="sample-prompt">${esc(p)}</div>
-    </div>`
-  ).join("");
+      <div class="sample-prompt"></div>
+    </div>`);
+  }
+  $("samples-grid").innerHTML = cards.join("");
 }
 
 /* ---------- faq ---------- */
