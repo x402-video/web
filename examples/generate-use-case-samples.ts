@@ -12,7 +12,7 @@
  *
  * Slugs: ad-creative | product-demo | social-shorts | blog-broll | previz | agent-commerce
  *
- * Cost: ~$0.45–$4.62 per clip depending on endpoint. See prices below.
+ * Cost: ~$0.91–$9.00 per clip depending on endpoint. See prices below.
  * Clips land in  web/assets/samples/use-case-<slug>.mp4  (paths match the <video> tags on the page).
  */
 
@@ -46,7 +46,7 @@ const USE_CASES: UseCase[] = [
       prompt:
         "golden sneaker rotating on a clean white pedestal, dramatic product lighting, slow 360 spin, luxury feel, 5 seconds",
     },
-    estimatedCost: "~$0.45",
+    estimatedCost: "~$0.91",
   },
   {
     slug: "product-demo",
@@ -56,7 +56,7 @@ const USE_CASES: UseCase[] = [
       prompt:
         "golden retriever bounding joyfully through a sunlit park covered in autumn leaves, slow motion, warm bokeh, cinematic",
     },
-    estimatedCost: "~$0.56",
+    estimatedCost: "~$0.96",
   },
   {
     slug: "social-shorts",
@@ -69,7 +69,7 @@ const USE_CASES: UseCase[] = [
       resolution: "720p",
       ratio: "9:16",
     },
-    estimatedCost: "~$0.45",
+    estimatedCost: "~$0.91",
   },
   {
     slug: "blog-broll",
@@ -79,7 +79,7 @@ const USE_CASES: UseCase[] = [
       prompt:
         "rain-soaked Tokyo intersection at dusk, neon signs reflected on wet asphalt, pedestrians with umbrellas, cinematic wide angle, moody atmosphere",
     },
-    estimatedCost: "~$0.45",
+    estimatedCost: "~$0.91",
   },
   {
     slug: "previz",
@@ -91,7 +91,7 @@ const USE_CASES: UseCase[] = [
       duration: 10,
       resolution: "1080p",
     },
-    estimatedCost: "$0.27–$4.62",
+    estimatedCost: "$0.45–$9.00",
   },
   {
     slug: "agent-commerce",
@@ -101,7 +101,7 @@ const USE_CASES: UseCase[] = [
       prompt:
         "smooth aerial reveal of Santorini whitewashed village at golden hour, camera slowly rising to show the caldera and sea, dreamy travel vibe",
     },
-    estimatedCost: "~$0.45",
+    estimatedCost: "~$0.91",
   },
 ];
 

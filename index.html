@@ -28,8 +28,8 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": 0.45,
-    "highPrice": 0.56,
+    "lowPrice": 0.91,
+    "highPrice": 0.96,
     "offerCount": 2
   }
 }
@@ -317,10 +317,10 @@
   <!-- hero -->
   <section class="hero">
     <div class="hero-left">
-      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $0.45/call · USDC on Base · no signup</span></div>
+      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $0.91/call · USDC on Base · no signup</span></div>
       <h1 class="hero-title" data-i18n="heroTitle">Your AI agent pays for video. No signup, no API key.</h1>
       <p class="hero-sub" data-i18n="heroSub">Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.</p>
-      <div class="hero-endpoint"><code>POST https://api.x402-video.com/generate/seedance-fast/5s-720p</code> · $0.45/call</div>
+      <div class="hero-endpoint"><code>POST https://api.x402-video.com/generate/seedance-fast/5s-720p</code> · $0.91/call</div>
       <div class="hero-ctas">
         <a class="btn-primary" href="#buy" data-i18n="ctaCode">See the code</a>
         <a class="btn-outline" href="#pricing" data-i18n="navPricing">Pricing</a>
@@ -478,8 +478,8 @@ const GATEWAY = apiParam && /^https?:\/\//i.test(apiParam)
   : "https://api.x402-video.com";
 
 const FALLBACK_SKUS = [
-  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 0.56, duration_seconds: 5, resolution: "720p" },
-  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 0.45, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 0.96, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 0.91, duration_seconds: 5, resolution: "720p" },
 ];
 
 /* 2 tiers × 3 modalities — the catalog grid. Only text-to-video is sold today
@@ -497,7 +497,7 @@ const MODEL_CARDS = [
 const I18N = {
   en: {
     navPricing: "Pricing", navPolicy: "Policy",
-    badge: "from $0.45/call · USDC on Base · no signup",
+    badge: "from $0.91/call · USDC on Base · no signup",
     heroTitle: "Your AI agent pays for video. No signup, no API key.",
     heroSub: "Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.",
     ctaCode: "See the code", ctaWhat: "What is x402? ↗",
@@ -510,7 +510,7 @@ const I18N = {
     obSkip: "Coming from x402scan or already on Base? Skip to pricing →",
     ob: [
       ["Your wallet is your account", "No signup. Any EVM wallet works — Coinbase Wallet takes about two minutes to set up."],
-      ["USDC is digital dollars", "1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $0.56."],
+      ["USDC is digital dollars", "1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $0.96."],
       ["Payment is automatic", "@x402/fetch handles 402 → pay → retry in one line of setup. You never touch the chain by hand."],
     ],
     stTitle: "Live gateway stats", stFrom: "Never cached, never edited. From",
@@ -560,7 +560,7 @@ const I18N = {
   },
   zh: {
     navPricing: "價格", navPolicy: "政策",
-    badge: "每次 $0.45 起 · Base 上的 USDC · 免註冊",
+    badge: "每次 $0.91 起 · Base 上的 USDC · 免註冊",
     heroTitle: "讓你的 AI agent 直接付款生成影片。免註冊、免 API key。",
     heroSub: "接上 @x402/fetch,402 → 付款 → 重試全自動:付款前先拿到精確 USDC 報價,在 Base 上結算,5 分鐘內出第一支影片。",
     ctaCode: "看程式碼", ctaWhat: "什麼是 x402?↗",
@@ -573,7 +573,7 @@ const I18N = {
     obSkip: "從 x402scan 來、或已經在用 Base?直接看價格 →",
     ob: [
       ["錢包就是你的帳號", "不用註冊。任何 EVM 錢包都可以 — Coinbase Wallet 約兩分鐘就能設定好。"],
-      ["USDC 就是數位美元", "1 USDC = 1 美元,跑在 Coinbase 的 Base 網路上。一支 5 秒影片約 $0.56。"],
+      ["USDC 就是數位美元", "1 USDC = 1 美元,跑在 Coinbase 的 Base 網路上。一支 5 秒影片約 $0.96。"],
       ["付款全自動", "@x402/fetch 一行設定就處理 402 → 付款 → 重試。你完全不用手動碰鏈。"],
     ],
     stTitle: "即時 gateway 統計", stFrom: "永不快取、永不修飾。來自",
@@ -703,13 +703,13 @@ const TRACE = [
   { t: '  {"prompt":"aerial coastline at dawn"}', c: "c-tx3" },
   { t: "← HTTP/1.1 402 Payment Required", c: "c-warn" },
   { t: "  accepts: USDC on Base · scheme exact (eip-3009)", c: "c-tx3" },
-  { t: "  amount: $0.56", c: "c-warn" },
+  { t: "  amount: $0.96", c: "c-warn" },
   { t: "  signing payment authorization… 0x7f3a…c21e", c: "c-tx3" },
   { t: "→ POST /generate/seedance/5s-720p · x-payment: signed", c: "c-tx" },
   { t: "← HTTP/1.1 200 OK · job_9f2e queued", c: "c-ac" },
   { t: "  GET /jobs/job_9f2e … generating", c: "c-tx3" },
   { t: "← status: succeeded · video_url ready (expires 24h)", c: "c-ac" },
-  { t: "✓ delivered — 5s 720p MP4 · total cost $0.56", c: "c-ok" },
+  { t: "✓ delivered — 5s 720p MP4 · total cost $0.96", c: "c-ok" },
 ];
 const STAGE_DESCS = ["POST /generate/…", "price + pay-to address", "auto via @x402/fetch", "signed URL · 24h"];
 
