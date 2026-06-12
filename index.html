@@ -451,6 +451,7 @@
           <a class="mono" id="foot-llms" href="#">/llms.txt</a>
           <a class="mono" id="foot-status" href="#">/status (live JSON)</a>
           <a href="https://docs.x402.org">docs.x402.org ↗</a>
+          <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
           <a href="/kling/">Kling API</a>
           <a href="/custom/">Pricing calculator</a>
@@ -463,7 +464,7 @@
           <button data-lang="zh">繁體中文</button>
         </div>
       </div>
-      <p class="foot-note" data-i18n="footNote">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; testnet quotes settle on Base Sepolia. Signed video URLs expire ~24h after delivery.</p>
+      <p class="foot-note" data-i18n="footNote">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base mainnet; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
     </div>
   </footer>
 
@@ -553,9 +554,9 @@ const I18N = {
       ["Do I need an account?", "No. Your wallet is your identity. The first response is a 402 quote; pay it and the same request succeeds."],
       ["How long are videos stored?", "You get a signed URL valid for about 24 hours. Download promptly — expired URLs are not reissued."],
       ["What if generation fails?", "You are not charged before settlement succeeds. If the upstream model fails after payment, the failure policy published in GET / applies — machine-readable, and honored."],
-      ["Which chain and currency?", "USDC on Base. Testnet runs on Base Sepolia with the same contract."],
+      ["Which chain and currency?", "USDC on Base mainnet. Payments are gasless for the buyer — you only need USDC, no ETH."],
     ],
-    footNote: "x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; testnet quotes settle on Base Sepolia. Signed video URLs expire ~24h after delivery.",
+    footNote: "x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base mainnet; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.",
     langLabel: "Language",
   },
   zh: {
@@ -616,9 +617,9 @@ const I18N = {
       ["需要帳號嗎?", "不用。錢包就是你的身分。第一次回應是 402 報價,付款後同一個請求就會成功。"],
       ["影片存多久?", "你會拿到約 24 小時有效的簽名連結。請儘快下載 — 過期不補發。"],
       ["生成失敗怎麼辦?", "結算成功前不會收費。若付款後上游模型失敗,依 GET / 公布的失敗政策處理 — 機器可讀、確實執行。"],
-      ["用哪條鏈、什麼幣?", "Base 上的 USDC。Testnet 跑在 Base Sepolia,合約相同。"],
+      ["用哪條鏈、什麼幣?", "Base 主網上的 USDC。買方付款免 gas — 只需要 USDC,不需要 ETH。"],
     ],
-    footNote: "x402video.com 是獨立 gateway,與 ByteDance 或任何模型廠商無關。使用 Base 上的 USDC;testnet 在 Base Sepolia 結算。簽名影片連結交付後約 24 小時過期。",
+    footNote: "x402video.com 是獨立 gateway,與 ByteDance 或任何模型廠商無關。使用 Base 主網上的 USDC,買方付款免 gas。簽名影片連結交付後約 24 小時過期。",
     langLabel: "語言",
   },
 };
