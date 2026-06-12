@@ -4,26 +4,26 @@
 > HTTP 402 -> pay USDC on Base (eip155:8453) -> video generates.
 > Any x402 client works; `@x402/fetch` handles 402 -> pay -> retry automatically.
 
-## Endpoints (live quotes at GET https://api.x402-video.com/)
+## Endpoints (live quotes at GET https://api.x402video.com/)
 
 | Endpoint | Output | Price |
 |---|---|---|
-| POST https://api.x402-video.com/generate/seedance-fast/5s-720p | 5s 720p MP4 | ~$0.45 / call |
-| POST https://api.x402-video.com/generate/seedance/5s-720p | 5s 720p MP4 (highest quality) | ~$0.56 / call |
-| POST https://api.x402-video.com/generate/seedance-fast/custom | 4-15s, 480p/720p, optional audio | $0.13-$1.49 |
-| POST https://api.x402-video.com/generate/seedance/custom | 4-15s, up to 1080p, optional audio | $0.27-$4.62 |
+| POST https://api.x402video.com/generate/seedance-fast/5s-720p | 5s 720p MP4 | ~$0.45 / call |
+| POST https://api.x402video.com/generate/seedance/5s-720p | 5s 720p MP4 (highest quality) | ~$0.56 / call |
+| POST https://api.x402video.com/generate/seedance-fast/custom | 4-15s, 480p/720p, optional audio | $0.13-$1.49 |
+| POST https://api.x402video.com/generate/seedance/custom | 4-15s, up to 1080p, optional audio | $0.27-$4.62 |
 
 The 402 response always quotes the exact USDC amount for your request before you pay.
 Custom body fields: { prompt, duration 4-15, resolution "480p"|"720p"|"1080p", ratio, seed, generate_audio, camera_fixed }.
 
 ## Quickstart (raw curl — see the 402 flow)
 
-curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+curl -i -X POST https://api.x402video.com/generate/seedance-fast/5s-720p \
   -H 'content-type: application/json' \
   -d '{"prompt":"a dog on the moon"}'
 # -> HTTP 402 with exact USDC payment requirements (scheme "exact", USDC on Base)
 # -> resend with X-PAYMENT header (any x402 client signs this for you) -> 200 { job_id, status_url }
-# -> GET https://api.x402-video.com/jobs/:id (free) until status "succeeded"
+# -> GET https://api.x402video.com/jobs/:id (free) until status "succeeded"
 # -> download video_url within 24h (link expires)
 
 Payments are gasless for the buyer (EIP-3009 signature; the facilitator submits the tx).
@@ -32,11 +32,11 @@ and capacity rejections (503) are never charged.
 
 ## Machine-readable resources
 
-- https://api.x402-video.com/llms.txt — canonical agent-readable storefront (live SKUs/prices)
-- https://api.x402-video.com/ — storefront (JSON)
-- https://api.x402-video.com/openapi.json — OpenAPI spec with x-payment-info pricing
-- https://api.x402-video.com/.well-known/x402 — x402 discovery document
-- https://api.x402-video.com/status — live success rate, p50 generation time, delivered count
+- https://api.x402video.com/llms.txt — canonical agent-readable storefront (live SKUs/prices)
+- https://api.x402video.com/ — storefront (JSON)
+- https://api.x402video.com/openapi.json — OpenAPI spec with x-payment-info pricing
+- https://api.x402video.com/.well-known/x402 — x402 discovery document
+- https://api.x402video.com/status — live success rate, p50 generation time, delivered count
 
 ## What people build with this
 
@@ -47,10 +47,10 @@ and capacity rejections (503) are never charged.
 - Game / film previz & storyboard prototyping → POST /generate/seedance/custom (up to 15s, 1080p, $0.27–$4.62)
 - Agent-to-agent commerce / autonomous pipeline purchasing → any endpoint; x402 lets agents pay with a USDC wallet, no human OAuth needed
 
-Full use-case page: https://x402-video.com/use-cases/
+Full use-case page: https://x402video.com/use-cases/
 
 ## Humans
 
-- https://x402-video.com — landing page
+- https://x402video.com — landing page
 - https://github.com/x402-video/web/blob/main/GETTING-STARTED.md — zero to first video in 5 minutes
 - https://github.com/x402-video — source

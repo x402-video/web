@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Custom Video Generation Pricing Calculator — Seedance API | x402-video.com</title>
+<title>Custom Video Generation Pricing Calculator — Seedance API | x402video.com</title>
 <meta name="description" content="Estimate your exact cost for custom Seedance video generation. Adjust duration, resolution, ratio, and audio — see live USDC pricing from the real 402 API response before paying a cent." />
-<link rel="canonical" href="https://x402-video.com/custom/" />
+<link rel="canonical" href="https://x402video.com/custom/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="x402-video.com" />
-<meta property="og:title" content="Custom Video Pricing Calculator — Seedance API | x402-video.com" />
+<meta property="og:site_name" content="x402video.com" />
+<meta property="og:title" content="Custom Video Pricing Calculator — Seedance API | x402video.com" />
 <meta property="og:description" content="Interactive pricing calculator for Seedance custom video generation. Live quotes from the 402 API — exactly what you'd pay per call." />
-<meta property="og:url" content="https://x402-video.com/custom/" />
-<meta property="og:image" content="https://x402-video.com/assets/og.png" />
+<meta property="og:url" content="https://x402video.com/custom/" />
+<meta property="og:image" content="https://x402video.com/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -131,7 +131,7 @@
   <div class="topbar-in">
     <a class="brand" href="/">
       <span class="brand-glyph">x</span>
-      <span class="brand-name">x402-video.com</span>
+      <span class="brand-name">x402video.com</span>
     </a>
     <nav class="nav-links">
       <a href="/">Home</a>
@@ -225,7 +225,7 @@
     <!-- code snippets -->
     <section id="code-examples">
       <h2>Ready-to-use code</h2>
-      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Reflects the current parameter selection. The URL is hardcoded to <code style="font-family: var(--mono);">https://api.x402-video.com</code>.</p>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Reflects the current parameter selection. The URL is hardcoded to <code style="font-family: var(--mono);">https://api.x402video.com</code>.</p>
       <div class="codes-grid">
         <div class="code-block">
           <div class="code-header">
@@ -248,7 +248,7 @@
     <section id="how">
       <h2>How the live quote works</h2>
       <div style="background: var(--card); border: 1px solid var(--bd); border-radius: 12px; padding: 22px 26px;">
-        <p style="margin: 0 0 12px; font-size: 14px; color: var(--tx2);">Every time you change a parameter, this page sends a real <code style="font-family: var(--mono);">POST</code> to <code style="font-family: var(--mono);">https://api.x402-video.com/generate/{model}/custom</code> <em>without</em> a payment header. The server responds with HTTP 402 and a JSON body that includes the per-second rate for your chosen resolution. The price you see is computed from that live response — not a static table.</p>
+        <p style="margin: 0 0 12px; font-size: 14px; color: var(--tx2);">Every time you change a parameter, this page sends a real <code style="font-family: var(--mono);">POST</code> to <code style="font-family: var(--mono);">https://api.x402video.com/generate/{model}/custom</code> <em>without</em> a payment header. The server responds with HTTP 402 and a JSON body that includes the per-second rate for your chosen resolution. The price you see is computed from that live response — not a static table.</p>
         <p style="margin: 0; font-size: 14px; color: var(--tx2);">When you actually call the API with payment, the 402 quote will match exactly. You sign the EIP-3009 USDC authorization for precisely that amount — no overcharging, no rounding surprises.</p>
       </div>
     </section>
@@ -263,10 +263,10 @@
       <a href="/seedance/">Seedance API</a>
       <a href="/kling/">Kling API</a>
       <a href="https://github.com/x402-video">GitHub &#8599;</a>
-      <a href="https://api.x402-video.com/llms.txt">/llms.txt</a>
+      <a href="https://api.x402video.com/llms.txt">/llms.txt</a>
       <a href="https://docs.x402.org">docs.x402.org &#8599;</a>
     </div>
-    <p class="foot-note">x402-video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+    <p class="foot-note">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
   </div>
 </footer>
 
@@ -330,7 +330,7 @@ function showLoading() {
 
 async function fetchQuote() {
   const endpoint = model === 'fast' ? 'seedance-fast' : 'seedance';
-  const url = 'https://api.x402-video.com/generate/' + endpoint + '/custom';
+  const url = 'https://api.x402video.com/generate/' + endpoint + '/custom';
   const body = {
     prompt: 'pricing probe',
     duration: duration,
@@ -413,7 +413,7 @@ function updateCode() {
 
   // curl
   const curlLines = [
-    "curl -X POST https://api.x402-video.com/generate/" + endpoint + "/custom \\",
+    "curl -X POST https://api.x402video.com/generate/" + endpoint + "/custom \\",
     "  -H 'Content-Type: application/json' \\",
     "  -H 'X-PAYMENT: $PAYMENT_HEADER' \\",
     "  -d '" + JSON.stringify(b) + "'",
@@ -433,7 +433,7 @@ function updateCode() {
     'const fetchPay = wrapFetchWithPayment(fetch, client);',
     '',
     'const res = await fetchPay(',
-    '  "https://api.x402-video.com/generate/' + endpoint + '/custom",',
+    '  "https://api.x402video.com/generate/' + endpoint + '/custom",',
     '  {',
     '    method: "POST",',
     '    headers: { "Content-Type": "application/json" },',

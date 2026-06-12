@@ -24,7 +24,7 @@ import { base } from "viem/chains";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-const GATEWAY = process.env.GATEWAY ?? "https://api.x402-video.com";
+const GATEWAY = process.env.GATEWAY ?? "https://api.x402video.com";
 
 // ---------------------------------------------------------------------------
 // Use-case definitions — prompts exactly match the /use-cases/ page
@@ -230,5 +230,5 @@ for (const r of results) {
 }
 console.log(`\nEstimated total spend: ~$${totalSpent.toFixed(2)} USDC`);
 console.log(
-  "Note: actual prices come from the 402 quote at call time — run GET https://api.x402-video.com/ for live prices.",
+  "Note: actual prices come from the 402 quote at call time — run GET https://api.x402video.com/ for live prices.",
 );

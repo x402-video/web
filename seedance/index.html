@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Seedance API — Pay-Per-Call, No API Key | x402-video.com</title>
+<title>Seedance API — Pay-Per-Call, No API Key | x402video.com</title>
 <meta name="description" content="Use the Seedance 2.0 API without an API key or account. Pay per call in USDC on Base via the x402 protocol. From $0.91/call — first video in under 5 minutes." />
-<link rel="canonical" href="https://x402-video.com/seedance/" />
+<link rel="canonical" href="https://x402video.com/seedance/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="x402-video.com" />
+<meta property="og:site_name" content="x402video.com" />
 <meta property="og:title" content="Seedance API — No API Key, Pay Per Call" />
 <meta property="og:description" content="Call Seedance 2.0 text-to-video with no account and no API key. HTTP 402 → pay USDC on Base → get your video. From $0.91/call." />
-<meta property="og:url" content="https://x402-video.com/seedance/" />
-<meta property="og:image" content="https://x402-video.com/assets/og.png" />
+<meta property="og:url" content="https://x402video.com/seedance/" />
+<meta property="og:image" content="https://x402video.com/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -21,12 +21,12 @@
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Seedance 2.0 API via x402",
-  "url": "https://x402-video.com/seedance/",
+  "url": "https://x402video.com/seedance/",
   "description": "Pay-per-call access to Seedance 2.0 and Seedance 2.0 Fast text-to-video generation via the x402 payment protocol. No account, no API key — pay USDC on Base per request.",
   "provider": {
     "@type": "Organization",
-    "name": "x402-video.com",
-    "url": "https://x402-video.com"
+    "name": "x402video.com",
+    "url": "https://x402video.com"
   },
   "offers": [
     {
@@ -135,7 +135,7 @@
   <div class="topbar-in">
     <a class="brand" href="/">
       <span class="brand-glyph">x</span>
-      <span class="brand-name">x402-video.com</span>
+      <span class="brand-name">x402video.com</span>
     </a>
     <nav class="nav-links">
       <a href="/">Home</a>
@@ -155,14 +155,14 @@
       <p class="lead">Access Seedance 2.0 and Seedance 2.0 Fast text-to-video without an account or API key. Your code pays in USDC on Base via HTTP 402 — exact price quoted before every charge.</p>
       <div class="ctas">
         <a class="btn-primary" href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Get started in 5 min</a>
-        <a class="btn-outline" href="https://api.x402-video.com/llms.txt">/llms.txt (machine-readable)</a>
+        <a class="btn-outline" href="https://api.x402video.com/llms.txt">/llms.txt (machine-readable)</a>
       </div>
     </section>
 
     <!-- pricing table -->
     <section id="pricing">
       <h2>Endpoint pricing</h2>
-      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Live quotes always at <a href="https://api.x402-video.com/">api.x402-video.com</a>. The 402 response quotes the exact USDC amount before you pay — never a surprise charge.</p>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Live quotes always at <a href="https://api.x402video.com/">api.x402video.com</a>. The 402 response quotes the exact USDC amount before you pay — never a surprise charge.</p>
       <table class="pricing-table">
         <thead>
           <tr>
@@ -205,7 +205,7 @@
       <h3>Step 1 — POST your prompt (no payment yet)</h3>
       <div class="code-block">
         <div class="code-label">BASH</div>
-        <pre>curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+        <pre>curl -i -X POST https://api.x402video.com/generate/seedance-fast/5s-720p \
   -H 'Content-Type: application/json' \
   -d '{"prompt":"a corgi surfing a wave at sunset"}'</pre>
       </div>
@@ -256,7 +256,7 @@ const client = new x402Client().register("eip155:*", new ExactEvmScheme(signer))
 const fetchPay = wrapFetchWithPayment(fetch, client);
 
 // 402 → sign USDC payment → retry all happens automatically:
-const res = await fetchPay("https://api.x402-video.com/generate/seedance-fast/5s-720p", {
+const res = await fetchPay("https://api.x402video.com/generate/seedance-fast/5s-720p", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ prompt: "a corgi surfing a wave at sunset" }),
@@ -267,7 +267,7 @@ const { job_id } = await res.json();
 // Poll until done (free endpoint):
 let video;
 while (true) {
-  const status = await fetch(`https://api.x402-video.com/jobs/${job_id}`).then(r => r.json());
+  const status = await fetch(`https://api.x402video.com/jobs/${job_id}`).then(r => r.json());
   if (status.status === "succeeded") { video = status.video_url; break; }
   if (status.status === "failed" || status.status === "cancelled") throw new Error(status.status);
   await new Promise(r => setTimeout(r, 5000)); // poll every 5s
@@ -313,10 +313,10 @@ while (true) {
     <section id="resources" style="padding-bottom: 0;">
       <h2>Resources</h2>
       <ul style="margin: 0; padding: 0 0 0 20px; color: var(--tx2); font-size: 14px; line-height: 2;">
-        <li><a href="/">x402-video.com — main landing page</a></li>
+        <li><a href="/">x402video.com — main landing page</a></li>
         <li><a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting Started Guide — zero to first video in 5 minutes</a></li>
-        <li><a href="https://api.x402-video.com/llms.txt">api.x402-video.com/llms.txt — machine-readable catalog (for AI agents)</a></li>
-        <li><a href="https://api.x402-video.com/openapi.json">api.x402-video.com/openapi.json — OpenAPI spec with x-payment-info pricing</a></li>
+        <li><a href="https://api.x402video.com/llms.txt">api.x402video.com/llms.txt — machine-readable catalog (for AI agents)</a></li>
+        <li><a href="https://api.x402video.com/openapi.json">api.x402video.com/openapi.json — OpenAPI spec with x-payment-info pricing</a></li>
         <li><a href="https://docs.x402.org">docs.x402.org — x402 protocol documentation</a></li>
         <li><a href="/custom/">Pricing calculator — interactive live quotes for custom parameters</a></li>
       </ul>
@@ -331,10 +331,10 @@ while (true) {
       <a href="/">← Home</a>
       <a href="/kling/">Kling page</a>
       <a href="https://github.com/x402-video">GitHub ↗</a>
-      <a href="https://api.x402-video.com/llms.txt">/llms.txt</a>
+      <a href="https://api.x402video.com/llms.txt">/llms.txt</a>
       <a href="https://docs.x402.org">docs.x402.org ↗</a>
     </div>
-    <p class="foot-note">x402-video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+    <p class="foot-note">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
   </div>
 </footer>
 

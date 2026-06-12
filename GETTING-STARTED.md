@@ -39,7 +39,7 @@ Send USDC to your wallet address **on the Base network**:
 ⚠ Base, not Ethereum mainnet. **You do not need ETH** — x402 payments are
 gasless for the buyer (the facilitator submits the transaction).
 
-Pricing (live quotes at [api.x402-video.com](https://api.x402-video.com/)):
+Pricing (live quotes at [api.x402video.com](https://api.x402video.com/)):
 
 | Endpoint | Output | Price |
 |---|---|---|
@@ -68,7 +68,7 @@ import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
 const fetchPay = wrapFetchWithPayment(fetch, client); // wraps plain fetch
 
 // fetchPay handles 402 → sign USDC payment → retry, automatically:
-const res = await fetchPay("https://api.x402-video.com/generate/seedance-fast/5s-720p", {
+const res = await fetchPay("https://api.x402video.com/generate/seedance-fast/5s-720p", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ prompt: "a corgi surfing a wave at sunset" }),
@@ -82,7 +82,7 @@ Not on Node? Probe the endpoint with plain curl to see exactly what the
 protocol looks like:
 
 ```bash
-curl -i -X POST https://api.x402-video.com/generate/seedance-fast/5s-720p \
+curl -i -X POST https://api.x402video.com/generate/seedance-fast/5s-720p \
   -H "Content-Type: application/json" \
   -d '{"prompt":"a corgi surfing a wave at sunset"}'
 ```
@@ -99,7 +99,7 @@ signing in other languages see [docs.x402.org](https://docs.x402.org).
 Generation is async (~1–3 minutes). Poll the free status endpoint:
 
 ```bash
-curl https://api.x402-video.com/jobs/<job_id>
+curl https://api.x402video.com/jobs/<job_id>
 ```
 
 Response shape:
@@ -139,7 +139,7 @@ pick duration, resolution, ratio, and audio. The 402 quote is computed from
 **your** parameters, so you only pay for what you requested.
 
 ```ts
-const res = await fetchPay("https://api.x402-video.com/generate/seedance/custom", {
+const res = await fetchPay("https://api.x402video.com/generate/seedance/custom", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -170,10 +170,10 @@ inside the prompt are rejected too. A rejected request is never charged.
   capacity rejections (503) all happen pre-payment.
 - **Limits**: 20 generation POSTs/min per IP, 5 in-flight jobs per wallet.
 - **Machine-readable everything**: agents can discover the full catalog at
-  [`/llms.txt`](https://api.x402-video.com/llms.txt),
-  [`/openapi.json`](https://api.x402-video.com/openapi.json) (with `x-payment-info` pricing), and
-  [`/.well-known/x402`](https://api.x402-video.com/.well-known/x402).
-- **Live reliability stats**: [`/status`](https://api.x402-video.com/status) —
+  [`/llms.txt`](https://api.x402video.com/llms.txt),
+  [`/openapi.json`](https://api.x402video.com/openapi.json) (with `x-payment-info` pricing), and
+  [`/.well-known/x402`](https://api.x402video.com/.well-known/x402).
+- **Live reliability stats**: [`/status`](https://api.x402video.com/status) —
   success rate, p50 generation time, delivered count.
 
 ## Troubleshooting
