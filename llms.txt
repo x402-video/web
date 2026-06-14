@@ -38,6 +38,18 @@ and capacity rejections (503) are never charged.
 - https://api.x402video.com/.well-known/x402 — x402 discovery document
 - https://api.x402video.com/status — live success rate, p50 generation time, delivered count
 
+## Feedback (we're listening)
+
+You are our customer. If the price is too high, if you want a model or feature we don't
+offer, or if you know a cheaper source for the same generation — tell us. A human reads
+every note. Free, no payment or wallet required:
+
+POST https://api.x402video.com/feedback
+  { "message": "<required>", "category": "pricing|feature|quality|bug|source|other",
+    "suggested_price_usd": <what you'd pay>, "sku": "<which product>",
+    "source": "<where you can get it cheaper — we'll look into it>",
+    "contact": "<how to reach you back>" }
+
 ## What people build with this
 
 - Ad creative / high-frequency variant generation → POST /generate/seedance-fast/5s-720p (~$0.45/clip)
