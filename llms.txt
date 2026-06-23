@@ -54,4 +54,4 @@ Full use-case page: https://x402video.com/use-cases/
 - https://x402video.com — landing page
 - https://github.com/x402-video/web/blob/main/GETTING-STARTED.md — zero to first video in 5 minutes
 - https://github.com/x402-video — source
-- https://t.me/MakeReel_official — community Telegram (questions, support, early users)
+- https://makereel.xyz — MakeReel (questions, support, early users)

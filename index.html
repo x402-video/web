@@ -253,6 +253,31 @@
   .faq-icon { color: var(--tx3); font-family: var(--mono); }
   .faq-a { margin: 0; padding: 0 20px 18px; font-size: 14px; color: var(--tx2); max-width: 78ch; text-wrap: pretty; }
 
+  /* ---------- built-on showcase (toC example app) ---------- */
+  .uc-card { border: 1px solid var(--bd); border-radius: 14px; background: var(--card); overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .uc-media { background: var(--card2); padding: 28px 28px 0; display: flex; align-items: flex-end; border-right: 1px solid var(--bd2); }
+  .uc-frame { width: 100%; border: 1px solid var(--bd); border-bottom: none; border-radius: 10px 10px 0 0; overflow: hidden; background: var(--card); }
+  .uc-bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid var(--bd2); }
+  .uc-tlight { width: 9px; height: 9px; border-radius: 50%; background: var(--bd); flex-shrink: 0; }
+  .uc-url { margin-left: 8px; font-size: 12px; color: var(--tx3); }
+  .uc-shot { aspect-ratio: 16 / 10; overflow: hidden; }
+  .uc-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .uc-body { padding: 28px 30px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .uc-tag { font-size: 11px; letter-spacing: 0.08em; color: var(--ac); border: 1px solid var(--acBd); background: var(--acBg); border-radius: 999px; padding: 3px 11px; }
+  .uc-name { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+  .uc-desc { margin: 0; font-size: 14.5px; color: var(--tx2); text-wrap: pretty; }
+  .uc-points { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .uc-points li { position: relative; padding-left: 24px; font-size: 13.5px; color: var(--tx2); }
+  .uc-points li::before { content: "\2192"; position: absolute; left: 0; top: 0; color: var(--ac); font-family: var(--mono); }
+  .uc-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+  .uc-note { font-size: 12px; color: var(--tx3); }
+  .uc-card a.btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ac); }
+  @media (max-width: 760px) {
+    .uc-card { grid-template-columns: 1fr; }
+    .uc-media { border-right: none; border-bottom: 1px solid var(--bd2); padding: 24px 24px 0; }
+    .uc-body { padding: 24px; }
+  }
+
   /* ---------- footer ---------- */
   .footer { border-top: 1px solid var(--bd2); }
   .footer-in { max-width: 1140px; margin: 0 auto; padding: 28px; display: flex; flex-direction: column; gap: 13px; }
@@ -308,7 +333,7 @@
         <a class="nav-link" href="#pricing" data-i18n="navPricing">Pricing</a>
         <a class="nav-link" href="#buy">API</a>
         <a class="nav-link" href="#policy" data-i18n="navPolicy">Policy</a>
-        <a class="nav-link" href="https://t.me/MakeReel_official">Telegram ↗</a>
+        <a class="nav-link" href="https://makereel.xyz">MakeReel ↗</a>
         <button class="tgl" id="theme-btn" aria-label="Toggle theme">☀</button>
         <a class="gh-btn" href="https://github.com/x402-video">GitHub ↗</a>
       </nav>
@@ -439,16 +464,49 @@
   </section>
 
   <!-- faq -->
-  <section class="section last">
+  <section class="section">
     <h2 class="sec-title" style="margin-bottom: 14px;">FAQ</h2>
     <div class="card" id="faq-list"></div>
+  </section>
+
+  <!-- built on x402video — consumer (toC) example app -->
+  <section class="section last" id="built">
+    <div class="sec-head" style="margin-bottom: 18px;">
+      <h2 class="sec-title" data-i18n="ucTitle">Built on this gateway</h2>
+      <span class="st-src" data-i18n="ucKicker">The same 402 rails, with a human front-end</span>
+    </div>
+    <div class="uc-card">
+      <div class="uc-media">
+        <div class="uc-frame">
+          <div class="uc-bar">
+            <span class="uc-tlight"></span><span class="uc-tlight"></span><span class="uc-tlight"></span>
+            <span class="uc-url mono">makereel.xyz</span>
+          </div>
+          <div class="uc-shot"><img src="assets/makereel-app.png" alt="MakeReel — consumer AI video app built on x402video" loading="lazy" /></div>
+        </div>
+      </div>
+      <div class="uc-body">
+        <span class="uc-tag mono" data-i18n="ucTag">CONSUMER APP · toC</span>
+        <h3 class="uc-name">MakeReel.xyz</h3>
+        <p class="uc-desc" data-i18n="ucDesc">MakeReel is the consumer-facing app built on x402video. People — not agents — type a prompt and get a video, while the same HTTP 402 → pay USDC → generate flow runs underneath. It is the human front-end to the exact rails on this page.</p>
+        <ul class="uc-points">
+          <li data-i18n="ucP1">No signup — your wallet signs in and pays per clip.</li>
+          <li data-i18n="ucP2">Same Seedance models, same per-call pricing you see above.</li>
+          <li data-i18n="ucP3">A working reference for what you can build on the 402 protocol.</li>
+        </ul>
+        <div class="uc-ctas">
+          <a class="btn-primary" href="https://makereel.xyz" data-i18n="ucCta">Open MakeReel ↗</a>
+          <span class="uc-note mono" data-i18n="ucMeta">same models · same prices · no API key</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer class="footer">
     <div class="footer-in">
       <div class="foot-meta">
         <div class="foot-links">
-          <a href="https://t.me/MakeReel_official">Telegram ↗</a>
+          <a href="https://makereel.xyz">MakeReel ↗</a>
           <a href="https://github.com/x402-video">GitHub ↗</a>
           <a class="mono" id="foot-llms" href="#">/llms.txt</a>
           <a class="mono" id="foot-status" href="#">/status (live JSON)</a>
@@ -560,6 +618,15 @@ const I18N = {
     ],
     footNote: "x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base mainnet; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.",
     langLabel: "Language",
+    ucTitle: "Built on this gateway",
+    ucKicker: "The same 402 rails, with a human front-end",
+    ucTag: "CONSUMER APP · toC",
+    ucDesc: "MakeReel is the consumer-facing app built on x402video. People — not agents — type a prompt and get a video, while the same HTTP 402 → pay USDC → generate flow runs underneath. It's the human front-end to the exact rails on this page.",
+    ucP1: "No signup — your wallet signs in and pays per clip.",
+    ucP2: "Same Seedance models, same per-call pricing you see above.",
+    ucP3: "A working reference for what you can build on the 402 protocol.",
+    ucCta: "Open MakeReel ↗",
+    ucMeta: "same models · same prices · no API key",
   },
   zh: {
     navPricing: "價格", navPolicy: "政策",
@@ -623,6 +690,15 @@ const I18N = {
     ],
     footNote: "x402video.com 是獨立 gateway,與 ByteDance 或任何模型廠商無關。使用 Base 主網上的 USDC,買方付款免 gas。簽名影片連結交付後約 24 小時過期。",
     langLabel: "語言",
+    ucTitle: "用這個 gateway 打造的產品",
+    ucKicker: "同一套 402 rails,加上給人用的介面",
+    ucTag: "消費級應用 · toC",
+    ucDesc: "MakeReel 是建在 x402video 上的消費級應用。由真人(不是 agent)輸入 prompt 取得影片,底層跑的是同一套 HTTP 402 → 付 USDC → 生成 流程。它就是這頁這套 rails 的人類版前端。",
+    ucP1: "免註冊 — 錢包即登入,逐支付費。",
+    ucP2: "相同的 Seedance 模型,相同的單次計價。",
+    ucP3: "一個可運作的範例,示範你能在 402 協議上做出什麼。",
+    ucCta: "開啟 MakeReel ↗",
+    ucMeta: "相同模型 · 相同價格 · 免 API key",
   },
 };
 
