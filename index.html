@@ -514,6 +514,7 @@
           <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
           <a href="/kling/">Kling API</a>
+          <a href="/image/">Image API</a>
           <a href="/custom/">Pricing calculator</a>
           <a href="/use-cases/">Use cases</a>
         </div>
@@ -552,6 +553,8 @@ const MODEL_CARDS = [
   { fast: true, mode: "text-to-video", img: "assets/art-denim.png", live: true },
   { fast: true, mode: "image-to-video", img: "assets/art-sprout.png", live: false },
   { fast: true, mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
+  { fast: false, mode: "text-to-image", img: "assets/art-hills.png", live: true, type: "image", endpoint: "grok-imagine/image", price_usd: 0.05 },
+  { fast: true,  mode: "text-to-image", img: "assets/art-sprout.png", live: true, type: "image", endpoint: "grok-imagine/image-quality", price_usd: 0.10 },
 ];
 
 /* ---------- copy (EN / ZH) ---------- */
@@ -584,11 +587,12 @@ const I18N = {
     prTitle: "Models & pricing",
     prSub: "Programmatic pricing — upstream cost × markup. Prices track upstream price cards automatically.",
     prRef: "⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.",
-    modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video" },
+    modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "Generate video from a text prompt — multi-shot narrative, cinematic motion.",
       "image-to-video": "Animate a first-frame image (optional last-frame) into video.",
       "reference-to-video": "Character-driven video from reference images and clips.",
+      "text-to-image": "Generate a JPEG image from a text prompt — powered by Grok Imagine.",
     },
     sec: "sec", refMark: "(ref)", perCallShort: "per call",
     soonNote: "after image moderation ships",
@@ -656,11 +660,12 @@ const I18N = {
     prTitle: "模型與價格",
     prSub: "公式定價 — 上游成本 × markup。價格自動跟隨上游價卡。",
     prRef: "⚠ 參考價 — gateway 離線。付款前請以即時 402 報價為準。",
-    modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video" },
+    modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "文字 prompt 生成影片 — 多鏡頭敘事、電影感運鏡。",
       "image-to-video": "以首幀圖片（可選尾幀）生成動態影片。",
       "reference-to-video": "以參考圖片與影片驅動角色生成。",
+      "text-to-image": "文字 prompt 生成 JPEG 圖片 — 由 Grok Imagine 驅動。",
     },
     sec: "秒", refMark: "(參考)", perCallShort: "/ 次",
     soonNote: "影像審核上線後開賣",
@@ -963,7 +968,7 @@ function renderTrust() {
   }
 }
 
-/* ---------- pricing (6-category cards) ---------- */
+/* ---------- pricing (6-category cards + image cards) ---------- */
 function perSecLabel(sku) {
   const p = Number(sku && sku.price_usd);
   const d = Number(sku && sku.duration_seconds);
@@ -977,6 +982,31 @@ function renderPricing() {
   const ref = state.root === "fail";
 
   $("sku-cards").innerHTML = MODEL_CARDS.map((card) => {
+    // Image cards (type:"image") use hardcoded prices — not live SKU lookup
+    if (card.type === "image") {
+      const name = "Image Generation" + (card.fast ? " Quality" : " Standard") + " " + dict.modeNames[card.mode];
+      const desc = dict.modeDescs[card.mode];
+      const price = "$" + Number(card.price_usd).toFixed(2);
+      const epPath = "POST /generate/" + card.endpoint;
+      const foot = card.live
+        ? `<div>
+            <span class="model-price">${esc(price)}</span><span class="model-per">/ image${ref ? " " + esc(dict.refMark) : ""}</span>
+          </div>
+          <a class="try-btn" href="/image/">↗ Docs</a>`
+        : `<span class="model-per">${esc(dict.soonNote)}</span>
+          <span class="soon-pill">${esc(dict.gaSoon)}</span>`;
+      return `<div class="model-card${card.live ? "" : " soon"}">
+        <div class="model-media"><img src="${card.img}" alt="${esc(name)} — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">${card.mode}</span>
+          <span class="model-name">${esc(name)}</span>
+          <p class="model-desc">${esc(desc)}</p>
+          ${card.live ? `<span class="model-ep" title="${esc(epPath)}">${esc(epPath)}</span>` : ""}
+        </div>
+        <div class="model-foot">${foot}</div>
+      </div>`;
+    }
+
     const name = (card.fast ? "Seedance 2.0 Fast" : "Seedance 2.0") + " " + dict.modeNames[card.mode];
     const desc = dict.modeDescs[card.mode];
     const sku = card.live ? tierSku(card.fast) : null;

@@ -32,7 +32,10 @@ for (;;) {
   await new Promise((r) => setTimeout(r, 5000));
   const job = (await (await fetch(`${GATEWAY}/jobs/${job_id}`)).json()) as {
     status: string;
-    video_url: string | null;
+    video_url: string | null;   // MP4 URL for video jobs
+    output_url: string | null;  // JPEG URL for image jobs (output_type="image")
+    output_type: string | null;
+    output_mime: string | null;
     error: unknown;
   };
   console.log("status:", job.status);

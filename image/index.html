@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Seedance API — Pay-Per-Call, No API Key | x402video.com</title>
-<meta name="description" content="Use the Seedance 2.0 API without an API key or account. Pay per call in USDC on Base via the x402 protocol. From $0.91/call — first video in under 5 minutes." />
-<link rel="canonical" href="https://x402video.com/seedance/" />
+<title>Image Generation API — Pay-Per-Call, No API Key | x402video.com</title>
+<meta name="description" content="Generate images without an API key or account. Pay per call in USDC on Base via the x402 protocol. From $0.05/call — powered by Grok Imagine." />
+<link rel="canonical" href="https://x402video.com/image/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="x402video.com" />
-<meta property="og:title" content="Seedance API — No API Key, Pay Per Call" />
-<meta property="og:description" content="Call Seedance 2.0 text-to-video with no account and no API key. HTTP 402 → pay USDC on Base → get your video. From $0.91/call." />
-<meta property="og:url" content="https://x402video.com/seedance/" />
+<meta property="og:title" content="Image Generation API — No API Key, Pay Per Call" />
+<meta property="og:description" content="Call image generation with no account and no API key. HTTP 402 → pay USDC on Base → get your image. From $0.05/call." />
+<meta property="og:url" content="https://x402video.com/image/" />
 <meta property="og:image" content="https://x402video.com/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -20,9 +20,9 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Seedance 2.0 API via x402",
-  "url": "https://x402video.com/seedance/",
-  "description": "Pay-per-call access to Seedance 2.0 and Seedance 2.0 Fast text-to-video generation via the x402 payment protocol. No account, no API key — pay USDC on Base per request.",
+  "name": "Image Generation API via x402",
+  "url": "https://x402video.com/image/",
+  "description": "Pay-per-call access to image generation (powered by Grok Imagine / xAI) via the x402 payment protocol. No account, no API key — pay USDC on Base per request. Returns a JPEG via output_url.",
   "provider": {
     "@type": "Organization",
     "name": "x402video.com",
@@ -31,33 +31,17 @@
   "offers": [
     {
       "@type": "Offer",
-      "name": "Seedance 2.0 Fast · 5s 720p",
-      "price": "0.91",
+      "name": "Image Generation — Standard",
+      "price": "0.05",
       "priceCurrency": "USD",
-      "description": "5-second 720p MP4 via POST /generate/seedance-fast/5s-720p"
+      "description": "Standard-quality JPEG image via POST /generate/grok-imagine/image"
     },
     {
       "@type": "Offer",
-      "name": "Seedance 2.0 · 5s 720p",
-      "price": "0.96",
+      "name": "Image Generation — Quality",
+      "price": "0.10",
       "priceCurrency": "USD",
-      "description": "5-second 720p MP4 (highest quality) via POST /generate/seedance/5s-720p"
-    },
-    {
-      "@type": "AggregateOffer",
-      "name": "Seedance 2.0 Fast · Custom",
-      "lowPrice": "0.26",
-      "highPrice": "3.42",
-      "priceCurrency": "USD",
-      "description": "4–15s, 480p/720p, optional audio via POST /generate/seedance-fast/custom"
-    },
-    {
-      "@type": "AggregateOffer",
-      "name": "Seedance 2.0 · Custom",
-      "lowPrice": "0.45",
-      "highPrice": "9.00",
-      "priceCurrency": "USD",
-      "description": "4–15s, up to 1080p, optional audio via POST /generate/seedance/custom"
+      "description": "Higher-quality JPEG image via POST /generate/grok-imagine/image-quality"
     }
   ]
 }
@@ -118,7 +102,6 @@
   .foot-links a { color: var(--tx2); text-decoration: none; }
   .foot-links a:hover { color: var(--tx); }
   .foot-note { margin: 0; font-size: 12.5px; color: var(--tx4); }
-  .tag { display: inline-block; font-size: 11.5px; border: 1px solid var(--acBd); color: var(--ac); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
   @media (max-width: 640px) {
     h1 { font-size: 30px; }
     .wrap { padding: 0 18px; }
@@ -139,7 +122,7 @@
     </a>
     <nav class="nav-links">
       <a href="/">Home</a>
-      <a href="/kling/">Kling</a>
+      <a href="/seedance/">Seedance</a>
       <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Guide</a>
     </nav>
   </div>
@@ -150,9 +133,9 @@
 
     <!-- hero -->
     <section class="hero">
-      <div class="badge"><span class="dot-ok"></span> Seedance 2.0 · live · from $0.91/call</div>
-      <h1>Seedance API — no API key, pay per call</h1>
-      <p class="lead">Access Seedance 2.0 and Seedance 2.0 Fast text-to-video without an account or API key. Your code pays in USDC on Base via HTTP 402 — exact price quoted before every charge.</p>
+      <div class="badge"><span class="dot-ok"></span> Image generation &middot; live &middot; from $0.05/call</div>
+      <h1>Image generation &mdash; no API key, pay per call</h1>
+      <p class="lead">Generate images without an account or API key. Your code pays in USDC on Base via HTTP 402 &mdash; exact price quoted before every charge. Powered by Grok Imagine (xAI). Returns a JPEG via <code style="font-family: var(--mono); font-size: 15px;">output_url</code>.</p>
       <div class="ctas">
         <a class="btn-primary" href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Get started in 5 min</a>
         <a class="btn-outline" href="https://api.x402video.com/llms.txt">/llms.txt (machine-readable)</a>
@@ -162,7 +145,7 @@
     <!-- pricing table -->
     <section id="pricing">
       <h2>Endpoint pricing</h2>
-      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Live quotes always at <a href="https://api.x402video.com/">api.x402video.com</a>. The 402 response quotes the exact USDC amount before you pay — never a surprise charge.</p>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Prices are fixed per SKU &mdash; no duration or resolution variable. The 402 response quotes the exact USDC amount before you pay &mdash; never a surprise charge.</p>
       <table class="pricing-table">
         <thead>
           <tr>
@@ -173,44 +156,34 @@
         </thead>
         <tbody>
           <tr>
-            <td><code>POST /generate/seedance-fast/5s-720p</code></td>
-            <td>5s 720p MP4</td>
-            <td><span class="price">~$0.91</span> / call</td>
+            <td><code>POST /generate/grok-imagine/image</code></td>
+            <td>JPEG image (<code>output_url</code>)</td>
+            <td><span class="price">$0.05</span> / call</td>
           </tr>
           <tr>
-            <td><code>POST /generate/seedance/5s-720p</code></td>
-            <td>5s 720p MP4 (highest quality)</td>
-            <td><span class="price">~$0.96</span> / call</td>
-          </tr>
-          <tr>
-            <td><code>POST /generate/seedance-fast/custom</code></td>
-            <td>4–15s, 480p/720p, optional audio</td>
-            <td><span class="price">$0.26–$3.42</span></td>
-          </tr>
-          <tr>
-            <td><code>POST /generate/seedance/custom</code></td>
-            <td>4–15s, up to 1080p, optional audio</td>
-            <td><span class="price">$0.45–$9.00</span></td>
+            <td><code>POST /generate/grok-imagine/image-quality</code></td>
+            <td>JPEG image &mdash; higher quality (<code>output_url</code>)</td>
+            <td><span class="price">$0.10</span> / call</td>
           </tr>
         </tbody>
       </table>
-      <p style="margin: 12px 0 0; font-size: 13px; color: var(--tx3);">Custom body fields: <code>prompt</code>, <code>duration</code> (4–15 s), <code>resolution</code> ("480p"|"720p"|"1080p"), <code>ratio</code>, <code>seed</code>, <code>generate_audio</code>, <code>camera_fixed</code>. Rejected requests (403/429/503) are never charged.</p>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--tx3);">Request body field: <code>prompt</code> (string, required). No duration or resolution parameters &mdash; image size is determined by the backend. These SKUs are not listed in the storefront <code>GET /</code>; use the endpoints directly. Rejected requests (403/429/503) are never charged.</p>
     </section>
 
     <!-- curl example -->
     <section id="curl">
-      <h2>Try it with curl — see the raw 402 flow</h2>
+      <h2>Try it with curl &mdash; see the raw 402 flow</h2>
       <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">No client library needed to understand the protocol. Run this command and observe the 402 payment challenge before any charge occurs.</p>
 
-      <h3>Step 1 — POST your prompt (no payment yet)</h3>
+      <h3>Step 1 &mdash; POST your prompt (no payment yet)</h3>
       <div class="code-block">
         <div class="code-label">BASH</div>
-        <pre>curl -i -X POST https://api.x402video.com/generate/seedance-fast/5s-720p \
+        <pre>curl -i -X POST https://api.x402video.com/generate/grok-imagine/image \
   -H 'Content-Type: application/json' \
-  -d '{"prompt":"a corgi surfing a wave at sunset"}'</pre>
+  -d '{"prompt":"a serene mountain lake at dawn, photorealistic"}'</pre>
       </div>
 
-      <h3 style="margin-top: 22px;">Response — HTTP 402 Payment Required</h3>
+      <h3 style="margin-top: 22px;">Response &mdash; HTTP 402 Payment Required</h3>
       <div class="code-block">
         <div class="code-label">HTTP RESPONSE</div>
         <pre>HTTP/1.1 402 Payment Required
@@ -222,25 +195,50 @@ content-type: application/json
     "scheme": "exact",
     "network": "base",
     "asset": "USDC",
-    "maxAmountRequired": "450000",
-    "payTo": "0x7f3a…c21e",
-    "description": "Seedance 2.0 Fast · 5s 720p MP4"
+    "maxAmountRequired": "50000",
+    "payTo": "0x7f3a&#x2026;c21e",
+    "description": "Image generation &middot; standard"
   }]
 }</pre>
       </div>
 
-      <p style="margin: 14px 0 0; font-size: 14px; color: var(--tx2);">
-        The gateway quoted the exact USDC amount before any payment occurred. An x402 client (like <code style="font-family: var(--mono); font-size: 13px;">@x402/fetch</code>) signs the EIP-3009 authorization and retries automatically. Gasless for you — the facilitator submits the transaction on-chain.
+      <h3 style="margin-top: 22px;">Step 2 &mdash; pay with @x402/fetch, get job_id</h3>
+      <p style="margin: -6px 0 14px; font-size: 14px; color: var(--tx2);">
+        The gateway quoted the exact USDC amount before any payment occurred. An x402 client (like <code style="font-family: var(--mono); font-size: 13px;">@x402/fetch</code>) signs the EIP-3009 authorization and retries automatically. Gasless for you.
       </p>
+      <div class="code-block">
+        <div class="code-label">HTTP RESPONSE &mdash; AFTER PAYMENT</div>
+        <pre>HTTP/1.1 200 OK
+content-type: application/json
+
+{
+  "job_id": "job_img_4a7c&#x2026;"
+}</pre>
+      </div>
+
+      <h3 style="margin-top: 22px;">Step 3 &mdash; poll GET /jobs/:id until succeeded</h3>
+      <div class="code-block">
+        <div class="code-label">BASH</div>
+        <pre>curl https://api.x402video.com/jobs/job_img_4a7c&#x2026;
+
+# when done:
+{
+  "status": "succeeded",
+  "output_url": "https://&#x2026;/image.jpg",
+  "output_type": "image",
+  "output_mime": "image/jpeg",
+  "video_url": null
+}</pre>
+      </div>
     </section>
 
     <!-- TypeScript example -->
     <section id="typescript">
-      <h2>TypeScript / Node.js — @x402/fetch</h2>
-      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Install once, then every call auto-handles the 402 → sign → retry loop. No HTTP boilerplate required.</p>
+      <h2>TypeScript / Node.js &mdash; @x402/fetch</h2>
+      <p style="margin: -10px 0 18px; color: var(--tx2); font-size: 14px;">Install once, then every call auto-handles the 402 &rarr; sign &rarr; retry loop. Read <code>output_url</code> (not <code>video_url</code>) from the job result &mdash; image jobs return a JPEG.</p>
 
       <div class="code-block">
-        <div class="code-label">BASH — INSTALL</div>
+        <div class="code-label">BASH &mdash; INSTALL</div>
         <pre>npm i @x402/fetch @x402/evm viem</pre>
       </div>
 
@@ -255,24 +253,40 @@ const signer = toClientEvmSigner(account);
 const client = new x402Client().register("eip155:*", new ExactEvmScheme(signer));
 const fetchPay = wrapFetchWithPayment(fetch, client);
 
-// 402 → sign USDC payment → retry all happens automatically:
-const res = await fetchPay("https://api.x402video.com/generate/seedance-fast/5s-720p", {
+// 402 -&gt; sign USDC payment -&gt; retry all happens automatically:
+const res = await fetchPay("https://api.x402video.com/generate/grok-imagine/image", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ prompt: "a corgi surfing a wave at sunset" }),
+  body: JSON.stringify({ prompt: "a serene mountain lake at dawn, photorealistic" }),
 });
 
 const { job_id } = await res.json();
 
 // Poll until done (free endpoint):
-let video;
+let imageUrl: string;
 while (true) {
-  const status = await fetch(`https://api.x402video.com/jobs/${job_id}`).then(r => r.json());
-  if (status.status === "succeeded") { video = status.video_url; break; }
-  if (status.status === "failed" || status.status === "cancelled") throw new Error(status.status);
-  await new Promise(r => setTimeout(r, 5000)); // poll every 5s
+  const job = await fetch(`https://api.x402video.com/jobs/${job_id}`).then(r =&gt; r.json()) as {
+    status: string;
+    output_url: string | null;  // JPEG -- read output_url, not video_url
+    output_type: string | null;
+    output_mime: string | null;
+    video_url: null;
+    error?: unknown;
+  };
+  if (job.status === "succeeded") {
+    imageUrl = job.output_url!;
+    break;
+  }
+  if (job.status === "failed" || job.status === "cancelled") {
+    throw new Error(JSON.stringify(job.error));
+  }
+  await new Promise(r =&gt; setTimeout(r, 3000)); // poll every 3s
 }
-// Download video_url within 24h — link expires after that</pre>
+
+// Use the image URL -- render in browser or download the JPEG:
+// &lt;img src={imageUrl} /&gt;
+// Or: await fetch(imageUrl).then(r =&gt; r.arrayBuffer())
+console.log("image (JPEG):", imageUrl);</pre>
       </div>
     </section>
 
@@ -282,28 +296,33 @@ while (true) {
       <div class="card">
 
         <div class="faq-item">
+          <p class="faq-q">What backend powers image generation?</p>
+          <p class="faq-a">The gateway routes image generation through Grok Imagine, xAI's text-to-image model. The endpoint slug uses the provider-neutral <code style="font-family: var(--mono); font-size: 13px;">/image/</code> path so it remains stable across backend changes.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What format does the result come in?</p>
+          <p class="faq-a">Results are delivered as JPEG images. The job response includes <code style="font-family: var(--mono); font-size: 13px;">output_url</code> (the signed image URL), <code style="font-family: var(--mono); font-size: 13px;">output_type: "image"</code>, and <code style="font-family: var(--mono); font-size: 13px;">output_mime: "image/jpeg"</code>. The <code style="font-family: var(--mono); font-size: 13px;">video_url</code> field is <code style="font-family: var(--mono); font-size: 13px;">null</code> for image jobs.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Why aren't these SKUs in GET /?</p>
+          <p class="faq-a">Image SKUs are unlisted &mdash; they do not appear in the storefront catalog returned by <code style="font-family: var(--mono); font-size: 13px;">GET /</code>. Use the endpoint URLs directly as shown on this page. The 402 quote mechanism works identically to video endpoints.</p>
+        </div>
+
+        <div class="faq-item">
           <p class="faq-q">What is x402 and why does it replace an API key?</p>
-          <p class="faq-a">x402 is an open protocol that uses the HTTP 402 status code to quote and settle payments inline with each request. Instead of registering for an API key and pre-paying a subscription, your code holds a small wallet of USDC on Base and pays the exact quoted amount per call. No account, no billing page, no rate-limit tiers — just per-request USDC settlement.</p>
+          <p class="faq-a">x402 is an open protocol that uses the HTTP 402 status code to quote and settle payments inline with each request. Instead of registering for an API key and pre-paying a subscription, your code holds a small wallet of USDC on Base and pays the exact quoted amount per call. No account, no billing page, no rate-limit tiers &mdash; just per-request USDC settlement.</p>
         </div>
 
         <div class="faq-item">
-          <p class="faq-q">What do I need to get started?</p>
-          <p class="faq-a">Node 20+ (for <code style="font-family: var(--mono); font-size: 13px;">@x402/fetch</code>) and roughly $1 of USDC on the Base network. Generate a wallet keypair locally (see the <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">getting-started guide</a>), fund it with USDC from Coinbase/Binance/OKX on the Base network, and you're ready. You do not need ETH — payments are gasless for the buyer.</p>
-        </div>
-
-        <div class="faq-item">
-          <p class="faq-q">How fast does Seedance generation take?</p>
-          <p class="faq-a">Generation is asynchronous and typically completes in 1–3 minutes. Your first call returns a <code style="font-family: var(--mono); font-size: 13px;">job_id</code>; poll <code style="font-family: var(--mono); font-size: 13px;">GET /jobs/:id</code> (free, no auth) until <code style="font-family: var(--mono); font-size: 13px;">status</code> is <code style="font-family: var(--mono); font-size: 13px;">succeeded</code>, then download <code style="font-family: var(--mono); font-size: 13px;">video_url</code>. The link expires ~24h after delivery, so store the file promptly.</p>
-        </div>
-
-        <div class="faq-item">
-          <p class="faq-q">What if generation fails — am I charged?</p>
-          <p class="faq-a">Prompts are screened before payment — rejected requests (403) are never charged. Rate-limit (429) and capacity (503) responses also happen pre-payment. If on-chain settlement fails, the job is <code style="font-family: var(--mono); font-size: 13px;">cancelled</code> and you are not charged. If the upstream model fails after successful payment, contact us with your <code style="font-family: var(--mono); font-size: 13px;">job_id</code> — every outcome is in an audit log.</p>
+          <p class="faq-q">What if generation fails &mdash; am I charged?</p>
+          <p class="faq-a">Prompts are screened before payment &mdash; rejected requests (403) are never charged. Rate-limit (429) and capacity (503) responses also happen pre-payment. If on-chain settlement fails, the job is <code style="font-family: var(--mono); font-size: 13px;">cancelled</code> and you are not charged.</p>
         </div>
 
         <div class="faq-item">
           <p class="faq-q">Which network and token is used?</p>
-          <p class="faq-a">USDC on Base (<code style="font-family: var(--mono); font-size: 13px;">eip155:8453</code>). The 402 quote always specifies the exact asset, amount, and recipient — you can verify before signing. Payments are EIP-3009 authorizations signed locally; only the signature travels over the network.</p>
+          <p class="faq-a">USDC on Base (<code style="font-family: var(--mono); font-size: 13px;">eip155:8453</code>). The 402 quote always specifies the exact asset, amount, and recipient &mdash; you can verify before signing. Payments are EIP-3009 authorizations signed locally; only the signature travels over the network.</p>
         </div>
 
       </div>
@@ -313,12 +332,12 @@ while (true) {
     <section id="resources" style="padding-bottom: 0;">
       <h2>Resources</h2>
       <ul style="margin: 0; padding: 0 0 0 20px; color: var(--tx2); font-size: 14px; line-height: 2;">
-        <li><a href="/">x402video.com — main landing page</a></li>
-        <li><a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting Started Guide — zero to first video in 5 minutes</a></li>
-        <li><a href="https://api.x402video.com/llms.txt">api.x402video.com/llms.txt — machine-readable catalog (for AI agents)</a></li>
-        <li><a href="https://api.x402video.com/openapi.json">api.x402video.com/openapi.json — OpenAPI spec with x-payment-info pricing</a></li>
-        <li><a href="https://docs.x402.org">docs.x402.org — x402 protocol documentation</a></li>
-        <li><a href="/custom/">Pricing calculator — interactive live quotes for custom parameters</a></li>
+        <li><a href="/">x402video.com &mdash; main landing page</a></li>
+        <li><a href="/seedance/">Seedance API &mdash; text-to-video documentation</a></li>
+        <li><a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting Started Guide &mdash; zero to first result in 5 minutes</a></li>
+        <li><a href="https://api.x402video.com/llms.txt">api.x402video.com/llms.txt &mdash; machine-readable catalog (for AI agents)</a></li>
+        <li><a href="https://api.x402video.com/openapi.json">api.x402video.com/openapi.json &mdash; OpenAPI spec</a></li>
+        <li><a href="https://docs.x402.org">docs.x402.org &mdash; x402 protocol documentation</a></li>
       </ul>
     </section>
 
@@ -328,15 +347,15 @@ while (true) {
 <footer class="footer">
   <div class="footer-in">
     <div class="foot-links">
-      <a href="/">← Home</a>
-      <a href="/kling/">Kling page</a>
-      <a href="/image/">Image API</a>
-      <a href="https://makereel.xyz">MakeReel ↗</a>
-      <a href="https://github.com/x402-video">GitHub ↗</a>
+      <a href="/">&#x2190; Home</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="/kling/">Kling API</a>
+      <a href="https://makereel.xyz">MakeReel &#x2197;</a>
+      <a href="https://github.com/x402-video">GitHub &#x2197;</a>
       <a href="https://api.x402video.com/llms.txt">/llms.txt</a>
-      <a href="https://docs.x402.org">docs.x402.org ↗</a>
+      <a href="https://docs.x402.org">docs.x402.org &#x2197;</a>
     </div>
-    <p class="foot-note">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+    <p class="foot-note">x402video.com is an independent gateway. Not affiliated with xAI or any model vendor. USDC on Base; payments are gasless for the buyer. Signed image URLs expire ~24h after delivery.</p>
   </div>
 </footer>
 
