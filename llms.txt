@@ -49,6 +49,11 @@ and capacity rejections (503) are never charged.
 
 Full use-case page: https://x402video.com/use-cases/
 
+## Concepts & guides
+
+- https://x402video.com/what-is-x402/ — what x402 is, how the HTTP 402 pay-per-call flow works, and who it is for
+- https://x402video.com/compare/ — x402video vs. traditional API-key video services (no signup / no API key / pay-per-call)
+
 ## Humans
 
 - https://x402video.com — landing page

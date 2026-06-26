@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>What is x402? Pay-Per-Call AI Video for Agents | x402video.com</title>
+<meta name="description" content="x402 is an open protocol that uses the HTTP 402 status code to quote and settle payments inline with a request. x402video applies it to AI video and image generation: no account, no API key — pay per call in USDC on Base." />
+<link rel="canonical" href="https://x402video.com/what-is-x402/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="x402video.com" />
+<meta property="og:title" content="What is x402? Pay-per-call AI video for agents" />
+<meta property="og:description" content="x402 uses HTTP 402 to quote and settle payment inline with each request. x402video is a pay-per-call AI video and image gateway built on it — no account, no API key, USDC on Base." />
+<meta property="og:url" content="https://x402video.com/what-is-x402/" />
+<meta property="og:image" content="https://x402video.com/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "What is x402? Pay-per-call AI video generation for agents",
+  "description": "x402 is an open protocol that uses the HTTP 402 status code to quote and settle payments inline with a request. x402video is a pay-per-call AI video and image generation gateway built on x402: no account, no API key, settled in USDC on Base.",
+  "datePublished": "2026-06-26",
+  "dateModified": "2026-06-26",
+  "author": { "@type": "Organization", "name": "x402video" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "x402video",
+    "url": "https://x402video.com/",
+    "logo": "https://x402video.com/assets/og.png"
+  },
+  "mainEntityOfPage": "https://x402video.com/what-is-x402/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is x402 in one sentence?",
+      "acceptedAnswer": { "@type": "Answer", "text": "x402 is an open payment protocol that uses the HTTP 402 Payment Required status code to quote and settle a payment inline with the request itself — so software can pay for a resource the moment it asks for it." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is x402video?",
+      "acceptedAnswer": { "@type": "Answer", "text": "x402video is an agent-native, pay-per-call AI video and image generation gateway built on the x402 protocol. There is no account and no API key: each call is quoted via HTTP 402 and paid in USDC on Base, starting around $2.40 per 5-second 720p video." }
+    },
+    {
+      "@type": "Question",
+      "name": "How is x402 different from an API key?",
+      "acceptedAnswer": { "@type": "Answer", "text": "With an API key you register an account, pre-pay or attach a credit card, and authenticate every request with a secret. With x402 your wallet is your identity: you hold a small balance of USDC on Base, and your client pays the exact quoted amount per request. No signup, no stored card, no rate-limit tiers." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is x402 good for AI agents?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Autonomous agents cannot fill in a signup form or paste a credit card. x402 lets an agent discover a price (the 402 quote), pay it programmatically, and receive the result in a single automated loop — no human in the loop. @x402/fetch handles 402 → pay → retry in one line of setup." }
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --card2: #f4f5f6; --hov: #f0f1f3;
+    --bd: #e2e2e6; --bd2: #e8e8ec; --bd3: #f0f0f2;
+    --tx: #18181b; --tx2: #52525b; --tx3: #87878f; --tx4: #c2c2c8;
+    --ac: #2563eb; --acBg: #e8efff; --acBd: #bcd2fb;
+    --ok: #16a34a; --warn: #a16207; --warnBg: #fdf6e3; --warnBd: #e6d399;
+    --mono: ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--ac); }
+  a:hover { opacity: 0.8; }
+  .topbar { border-bottom: 1px solid var(--bd2); background: rgba(250,250,250,0.92); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+  .topbar-in { max-width: 900px; margin: 0 auto; padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tx); }
+  .brand-glyph { width: 22px; height: 22px; border-radius: 5px; background: var(--ac); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .brand-name { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--tx2); text-decoration: none; }
+  .nav-links a:hover { color: var(--tx); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+  .hero { padding: 56px 0 40px; }
+  .badge { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--bd); border-radius: 999px; padding: 4px 14px; font-size: 12.5px; color: var(--tx2); margin-bottom: 20px; }
+  .dot-ok { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: inline-block; }
+  h1 { margin: 0 0 14px; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+  .lead { margin: 0 0 28px; font-size: 17px; color: var(--tx2); max-width: 62ch; text-wrap: pretty; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-outline { text-decoration: none; border: 1px solid var(--bd); color: var(--tx); border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-outline:hover { border-color: var(--ac); }
+  section { padding: 44px 0 0; }
+  section:last-of-type { padding-bottom: 72px; }
+  h2 { margin: 0 0 16px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  h3 { margin: 24px 0 8px; font-size: 17px; font-weight: 700; }
+  p { max-width: 72ch; text-wrap: pretty; }
+  .answer { font-size: 16px; color: var(--tx); }
+  .answer strong { font-weight: 700; }
+  ol, ul { max-width: 72ch; color: var(--tx2); }
+  li { margin: 6px 0; }
+  code { font-family: var(--mono); font-size: 13px; background: var(--card2); border: 1px solid var(--bd); padding: 2px 6px; border-radius: 4px; }
+  .pricing-table { width: 100%; border-collapse: collapse; border: 1px solid var(--bd); border-radius: 10px; overflow: hidden; font-size: 14px; }
+  .pricing-table th { background: var(--card2); padding: 11px 16px; text-align: left; font-weight: 600; color: var(--tx2); border-bottom: 1px solid var(--bd); }
+  .pricing-table td { padding: 11px 16px; border-bottom: 1px solid var(--bd2); vertical-align: top; }
+  .pricing-table tr:last-child td { border-bottom: none; }
+  .price { font-family: var(--mono); font-weight: 700; color: var(--ac); }
+  .faq-item { border-bottom: 1px solid var(--bd2); padding: 18px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { margin: 0 0 7px; font-size: 15px; font-weight: 600; }
+  .faq-a { margin: 0; font-size: 14px; color: var(--tx2); max-width: 72ch; text-wrap: pretty; }
+  .card { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); padding: 22px 24px; }
+  .footer { border-top: 1px solid var(--bd2); margin-top: 60px; }
+  .footer-in { max-width: 900px; margin: 0 auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+  .foot-links a { color: var(--tx2); text-decoration: none; }
+  .foot-links a:hover { color: var(--tx); }
+  .foot-note { margin: 0; font-size: 12.5px; color: var(--tx4); }
+  @media (max-width: 640px) {
+    h1 { font-size: 30px; }
+    .wrap { padding: 0 18px; }
+    .topbar-in { padding: 12px 18px; }
+    .footer-in { padding: 20px 18px; }
+    .pricing-table { font-size: 13px; }
+    .pricing-table td, .pricing-table th { padding: 9px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/">
+      <span class="brand-glyph">x</span>
+      <span class="brand-name">x402video.com</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/compare/">Compare</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="badge"><span class="dot-ok"></span> x402 explained · pay-per-call · USDC on Base</div>
+      <h1>What is x402?</h1>
+      <p class="lead answer"><strong>x402 is an open payment protocol that uses the HTTP 402 "Payment Required" status code to quote and settle a payment inline with the request itself.</strong> Instead of registering an account and authenticating with an API key, software holds a small balance of digital dollars (USDC) and pays the exact quoted price the moment it asks for a resource. x402video is a pay-per-call AI video and image generation gateway built on this protocol — no account, no API key, settled in USDC on Base.</p>
+      <div class="ctas">
+        <a class="btn-primary" href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Get started in 5 min</a>
+        <a class="btn-outline" href="/compare/">x402 vs. API keys →</a>
+      </div>
+    </section>
+
+    <section id="protocol">
+      <h2>What does the HTTP 402 status code do?</h2>
+      <p>402 Payment Required has been reserved in the HTTP specification for decades, waiting for a payment standard to use it. The x402 protocol fills that gap. When a client requests a paid resource, the server replies <code>402 Payment Required</code> with a machine-readable quote: the asset (USDC), the exact amount, the network (Base), and the address to pay. The client signs a payment authorization and retries the same request with the payment attached. The server verifies, settles on-chain, and returns the result.</p>
+      <p>The key idea: <strong>price discovery and payment happen inside the normal request/response cycle</strong>, with no out-of-band signup, invoicing, or key management.</p>
+    </section>
+
+    <section id="how-x402video-uses-it">
+      <h2>How does x402video use x402?</h2>
+      <p class="answer">x402video puts AI video and image models behind x402 endpoints. You POST a prompt; the gateway screens it and replies with a 402 quote; your client pays in USDC on Base; the video generates. A 5-second 720p clip starts around <span class="price">$2.40</span>. Here is the flow, step by step:</p>
+      <ol>
+        <li><strong>POST your prompt</strong> to a generation endpoint. The gateway screens the prompt and replies <code>402</code> with a signed quote.</li>
+        <li><strong>Pay &amp; retry — automatically.</strong> <code>@x402/fetch</code> signs the USDC transfer and retries the request for you. One line of setup.</li>
+        <li><strong>Poll the job</strong> at <code>GET /jobs/:id</code> (free) until <code>status</code> is <code>succeeded</code>.</li>
+        <li><strong>Download within 24h.</strong> The response carries a signed <code>video_url</code> that expires, so grab it promptly.</li>
+      </ol>
+      <p>Because there is no human step anywhere in that loop, an autonomous agent can run it end-to-end on its own.</p>
+    </section>
+
+    <section id="who">
+      <h2>Who is x402video for?</h2>
+      <p>x402video serves two audiences on the same rails:</p>
+      <ul>
+        <li><strong>Developers and AI agents</strong> that need media generation without onboarding friction — buy a single clip programmatically with no account, no key, and no minimum commitment.</li>
+        <li><strong>People</strong>, through <a href="https://makereel.xyz">MakeReel.xyz</a> — the consumer-facing app built on x402video, where a wallet signs in and pays per clip on the exact same protocol.</li>
+      </ul>
+    </section>
+
+    <section id="custody">
+      <h2>Do I hand over custody of my money?</h2>
+      <p class="answer"><strong>No.</strong> You keep your own wallet. Each 402 quote names the exact amount and recipient before anything is signed, so you can verify the charge. Payments are EIP-3009 authorizations signed locally — only the signature travels over the network — and they are gasless for the buyer, so you only need USDC, not ETH. Prompts are screened before the quote is issued, and a rejected request is never charged.</p>
+    </section>
+
+    <section id="pricing">
+      <h2>How much does x402video cost?</h2>
+      <p>Pricing is programmatic: upstream model cost × markup, tracking the upstream price cards automatically. Representative reference prices (verify the live 402 quote before paying):</p>
+      <table class="pricing-table">
+        <thead>
+          <tr><th>What</th><th>Endpoint</th><th>Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Seedance 2.0 Fast · 5s 720p video</td><td><code>POST /generate/seedance-fast/5s-720p</code></td><td><span class="price">~$2.40</span> / call</td></tr>
+          <tr><td>Seedance 2.0 · 5s 720p video</td><td><code>POST /generate/seedance/5s-720p</code></td><td><span class="price">~$3.04</span> / call</td></tr>
+          <tr><td>Image — Standard</td><td><code>POST /generate/grok-imagine/image</code></td><td><span class="price">$0.05</span> / image</td></tr>
+          <tr><td>Image — Quality</td><td><code>POST /generate/grok-imagine/image-quality</code></td><td><span class="price">$0.10</span> / image</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 12px; font-size: 13px; color: var(--tx3);">Live quotes always at <a href="https://api.x402video.com/">api.x402video.com</a>. See full pricing on the <a href="/">home page</a> and the <a href="/custom/">pricing calculator</a>.</p>
+    </section>
+
+    <section id="faq">
+      <h2>x402 — frequently asked questions</h2>
+      <div class="card">
+        <div class="faq-item">
+          <p class="faq-q">What is x402 in one sentence?</p>
+          <p class="faq-a">x402 is an open payment protocol that uses the HTTP 402 Payment Required status code to quote and settle a payment inline with the request itself — so software can pay for a resource the moment it asks for it.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">What is x402video?</p>
+          <p class="faq-a">x402video is an agent-native, pay-per-call AI video and image generation gateway built on the x402 protocol. There is no account and no API key: each call is quoted via HTTP 402 and paid in USDC on Base, starting around $2.40 per 5-second 720p video.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">How is x402 different from an API key?</p>
+          <p class="faq-a">With an API key you register an account, pre-pay or attach a credit card, and authenticate every request with a secret. With x402 your wallet is your identity: you hold a small balance of USDC on Base, and your client pays the exact quoted amount per request. No signup, no stored card, no rate-limit tiers. See the full <a href="/compare/">comparison</a>.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Why is x402 good for AI agents?</p>
+          <p class="faq-a">Autonomous agents cannot fill in a signup form or paste a credit card. x402 lets an agent discover a price (the 402 quote), pay it programmatically, and receive the result in a single automated loop — no human in the loop. @x402/fetch handles 402 → pay → retry in one line of setup.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" style="padding-bottom: 0;">
+      <h2>Learn more</h2>
+      <ul style="line-height: 2;">
+        <li><a href="/">x402video.com — main landing page and live pricing</a></li>
+        <li><a href="/compare/">x402video vs. traditional API-key video services</a></li>
+        <li><a href="/seedance/">Seedance API — no API key, pay per call</a></li>
+        <li><a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting Started — zero to first video in 5 minutes</a></li>
+        <li><a href="https://api.x402video.com/llms.txt">api.x402video.com/llms.txt — machine-readable catalog for agents</a></li>
+        <li><a href="https://docs.x402.org">docs.x402.org — the x402 protocol specification</a></li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="foot-links">
+      <a href="/">← Home</a>
+      <a href="/compare/">Compare</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="/image/">Image API</a>
+      <a href="https://makereel.xyz">MakeReel ↗</a>
+      <a href="https://github.com/x402-video">GitHub ↗</a>
+      <a href="https://docs.x402.org">docs.x402.org ↗</a>
+    </div>
+    <p class="foot-note">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.</p>
+  </div>
+</footer>
+
+</body>
+</html>
