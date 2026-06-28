@@ -13,8 +13,8 @@
 //
 // Sources: GET / (fixed-SKU prices) + GET /openapi.json (parametric custom min/max).
 // When the gateway ships GET /catalog.v1.json, fold both into that one read.
-// Image SKUs ($0.05/$0.10) are intentionally NOT managed here: they are unlisted
-// upstream and absent from the storefront. They stay hand-maintained until listed.
+// Image SKUs are unlisted in the video gateway but ARE managed here via constants
+// (IMAGE_STD_USD / IMAGE_QUAL_USD). Update those two values if Grok Imagine pricing changes.
 
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -24,6 +24,12 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = (process.env.SOURCE || "https://api.x402video.com/").replace(/\/+$/, "");
 const CHECK = process.argv.includes("--check");
 const DASH = "–"; // en-dash used in "$0.26–$3.42"
+
+// Image generation prices are unlisted in the video gateway; hand-maintained here.
+// These are the SINGLE source of truth for image/index.html prices.
+// Update here if Grok Imagine pricing changes; the generator propagates the new values.
+const IMAGE_STD_USD = "0.05";  // POST /generate/grok-imagine/image
+const IMAGE_QUAL_USD = "0.10"; // POST /generate/grok-imagine/image-quality
 
 const usd = (n) => Number(n).toFixed(2); // "3.04"
 const perSec = (n) => Number(Number(n).toFixed(4)).toString(); // 0.608 -> "0.608", 0.48 -> "0.48"
@@ -145,6 +151,42 @@ function klingRules(c) {
   return [rule("avail-from", /(Live now — from \$)\d+(?:\.\d+)?(\/call)/, (_m, a, b) => a + usd(c.min) + b)];
 }
 
+function llmsRules(c) {
+  // llms.txt is plain text — uses ASCII hyphen for ranges (not en-dash).
+  const mdRange = (lo, hi) => `$${usd(lo)}-$${usd(hi)}`;
+  return [
+    // Pricing table rows (lines 11-14 of llms.txt)
+    rule("tbl-fast-fixed",  /(seedance-fast\/5s-720p \| 5s 720p MP4 \| ~\$)\d+(?:\.\d+)?( \/ call \|)/, (_m, a, b) => a + usd(c.fast.price) + b),
+    rule("tbl-std-fixed",   /(seedance\/5s-720p \| 5s 720p MP4 \(highest quality\) \| ~\$)\d+(?:\.\d+)?( \/ call \|)/, (_m, a, b) => a + usd(c.std.price) + b),
+    rule("tbl-fast-custom", /(seedance-fast\/custom \| 4-15s, 480p\/720p, optional audio \| )\$\d+(?:\.\d+)?-\$\d+(?:\.\d+)?( \|)/, (_m, a, b) => a + mdRange(c.fastCustom.min, c.fastCustom.max) + b),
+    rule("tbl-std-custom",  /(seedance\/custom \| 4-15s, up to 1080p, optional audio \| )\$\d+(?:\.\d+)?-\$\d+(?:\.\d+)?( \|)/, (_m, a, b) => a + mdRange(c.stdCustom.min, c.stdCustom.max) + b),
+    // Use-case lines: seedance-fast/5s-720p appears on two separate lines (~$N.NN/clip)
+    rule("uc-fast-fixed", /(generate\/seedance-fast\/5s-720p \(~\$)\d+(?:\.\d+)?(\/clip\))/g, (_m, a, b) => a + usd(c.fast.price) + b, 2),
+    // Use-case line: seedance/5s-720p (~$N.NN/clip)
+    rule("uc-std-fixed",  /(generate\/seedance\/5s-720p \(~\$)\d+(?:\.\d+)?(\/clip\))/, (_m, a, b) => a + usd(c.std.price) + b),
+    // Use-case line: seedance/custom range with en-dash
+    rule("uc-std-custom", /(generate\/seedance\/custom \(up to 15s, 1080p, \$)\d+(?:\.\d+)?[–-]\$\d+(?:\.\d+)?(\))/, (_m, a, b) => a + usd(c.stdCustom.min) + DASH + "$" + usd(c.stdCustom.max) + b),
+  ];
+}
+
+function imageRules(_c) {
+  // Image prices come from constants IMAGE_STD_USD / IMAGE_QUAL_USD (not the video gateway).
+  return [
+    // meta description + og:description "From $N.NN/call" — appears twice
+    rule("meta-from", /(From \$)\d+(?:\.\d+)?(\/call)/g, (_m, a, b) => a + IMAGE_STD_USD + b, 2),
+    // hero badge "from $N.NN/call"
+    rule("badge-from", /(from \$)\d+(?:\.\d+)?(\/call)/, (_m, a, b) => a + IMAGE_STD_USD + b),
+    // JSON-LD: standard offer price
+    rule("ld-std",  /("name": "Image Generation — Standard"[\s\S]{0,90}?"price": ")\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_STD_USD),
+    // JSON-LD: quality offer price
+    rule("ld-qual", /("name": "Image Generation — Quality"[\s\S]{0,90}?"price": ")\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_QUAL_USD),
+    // pricing table: grok-imagine/image row (note: /image must NOT match /image-quality)
+    rule("tbl-std",  /(grok-imagine\/image<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_STD_USD),
+    // pricing table: grok-imagine/image-quality row
+    rule("tbl-qual", /(grok-imagine\/image-quality<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_QUAL_USD),
+  ];
+}
+
 const FILES = {
   "index.html": homeRules,
   "seedance/index.html": seedanceRules,
@@ -152,6 +194,8 @@ const FILES = {
   "what-is-x402/index.html": whatIsRules,
   "compare/index.html": compareRules,
   "kling/index.html": klingRules,
+  "llms.txt": llmsRules,
+  "image/index.html": imageRules,
 };
 
 async function applyRules(relPath, rules) {

@@ -8,10 +8,10 @@
 
 | Endpoint | Output | Price |
 |---|---|---|
-| POST https://api.x402video.com/generate/seedance-fast/5s-720p | 5s 720p MP4 | ~$0.45 / call |
-| POST https://api.x402video.com/generate/seedance/5s-720p | 5s 720p MP4 (highest quality) | ~$0.56 / call |
-| POST https://api.x402video.com/generate/seedance-fast/custom | 4-15s, 480p/720p, optional audio | $0.13-$1.49 |
-| POST https://api.x402video.com/generate/seedance/custom | 4-15s, up to 1080p, optional audio | $0.27-$4.62 |
+| POST https://api.x402video.com/generate/seedance-fast/5s-720p | 5s 720p MP4 | ~$1.05 / call |
+| POST https://api.x402video.com/generate/seedance/5s-720p | 5s 720p MP4 (highest quality) | ~$1.33 / call |
+| POST https://api.x402video.com/generate/seedance-fast/custom | 4-15s, 480p/720p, optional audio | $0.40-$3.15 |
+| POST https://api.x402video.com/generate/seedance/custom | 4-15s, up to 1080p, optional audio | $0.49-$9.82 |
 
 The 402 response always quotes the exact USDC amount for your request before you pay.
 Custom body fields: { prompt, duration 4-15, resolution "480p"|"720p"|"1080p", ratio, seed, generate_audio, camera_fixed }.
@@ -40,11 +40,11 @@ and capacity rejections (503) are never charged.
 
 ## What people build with this
 
-- Ad creative / high-frequency variant generation → POST /generate/seedance-fast/5s-720p (~$0.45/clip)
-- Product demo b-roll / landing-page cinematic clips → POST /generate/seedance/5s-720p (~$0.56/clip)
+- Ad creative / high-frequency variant generation → POST /generate/seedance-fast/5s-720p (~$1.05/clip)
+- Product demo b-roll / landing-page cinematic clips → POST /generate/seedance/5s-720p (~$1.33/clip)
 - Social shorts 9:16 vertical (TikTok / Reels / Shorts) → POST /generate/seedance-fast/custom with ratio "9:16"
-- Blog & news auto b-roll (LLM reads article → prompt → video) → POST /generate/seedance-fast/5s-720p (~$0.45/clip)
-- Game / film previz & storyboard prototyping → POST /generate/seedance/custom (up to 15s, 1080p, $0.27–$4.62)
+- Blog & news auto b-roll (LLM reads article → prompt → video) → POST /generate/seedance-fast/5s-720p (~$1.05/clip)
+- Game / film previz & storyboard prototyping → POST /generate/seedance/custom (up to 15s, 1080p, $0.49–$9.82)
 - Agent-to-agent commerce / autonomous pipeline purchasing → any endpoint; x402 lets agents pay with a USDC wallet, no human OAuth needed
 
 Full use-case page: https://x402video.com/use-cases/
