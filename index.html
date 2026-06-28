@@ -28,10 +28,58 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": 0.91,
-    "highPrice": 0.96,
+    "lowPrice": 1.05,
+    "highPrice": 1.33,
     "offerCount": 2
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "x402video",
+  "url": "https://x402video.com/",
+  "logo": "https://x402video.com/assets/og.png",
+  "description": "x402video is an agent-native pay-per-call AI video and image generation gateway built on the x402 payment protocol. No accounts, no API keys: each call is quoted via HTTP 402 and paid in USDC on Base.",
+  "sameAs": [
+    "https://github.com/x402-video",
+    "https://makereel.xyz",
+    "https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is x402?",
+      "acceptedAnswer": { "@type": "Answer", "text": "An open protocol that uses the HTTP 402 status code to quote and settle payments inline with the request. Full spec at docs.x402.org." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need an account?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Your wallet is your identity. The first response is a 402 quote; pay it and the same request succeeds." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long are videos stored?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You get a signed URL valid for about 24 hours. Download promptly — expired URLs are not reissued." }
+    },
+    {
+      "@type": "Question",
+      "name": "What if generation fails?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You are not charged before settlement succeeds. If the upstream model fails after payment, the failure policy published in GET / applies — machine-readable, and honored." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which chain and currency does x402video use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "USDC on Base mainnet. Payments are gasless for the buyer — you only need USDC, no ETH." }
+    }
+  ]
 }
 </script>
 <style>
@@ -343,14 +391,14 @@
   <!-- hero -->
   <section class="hero">
     <div class="hero-left">
-      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $0.91/call · USDC on Base · no signup</span></div>
+      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $1.05/call · USDC on Base · no signup</span></div>
       <h1 class="hero-title" data-i18n="heroTitle">Your AI agent pays for video. No signup, no API key.</h1>
       <p class="hero-sub" data-i18n="heroSub">Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.</p>
-      <div class="hero-endpoint"><code>POST https://api.x402video.com/generate/seedance-fast/5s-720p</code> · $0.91/call</div>
+      <div class="hero-endpoint"><code>POST https://api.x402video.com/generate/seedance-fast/5s-720p</code> · $1.05/call</div>
       <div class="hero-ctas">
         <a class="btn-primary" href="#buy" data-i18n="ctaCode">See the code</a>
         <a class="btn-outline" href="#pricing" data-i18n="navPricing">Pricing</a>
-        <a class="link-quiet" href="https://docs.x402.org" data-i18n="ctaWhat">What is x402? ↗</a>
+        <a class="link-quiet" href="/what-is-x402/" data-i18n="ctaWhat">What is x402? ↗</a>
       </div>
       <div class="agents-line"><span data-i18n="agents">For agents:</span> <a id="llms-link" href="#">GET /llms.txt</a> · <a id="storefront-link" href="#">GET / → JSON storefront</a></div>
     </div>
@@ -377,7 +425,15 @@
 
   <!-- 402 stepper strip -->
   <section class="stepper-strip">
-    <div class="stepper" id="stepper"></div>
+    <div class="stepper" id="stepper">
+      <div class="stage" data-stage="0"><div class="stage-head"><span class="stage-dot"></span><span class="stage-label">Request</span></div><span class="stage-desc">POST /generate/…</span></div>
+      <div class="conn" data-conn="0"></div>
+      <div class="stage" data-stage="1"><div class="stage-head"><span class="stage-dot"></span><span class="stage-label">402 quote</span></div><span class="stage-desc">price + pay-to address</span></div>
+      <div class="conn" data-conn="1"></div>
+      <div class="stage" data-stage="2"><div class="stage-head"><span class="stage-dot"></span><span class="stage-label">Pay USDC</span></div><span class="stage-desc">auto via @x402/fetch</span></div>
+      <div class="conn" data-conn="2"></div>
+      <div class="stage" data-stage="3"><div class="stage-head"><span class="stage-dot"></span><span class="stage-label">Video</span></div><span class="stage-desc">signed URL · 24h</span></div>
+    </div>
   </section>
 
   <!-- protocol trace -->
@@ -387,7 +443,19 @@
         <span class="card-label" data-i18n="trLabel">PROTOCOL TRACE — ONE PAID CALL</span>
         <span class="trace-status">replaying ●</span>
       </div>
-      <div class="trace-body" id="trace-body"></div>
+      <div class="trace-body" id="trace-body">
+        <div class="trace-line c-tx show">→ POST /generate/seedance/5s-720p HTTP/1.1</div>
+        <div class="trace-line c-tx3 show">  {"prompt":"aerial coastline at dawn"}</div>
+        <div class="trace-line c-warn show">← HTTP/1.1 402 Payment Required</div>
+        <div class="trace-line c-tx3 show">  accepts: USDC on Base · scheme exact (eip-3009)</div>
+        <div class="trace-line c-warn show">  amount: $1.33</div>
+        <div class="trace-line c-tx3 show">  signing payment authorization… 0x7f3a…c21e</div>
+        <div class="trace-line c-tx show">→ POST /generate/seedance/5s-720p · x-payment: signed</div>
+        <div class="trace-line c-ac show">← HTTP/1.1 200 OK · job_9f2e queued</div>
+        <div class="trace-line c-tx3 show">  GET /jobs/job_9f2e … generating</div>
+        <div class="trace-line c-ac show">← status: succeeded · video_url ready (expires 24h)</div>
+        <div class="trace-line c-ok show">✓ delivered — 5s 720p MP4 · total cost $1.33</div>
+      </div>
     </div>
   </section>
 
@@ -397,14 +465,18 @@
       <h2 class="sec-title" data-i18n="obTitle">New to x402? Three things, then you're done.</h2>
       <a class="ob-skip" href="#pricing" data-i18n="obSkip">Coming from x402scan or already on Base? Skip to pricing →</a>
     </div>
-    <div class="grid3" id="ob-grid"></div>
+    <div class="grid3" id="ob-grid">
+      <div class="ob-card"><div class="ob-top"><span class="ob-num">1</span><span class="ob-title">Your wallet is your account</span></div><p class="ob-body">No signup. Any EVM wallet works — Coinbase Wallet takes about two minutes to set up.</p></div>
+      <div class="ob-card"><div class="ob-top"><span class="ob-num">2</span><span class="ob-title">USDC is digital dollars</span></div><p class="ob-body">1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $1.33.</p></div>
+      <div class="ob-card"><div class="ob-top"><span class="ob-num">3</span><span class="ob-title">Payment is automatic</span></div><p class="ob-body">@x402/fetch handles 402 → pay → retry in one line of setup. You never touch the chain by hand.</p></div>
+    </div>
   </section>
 
   <!-- trust strip -->
   <section class="section">
     <div class="sec-head">
       <h2 class="sec-title" data-i18n="stTitle">Live gateway stats</h2>
-      <span class="st-src" id="st-src" hidden><span data-i18n="stFrom">Never cached, never edited. From</span> <a class="mono" id="status-link" href="#" style="color: inherit;">GET /status</a></span>
+      <span class="st-src" id="st-src" hidden><span data-i18n="stFrom">Never cached, never edited. From</span> <a class="mono" id="status-link" href="#" style="color: inherit;">GET api.x402video.com/status</a></span>
     </div>
     <div class="st-ind" id="st-ind"><span class="st-line mono" data-i18n="connecting">connecting to gateway…</span></div>
     <div class="grid4" id="stats-grid" hidden></div>
@@ -416,7 +488,84 @@
     <h2 class="sec-title" style="margin-bottom: 4px;" data-i18n="prTitle">Models &amp; pricing</h2>
     <p class="pr-sub" data-i18n="prSub">Programmatic pricing — upstream cost × markup + network fee. Prices track upstream price cards automatically.</p>
     <div class="ref-banner" id="ref-banner" hidden data-i18n="prRef">⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.</div>
-    <div class="grid3" id="sku-cards"></div>
+    <div class="grid3" id="sku-cards">
+      <div class="model-card">
+        <div class="model-media"><img src="assets/art-portrait.png" alt="Seedance 2.0 Text-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">text-to-video</span>
+          <span class="model-name">Seedance 2.0 Text-to-Video</span>
+          <p class="model-desc">Generate video from a text prompt — multi-shot narrative, cinematic motion.</p>
+          <span class="model-ep" title="POST /generate/seedance/5s-720p">POST /generate/seedance/5s-720p</span>
+        </div>
+        <!-- x402-pricing:start card-std --><div class="model-foot"><div><span class="model-price">$0.266</span><span class="model-per">/ sec</span><span class="model-call">$1.33 · 5s 720p per call</span></div><a class="try-btn" href="#buy">↗ Try it</a></div><!-- x402-pricing:end card-std -->
+      </div>
+      <div class="model-card soon">
+        <div class="model-media"><img src="assets/art-tree.png" alt="Seedance 2.0 Image-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">image-to-video</span>
+          <span class="model-name">Seedance 2.0 Image-to-Video</span>
+          <p class="model-desc">Animate a first-frame image (optional last-frame) into video.</p>
+        </div>
+        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
+      </div>
+      <div class="model-card soon">
+        <div class="model-media"><img src="assets/art-meadow.png" alt="Seedance 2.0 Reference-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">reference-to-video</span>
+          <span class="model-name">Seedance 2.0 Reference-to-Video</span>
+          <p class="model-desc">Character-driven video from reference images and clips.</p>
+        </div>
+        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
+      </div>
+      <div class="model-card">
+        <div class="model-media"><img src="assets/art-denim.png" alt="Seedance 2.0 Fast Text-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">text-to-video</span>
+          <span class="model-name">Seedance 2.0 Fast Text-to-Video</span>
+          <p class="model-desc">Generate video from a text prompt — multi-shot narrative, cinematic motion.</p>
+          <span class="model-ep" title="POST /generate/seedance-fast/5s-720p">POST /generate/seedance-fast/5s-720p</span>
+        </div>
+        <!-- x402-pricing:start card-fast --><div class="model-foot"><div><span class="model-price">$0.21</span><span class="model-per">/ sec</span><span class="model-call">$1.05 · 5s 720p per call</span></div><a class="try-btn" href="#buy">↗ Try it</a></div><!-- x402-pricing:end card-fast -->
+      </div>
+      <div class="model-card soon">
+        <div class="model-media"><img src="assets/art-sprout.png" alt="Seedance 2.0 Fast Image-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">image-to-video</span>
+          <span class="model-name">Seedance 2.0 Fast Image-to-Video</span>
+          <p class="model-desc">Animate a first-frame image (optional last-frame) into video.</p>
+        </div>
+        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
+      </div>
+      <div class="model-card soon">
+        <div class="model-media"><img src="assets/art-pasture.png" alt="Seedance 2.0 Fast Reference-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">reference-to-video</span>
+          <span class="model-name">Seedance 2.0 Fast Reference-to-Video</span>
+          <p class="model-desc">Character-driven video from reference images and clips.</p>
+        </div>
+        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
+      </div>
+      <div class="model-card">
+        <div class="model-media"><img src="assets/art-hills.png" alt="Image Generation Standard Text-to-Image — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">text-to-image</span>
+          <span class="model-name">Image Generation Standard Text-to-Image</span>
+          <p class="model-desc">Generate a JPEG image from a text prompt — powered by Grok Imagine.</p>
+          <span class="model-ep" title="POST /generate/grok-imagine/image">POST /generate/grok-imagine/image</span>
+        </div>
+        <div class="model-foot"><div><span class="model-price">$0.05</span><span class="model-per">/ image</span></div><a class="try-btn" href="/image/">↗ Docs</a></div>
+      </div>
+      <div class="model-card">
+        <div class="model-media"><img src="assets/art-sprout.png" alt="Image Generation Quality Text-to-Image — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">text-to-image</span>
+          <span class="model-name">Image Generation Quality Text-to-Image</span>
+          <p class="model-desc">Generate a JPEG image from a text prompt — powered by Grok Imagine.</p>
+          <span class="model-ep" title="POST /generate/grok-imagine/image-quality">POST /generate/grok-imagine/image-quality</span>
+        </div>
+        <div class="model-foot"><div><span class="model-price">$0.10</span><span class="model-per">/ image</span></div><a class="try-btn" href="/image/">↗ Docs</a></div>
+      </div>
+    </div>
     <p class="pr-note" data-i18n="prRoadmap">image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.</p>
   </section>
 
@@ -428,7 +577,12 @@
       <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md" data-i18n="buyGuideLink">zero-to-first-video guide ↗</a>
     </p>
     <div class="buy-grid">
-      <ol class="steps" id="steps"></ol>
+      <ol class="steps" id="steps">
+        <li class="step"><span class="step-num">1</span><div><div class="step-title">POST your prompt</div><div class="step-body">Send your prompt to a generation endpoint. The gateway screens it and replies 402 with a signed quote.</div></div></li>
+        <li class="step"><span class="step-num">2</span><div><div class="step-title">Pay &amp; retry — automatic</div><div class="step-body">@x402/fetch signs the USDC transfer and retries the request for you. One line of setup.</div></div></li>
+        <li class="step"><span class="step-num">3</span><div><div class="step-title">Poll the job</div><div class="step-body">GET /jobs/:id — free — until status is succeeded.</div></div></li>
+        <li class="step"><span class="step-num">4</span><div><div class="step-title">Download within 24h</div><div class="step-body">The response carries a signed video_url. It expires; grab it promptly.</div></div></li>
+      </ol>
       <div class="card">
         <div class="code-head">
           <div class="tabs">
@@ -447,7 +601,11 @@
     <div class="ga-head">
       <h2 class="sec-title" data-i18n="gaTitle">Sample outputs</h2>
     </div>
-    <div class="grid3" id="samples-grid"></div>
+    <div class="grid3" id="samples-grid">
+      <div class="sample-card"><video class="sample-video" src="assets/samples/golden-retriever-autumn-leaves.mp4" autoplay loop muted playsinline preload="metadata" aria-label="golden retriever puppy chasing autumn leaves in a park, cinematic morning light"></video><div class="sample-prompt">prompt: golden retriever puppy chasing autumn leaves in a park, cinematic morning light <span class="model-per">· seedance-fast-5s-720p</span></div></div>
+      <div class="sample-card"><video class="sample-video" src="assets/samples/tokyo-rain-neon.mp4" autoplay loop muted playsinline preload="metadata" aria-label="neon-lit tokyo street at night in the rain, reflections on wet asphalt, cinematic slow push-in"></video><div class="sample-prompt">prompt: neon-lit tokyo street at night in the rain, reflections on wet asphalt, cinematic slow push-in <span class="model-per">· seedance-fast-5s-720p</span></div></div>
+      <div class="sample-card"><video class="sample-video" src="assets/samples/silver-chain-dancer.mp4" autoplay loop muted playsinline preload="metadata" aria-label="silver chain dancer in dim light"></video><div class="sample-prompt">prompt: silver chain dancer in dim light <span class="model-per">· seedance-6s-720p</span></div></div>
+    </div>
     <p class="ga-note" data-i18n="gaNote">Every sample is a real, unedited generation from this gateway — bought through the same 402 flow you'd use.</p>
   </section>
 
@@ -466,7 +624,13 @@
   <!-- faq -->
   <section class="section">
     <h2 class="sec-title" style="margin-bottom: 14px;">FAQ</h2>
-    <div class="card" id="faq-list"></div>
+    <div class="card" id="faq-list">
+      <div class="faq-item"><button class="faq-q" data-faq="0" aria-expanded="true"><span>What is x402?</span><span class="faq-icon">−</span></button><p class="faq-a">An open protocol that uses the HTTP 402 status code to quote and settle payments inline with the request. Full spec at docs.x402.org.</p></div>
+      <div class="faq-item"><button class="faq-q" data-faq="1" aria-expanded="true"><span>Do I need an account?</span><span class="faq-icon">−</span></button><p class="faq-a">No. Your wallet is your identity. The first response is a 402 quote; pay it and the same request succeeds.</p></div>
+      <div class="faq-item"><button class="faq-q" data-faq="2" aria-expanded="true"><span>How long are videos stored?</span><span class="faq-icon">−</span></button><p class="faq-a">You get a signed URL valid for about 24 hours. Download promptly — expired URLs are not reissued.</p></div>
+      <div class="faq-item"><button class="faq-q" data-faq="3" aria-expanded="true"><span>What if generation fails?</span><span class="faq-icon">−</span></button><p class="faq-a">You are not charged before settlement succeeds. If the upstream model fails after payment, the failure policy published in GET / applies — machine-readable, and honored.</p></div>
+      <div class="faq-item"><button class="faq-q" data-faq="4" aria-expanded="true"><span>Which chain and currency?</span><span class="faq-icon">−</span></button><p class="faq-a">USDC on Base mainnet. Payments are gasless for the buyer — you only need USDC, no ETH.</p></div>
+    </div>
   </section>
 
   <!-- built on x402video — consumer (toC) example app -->
@@ -509,7 +673,9 @@
           <a href="https://makereel.xyz">MakeReel ↗</a>
           <a href="https://github.com/x402-video">GitHub ↗</a>
           <a class="mono" id="foot-llms" href="#">/llms.txt</a>
-          <a class="mono" id="foot-status" href="#">/status (live JSON)</a>
+          <a class="mono" id="foot-status" href="#">api.x402video.com/status (live JSON)</a>
+          <a href="/what-is-x402/">What is x402?</a>
+          <a href="/compare/">Compare</a>
           <a href="https://docs.x402.org">docs.x402.org ↗</a>
           <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
@@ -540,8 +706,8 @@ const GATEWAY = apiParam && /^https?:\/\//i.test(apiParam)
   : "https://api.x402video.com";
 
 const FALLBACK_SKUS = [
-  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 0.96, duration_seconds: 5, resolution: "720p" },
-  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 0.91, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 1.33, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 1.05, duration_seconds: 5, resolution: "720p" },
 ];
 
 /* 2 tiers × 3 modalities — the catalog grid. Only text-to-video is sold today
@@ -561,7 +727,7 @@ const MODEL_CARDS = [
 const I18N = {
   en: {
     navPricing: "Pricing", navPolicy: "Policy",
-    badge: "from $0.91/call · USDC on Base · no signup",
+    badge: "from $1.05/call · USDC on Base · no signup",
     heroTitle: "Your AI agent pays for video. No signup, no API key.",
     heroSub: "Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.",
     ctaCode: "See the code", ctaWhat: "What is x402? ↗",
@@ -574,7 +740,7 @@ const I18N = {
     obSkip: "Coming from x402scan or already on Base? Skip to pricing →",
     ob: [
       ["Your wallet is your account", "No signup. Any EVM wallet works — Coinbase Wallet takes about two minutes to set up."],
-      ["USDC is digital dollars", "1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $0.96."],
+      ["USDC is digital dollars", "1 USDC = $1, on Base — Coinbase's network. A 5-second video costs about $1.33."],
       ["Payment is automatic", "@x402/fetch handles 402 → pay → retry in one line of setup. You never touch the chain by hand."],
     ],
     stTitle: "Live gateway stats", stFrom: "Never cached, never edited. From",
@@ -634,7 +800,7 @@ const I18N = {
   },
   zh: {
     navPricing: "價格", navPolicy: "政策",
-    badge: "每次 $0.91 起 · Base 上的 USDC · 免註冊",
+    badge: "每次 $1.05 起 · Base 上的 USDC · 免註冊",
     heroTitle: "讓你的 AI agent 直接付款生成影片。免註冊、免 API key。",
     heroSub: "接上 @x402/fetch,402 → 付款 → 重試全自動:付款前先拿到精確 USDC 報價,在 Base 上結算,5 分鐘內出第一支影片。",
     ctaCode: "看程式碼", ctaWhat: "什麼是 x402?↗",
@@ -647,7 +813,7 @@ const I18N = {
     obSkip: "從 x402scan 來、或已經在用 Base?直接看價格 →",
     ob: [
       ["錢包就是你的帳號", "不用註冊。任何 EVM 錢包都可以 — Coinbase Wallet 約兩分鐘就能設定好。"],
-      ["USDC 就是數位美元", "1 USDC = 1 美元,跑在 Coinbase 的 Base 網路上。一支 5 秒影片約 $0.96。"],
+      ["USDC 就是數位美元", "1 USDC = 1 美元,跑在 Coinbase 的 Base 網路上。一支 5 秒影片約 $1.33。"],
       ["付款全自動", "@x402/fetch 一行設定就處理 402 → 付款 → 重試。你完全不用手動碰鏈。"],
     ],
     stTitle: "即時 gateway 統計", stFrom: "永不快取、永不修飾。來自",
@@ -787,13 +953,13 @@ const TRACE = [
   { t: '  {"prompt":"aerial coastline at dawn"}', c: "c-tx3" },
   { t: "← HTTP/1.1 402 Payment Required", c: "c-warn" },
   { t: "  accepts: USDC on Base · scheme exact (eip-3009)", c: "c-tx3" },
-  { t: "  amount: $0.96", c: "c-warn" },
+  { t: "  amount: $1.33", c: "c-warn" },
   { t: "  signing payment authorization… 0x7f3a…c21e", c: "c-tx3" },
   { t: "→ POST /generate/seedance/5s-720p · x-payment: signed", c: "c-tx" },
   { t: "← HTTP/1.1 200 OK · job_9f2e queued", c: "c-ac" },
   { t: "  GET /jobs/job_9f2e … generating", c: "c-tx3" },
   { t: "← status: succeeded · video_url ready (expires 24h)", c: "c-ac" },
-  { t: "✓ delivered — 5s 720p MP4 · total cost $0.96", c: "c-ok" },
+  { t: "✓ delivered — 5s 720p MP4 · total cost $1.33", c: "c-ok" },
 ];
 const STAGE_DESCS = ["POST /generate/…", "price + pay-to address", "auto via @x402/fetch", "signed URL · 24h"];
 

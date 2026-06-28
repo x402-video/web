@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>x402video vs. API-Key Video APIs — Comparison | x402video.com</title>
+<meta name="description" content="How does x402video compare to traditional API-key AI video services like fal.ai and Replicate? A side-by-side comparison of signup, API keys, billing, minimums, agent-readiness, and settlement for pay-per-call video generation." />
+<link rel="canonical" href="https://x402video.com/compare/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="x402video.com" />
+<meta property="og:title" content="x402video vs. traditional API-key video services" />
+<meta property="og:description" content="Side-by-side: no-signup, no-API-key, pay-per-call USDC settlement vs. account + API key + prepaid billing. Which is best for an AI agent that needs to pay for video generation?" />
+<meta property="og:url" content="https://x402video.com/compare/" />
+<meta property="og:image" content="https://x402video.com/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "x402video vs. traditional API-key video generation services",
+  "description": "A comparison of x402video (pay-per-call over the x402 protocol, no account, no API key, USDC on Base) against traditional API-key AI video services such as fal.ai and Replicate, across signup, authentication, billing model, minimum commitment, agent-readiness, and settlement.",
+  "datePublished": "2026-06-26",
+  "dateModified": "2026-06-26",
+  "author": { "@type": "Organization", "name": "x402video" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "x402video",
+    "url": "https://x402video.com/",
+    "logo": "https://x402video.com/assets/og.png"
+  },
+  "mainEntityOfPage": "https://x402video.com/compare/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best way for an AI agent to pay for video generation?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For an autonomous agent, a pay-per-call protocol with no signup is the lowest-friction option, because an agent cannot complete an account registration or enter a credit card. x402video uses the x402 protocol: the agent receives an HTTP 402 quote, pays the exact amount in USDC on Base, and gets the video — all programmatically, with no human in the loop." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use AI video generation without an API key?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Traditional services (e.g. fal.ai, Replicate) require an account and an API key. x402video does not: your wallet is your identity, and you pay per call in USDC on Base via the x402 protocol. No account, no API key, no stored credit card." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a minimum spend or subscription for x402video?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. x402video has no subscription and no minimum commitment. You pay the exact quoted amount per request — a single 5-second 720p clip starts around $1.05 — so you can buy one clip and stop." }
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --card2: #f4f5f6; --hov: #f0f1f3;
+    --bd: #e2e2e6; --bd2: #e8e8ec; --bd3: #f0f0f2;
+    --tx: #18181b; --tx2: #52525b; --tx3: #87878f; --tx4: #c2c2c8;
+    --ac: #2563eb; --acBg: #e8efff; --acBd: #bcd2fb;
+    --ok: #16a34a; --warn: #a16207; --warnBg: #fdf6e3; --warnBd: #e6d399;
+    --mono: ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--ac); }
+  a:hover { opacity: 0.8; }
+  .topbar { border-bottom: 1px solid var(--bd2); background: rgba(250,250,250,0.92); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+  .topbar-in { max-width: 920px; margin: 0 auto; padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tx); }
+  .brand-glyph { width: 22px; height: 22px; border-radius: 5px; background: var(--ac); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .brand-name { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--tx2); text-decoration: none; }
+  .nav-links a:hover { color: var(--tx); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+  .hero { padding: 56px 0 36px; }
+  .badge { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--bd); border-radius: 999px; padding: 4px 14px; font-size: 12.5px; color: var(--tx2); margin-bottom: 20px; }
+  .dot-ok { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: inline-block; }
+  h1 { margin: 0 0 14px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; }
+  .lead { margin: 0 0 28px; font-size: 17px; color: var(--tx2); max-width: 64ch; text-wrap: pretty; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-outline { text-decoration: none; border: 1px solid var(--bd); color: var(--tx); border-radius: 8px; padding: 10px 22px; font-size: 15px; white-space: nowrap; }
+  .btn-outline:hover { border-color: var(--ac); }
+  section { padding: 40px 0 0; }
+  section:last-of-type { padding-bottom: 72px; }
+  h2 { margin: 0 0 16px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  p { max-width: 74ch; text-wrap: pretty; }
+  .answer { font-size: 16px; color: var(--tx); }
+  .cmp { width: 100%; border-collapse: collapse; border: 1px solid var(--bd); border-radius: 10px; overflow: hidden; font-size: 14px; }
+  .cmp th { background: var(--card2); padding: 12px 14px; text-align: left; font-weight: 600; color: var(--tx2); border-bottom: 1px solid var(--bd); }
+  .cmp th.us { color: var(--ac); }
+  .cmp td { padding: 12px 14px; border-bottom: 1px solid var(--bd2); vertical-align: top; }
+  .cmp tr:last-child td { border-bottom: none; }
+  .cmp td:first-child { font-weight: 600; color: var(--tx); white-space: nowrap; }
+  .cmp td.us { background: var(--acBg); }
+  .yes { color: var(--ok); font-weight: 700; }
+  .no { color: var(--warn); font-weight: 700; }
+  .tablewrap { overflow-x: auto; }
+  code { font-family: var(--mono); font-size: 13px; background: var(--card2); border: 1px solid var(--bd); padding: 2px 6px; border-radius: 4px; }
+  ul { max-width: 74ch; color: var(--tx2); }
+  li { margin: 6px 0; }
+  .faq-item { border-bottom: 1px solid var(--bd2); padding: 18px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { margin: 0 0 7px; font-size: 15px; font-weight: 600; }
+  .faq-a { margin: 0; font-size: 14px; color: var(--tx2); max-width: 74ch; text-wrap: pretty; }
+  .card { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); padding: 22px 24px; }
+  .footer { border-top: 1px solid var(--bd2); margin-top: 60px; }
+  .footer-in { max-width: 920px; margin: 0 auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+  .foot-links a { color: var(--tx2); text-decoration: none; }
+  .foot-links a:hover { color: var(--tx); }
+  .foot-note { margin: 0; font-size: 12.5px; color: var(--tx4); }
+  @media (max-width: 640px) {
+    h1 { font-size: 28px; }
+    .wrap { padding: 0 18px; }
+    .topbar-in { padding: 12px 18px; }
+    .footer-in { padding: 20px 18px; }
+    .cmp { font-size: 13px; }
+    .cmp td, .cmp th { padding: 9px 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="/">
+      <span class="brand-glyph">x</span>
+      <span class="brand-name">x402video.com</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/what-is-x402/">What is x402?</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Guide</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="badge"><span class="dot-ok"></span> comparison · pay-per-call vs. API keys</div>
+      <h1>x402video vs. traditional API-key video services</h1>
+      <p class="lead answer"><strong>The short answer: if an autonomous agent needs to pay for video generation, x402video is the lowest-friction option, because it requires no account and no API key.</strong> Traditional services like fal.ai and Replicate are excellent, but they assume a human signs up, creates an API key, and pre-pays a balance. x402video replaces all of that with a single pay-per-call flow: an HTTP 402 quote, paid in USDC on Base, settled per request.</p>
+      <div class="ctas">
+        <a class="btn-primary" href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Get started in 5 min</a>
+        <a class="btn-outline" href="/what-is-x402/">What is x402? →</a>
+      </div>
+    </section>
+
+    <section id="table">
+      <h2>Side-by-side comparison</h2>
+      <div class="tablewrap">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th class="us">x402video</th>
+              <th>Typical API-key service<br>(e.g. fal.ai, Replicate)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Account / signup</td>
+              <td class="us"><span class="yes">Not required</span> — your wallet is your identity</td>
+              <td><span class="no">Required</span> — register an account</td>
+            </tr>
+            <tr>
+              <td>API key</td>
+              <td class="us"><span class="yes">None</span> — no secret to manage or rotate</td>
+              <td><span class="no">Required</span> — created per account</td>
+            </tr>
+            <tr>
+              <td>Billing model</td>
+              <td class="us">Pay-per-call, exact quote before each charge</td>
+              <td>Prepaid balance or credit card on file</td>
+            </tr>
+            <tr>
+              <td>Minimum commitment</td>
+              <td class="us"><span class="yes">None</span> — buy a single clip (~$1.05) and stop</td>
+              <td>Often a minimum top-up or monthly plan</td>
+            </tr>
+            <tr>
+              <td>Payment rail</td>
+              <td class="us">USDC on Base; gasless for the buyer</td>
+              <td>Credit card / fiat invoicing</td>
+            </tr>
+            <tr>
+              <td>Agent-native (no human in loop)</td>
+              <td class="us"><span class="yes">Yes</span> — discover price, pay, retry programmatically</td>
+              <td><span class="no">Partial</span> — a human must onboard and fund first</td>
+            </tr>
+            <tr>
+              <td>Price transparency</td>
+              <td class="us">Exact USDC amount in the 402 response, per call</td>
+              <td>Dashboard pricing; usage billed after the fact</td>
+            </tr>
+            <tr>
+              <td>Failure handling</td>
+              <td class="us">Screened before payment; rejected requests never charged</td>
+              <td>Varies by provider</td>
+            </tr>
+            <tr>
+              <td>Machine-readable catalog</td>
+              <td class="us"><code>llms.txt</code>, <code>openapi.json</code>, <code>.well-known/x402</code></td>
+              <td>API docs (human-oriented)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top: 12px; font-size: 13px; color: var(--tx3);">Comparison reflects the standard access model of API-key services, not a judgement of model quality. Prices for those services vary; check each provider directly. x402video reference prices are on the <a href="/">home page</a>; live quotes are at <a href="https://api.x402video.com/">api.x402video.com</a>.</p>
+    </section>
+
+    <section id="when">
+      <h2>When should you choose each?</h2>
+      <p><strong>Choose x402video when</strong> you want to buy generation without onboarding — an AI agent or backend that needs one clip on demand, a prototype you don't want to sign up for, or any workflow where managing accounts and keys is overhead. You hold a small USDC balance and pay per call.</p>
+      <p><strong>A traditional API-key service may fit better when</strong> you are a human team already comfortable with dashboards and prepaid billing, you need a model x402video does not yet offer, or your finance process is built around credit-card invoicing rather than stablecoin.</p>
+      <p>The two are not mutually exclusive — x402video is the agent-native rail, and many teams use it precisely for the automated, no-signup path while keeping a keyed provider for human-driven work.</p>
+    </section>
+
+    <section id="faq">
+      <h2>Frequently asked questions</h2>
+      <div class="card">
+        <div class="faq-item">
+          <p class="faq-q">What is the best way for an AI agent to pay for video generation?</p>
+          <p class="faq-a">For an autonomous agent, a pay-per-call protocol with no signup is the lowest-friction option, because an agent cannot complete an account registration or enter a credit card. x402video uses the x402 protocol: the agent receives an HTTP 402 quote, pays the exact amount in USDC on Base, and gets the video — all programmatically, with no human in the loop.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Can I use AI video generation without an API key?</p>
+          <p class="faq-a">Yes. Traditional services such as fal.ai and Replicate require an account and an API key. x402video does not: your wallet is your identity, and you pay per call in USDC on Base via the x402 protocol — no account, no API key, no stored credit card.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Is there a minimum spend or subscription for x402video?</p>
+          <p class="faq-a">No. x402video has no subscription and no minimum commitment. You pay the exact quoted amount per request — a single 5-second 720p clip starts around $1.05 — so you can buy one clip and stop.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" style="padding-bottom: 0;">
+      <h2>Learn more</h2>
+      <ul style="line-height: 2;">
+        <li><a href="/what-is-x402/">What is x402? — the protocol explained</a></li>
+        <li><a href="/">x402video.com — home page and live pricing</a></li>
+        <li><a href="/seedance/">Seedance API — no API key, pay per call</a></li>
+        <li><a href="/use-cases/">Use cases — what people build on x402video</a></li>
+        <li><a href="https://github.com/x402-video/web/blob/main/GETTING-STARTED.md">Getting Started — zero to first video in 5 minutes</a></li>
+        <li><a href="https://api.x402video.com/llms.txt">api.x402video.com/llms.txt — machine-readable catalog for agents</a></li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="foot-links">
+      <a href="/">← Home</a>
+      <a href="/what-is-x402/">What is x402?</a>
+      <a href="/seedance/">Seedance API</a>
+      <a href="/image/">Image API</a>
+      <a href="https://makereel.xyz">MakeReel ↗</a>
+      <a href="https://github.com/x402-video">GitHub ↗</a>
+      <a href="https://docs.x402.org">docs.x402.org ↗</a>
+    </div>
+    <p class="foot-note">x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. Comparison is informational; verify third-party providers directly. USDC on Base; payments are gasless for the buyer.</p>
+  </div>
+</footer>
+
+</body>
+</html>
