@@ -545,25 +545,23 @@
         </div>
         <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
       </div>
-      <div class="model-card">
+      <div class="model-card soon">
         <div class="model-media"><img src="assets/art-hills.png" alt="Image Generation Standard Text-to-Image — illustration" loading="lazy" /></div>
         <div class="model-body">
           <span class="feat-tag">text-to-image</span>
           <span class="model-name">Image Generation Standard Text-to-Image</span>
           <p class="model-desc">Generate a JPEG image from a text prompt — powered by Grok Imagine.</p>
-          <span class="model-ep" title="POST /generate/grok-imagine/image">POST /generate/grok-imagine/image</span>
         </div>
-        <div class="model-foot"><div><span class="model-price">$0.05</span><span class="model-per">/ image</span></div><a class="try-btn" href="/image/">↗ Docs</a></div>
+        <div class="model-foot"><span class="model-per">in private preview</span><span class="soon-pill">Coming soon</span></div>
       </div>
-      <div class="model-card">
+      <div class="model-card soon">
         <div class="model-media"><img src="assets/art-sprout.png" alt="Image Generation Quality Text-to-Image — illustration" loading="lazy" /></div>
         <div class="model-body">
           <span class="feat-tag">text-to-image</span>
           <span class="model-name">Image Generation Quality Text-to-Image</span>
           <p class="model-desc">Generate a JPEG image from a text prompt — powered by Grok Imagine.</p>
-          <span class="model-ep" title="POST /generate/grok-imagine/image-quality">POST /generate/grok-imagine/image-quality</span>
         </div>
-        <div class="model-foot"><div><span class="model-price">$0.10</span><span class="model-per">/ image</span></div><a class="try-btn" href="/image/">↗ Docs</a></div>
+        <div class="model-foot"><span class="model-per">in private preview</span><span class="soon-pill">Coming soon</span></div>
       </div>
     </div>
     <p class="pr-note" data-i18n="prRoadmap">image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.</p>
@@ -680,7 +678,6 @@
           <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
           <a href="/kling/">Kling API</a>
-          <a href="/image/">Image API</a>
           <a href="/custom/">Pricing calculator</a>
           <a href="/use-cases/">Use cases</a>
         </div>
@@ -719,8 +716,14 @@ const MODEL_CARDS = [
   { fast: true, mode: "text-to-video", img: "assets/art-denim.png", live: true },
   { fast: true, mode: "image-to-video", img: "assets/art-sprout.png", live: false },
   { fast: true, mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
-  { fast: false, mode: "text-to-image", img: "assets/art-hills.png", live: true, type: "image", endpoint: "grok-imagine/image", price_usd: 0.05 },
-  { fast: true,  mode: "text-to-image", img: "assets/art-sprout.png", live: true, type: "image", endpoint: "grok-imagine/image-quality", price_usd: 0.10 },
+  // Grok Imagine text-to-image is an UNLISTED preview in the gateway: the routes work,
+  // but they are deliberately absent from GET / skus[] and /.well-known/x402, so no agent
+  // can discover them. Selling them here as `live` advertised a product the buyers this
+  // site is built for cannot find. Two things must be true before flipping back to
+  // `live: true`: the gateway lists them in skus[]/.well-known, AND /image/ actually
+  // ships (the Dockerfile COPY allowlist omits it, so the "↗ Docs" link 404s today).
+  { fast: false, mode: "text-to-image", img: "assets/art-hills.png", live: false, type: "image", endpoint: "grok-imagine/image", price_usd: 0.05 },
+  { fast: true,  mode: "text-to-image", img: "assets/art-sprout.png", live: false, type: "image", endpoint: "grok-imagine/image-quality", price_usd: 0.10 },
 ];
 
 /* ---------- copy (EN / ZH) ---------- */
@@ -762,6 +765,9 @@ const I18N = {
     },
     sec: "sec", refMark: "(ref)", perCallShort: "per call",
     soonNote: "after image moderation ships",
+    // Distinct from soonNote: that one is about image INPUT moderation (i2v/r2v).
+    // Text-to-image is gated on the gateway listing it publicly, not on input moderation.
+    soonNoteImg: "in private preview",
     tryIt: "↗ Try it",
     prRoadmap: "image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.",
     buyTitle: "How to buy",
@@ -835,6 +841,7 @@ const I18N = {
     },
     sec: "秒", refMark: "(參考)", perCallShort: "/ 次",
     soonNote: "影像審核上線後開賣",
+    soonNoteImg: "私測中",
     tryIt: "↗ 試試看",
     prRoadmap: "image-to-video 與 reference-to-video 上游已接通，等影像輸入審核上線即開賣 — 圖片輸入適用與 prompt 相同的紅線。更長時長與 1080p 現在就可透過 /custom 參數端點購買。",
     buyTitle: "怎麼購買",
@@ -1159,7 +1166,7 @@ function renderPricing() {
             <span class="model-price">${esc(price)}</span><span class="model-per">/ image${ref ? " " + esc(dict.refMark) : ""}</span>
           </div>
           <a class="try-btn" href="/image/">↗ Docs</a>`
-        : `<span class="model-per">${esc(dict.soonNote)}</span>
+        : `<span class="model-per">${esc(dict.soonNoteImg)}</span>
           <span class="soon-pill">${esc(dict.gaSoon)}</span>`;
       return `<div class="model-card${card.live ? "" : " soon"}">
         <div class="model-media"><img src="${card.img}" alt="${esc(name)} — illustration" loading="lazy" /></div>
