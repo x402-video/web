@@ -703,9 +703,9 @@ const FALLBACK_SKUS = [
 /* Human pricing: vendor + model name + sticker price. Agents use GET / instead. */
 const TIER_LABEL = { std: "Seedance 2.0", fast: "Seedance 2.0 Fast", mini: "Seedance 2.0 Mini" };
 const TIER_IMG = {
-  mini: "assets/art-hills.png",
-  fast: "assets/art-denim.png",
-  std: "assets/art-portrait.png",
+  mini: "assets/art-seedance-mini.png",  // series A — denim cobalt
+  fast: "assets/art-seedance-fast.png",  // series B — bob lavender
+  std: "assets/art-seedance-std.png",    // series D — bun oxford
 };
 const TIER_VENDOR = "ByteDance · Seedance";
 
@@ -985,10 +985,10 @@ const STAGE_DESCS = ["POST /generate/…", "price + pay-to address", "auto via @
 
 /* ---------- featured-model carousel: 2 tiers × 3 modes ---------- */
 const FEAT_SLIDES = [
-  { img: "assets/art-portrait.png", mode: "text-to-video", fast: false },
+  { img: "assets/art-seedance-std.png", mode: "text-to-video", fast: false },
   { img: "assets/art-tree.png", mode: "image-to-video", fast: false },
   { img: "assets/art-meadow.png", mode: "reference-to-video", fast: false },
-  { img: "assets/art-denim.png", mode: "text-to-video", fast: true },
+  { img: "assets/art-seedance-fast.png", mode: "text-to-video", fast: true },
   { img: "assets/art-sprout.png", mode: "image-to-video", fast: true },
   { img: "assets/art-pasture.png", mode: "reference-to-video", fast: true },
 ];
