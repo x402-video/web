@@ -695,19 +695,33 @@ const GATEWAY = apiParam && /^https?:\/\//i.test(apiParam)
   : "https://api.x402video.com";
 
 const FALLBACK_SKUS = [
-  { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 1.33, duration_seconds: 5, resolution: "720p" },
-  { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 1.05, duration_seconds: 5, resolution: "720p" },
-  { sku: "seedance-mini-5s-720p", model: "Seedance 2.0 Mini", endpoint: "POST /generate/seedance-mini/5s-720p", price_usd: 0.67, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-5s-720p", model: "seedance-2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 1.33, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-fast-5s-720p", model: "seedance-2.0-fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 1.05, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-mini-5s-720p", model: "seedance-2.0-mini", endpoint: "POST /generate/seedance-mini/5s-720p", price_usd: 0.67, duration_seconds: 5, resolution: "720p" },
+  { sku: "minimax-h3-5s-768P", model: "minimax-h3", endpoint: "POST /generate/minimax-h3/5s-768P", price_usd: 0.70, duration_seconds: 5, resolution: "768P" },
+  { sku: "minimax-h3-5s-2K", model: "minimax-h3", endpoint: "POST /generate/minimax-h3/5s-2K", price_usd: 1.14, duration_seconds: 5, resolution: "2K" },
 ];
 
 /* Human pricing: vendor + model name + sticker price. Agents use GET / instead. */
-const TIER_LABEL = { std: "Seedance 2.0", fast: "Seedance 2.0 Fast", mini: "Seedance 2.0 Mini" };
+const TIER_LABEL = {
+  std: "Seedance 2.0",
+  fast: "Seedance 2.0 Fast",
+  mini: "Seedance 2.0 Mini",
+  minimax: "MiniMax H3",
+};
 const TIER_IMG = {
-  mini: "assets/art-seedance-mini.png?v=20260807",  // series A — denim cobalt
-  fast: "assets/art-seedance-fast.png?v=20260807",  // series B — bob lavender
-  std: "assets/art-seedance-std.png?v=20260807",    // series D — bun oxford
+  mini: "assets/art-seedance-mini.png?v=20260807",
+  fast: "assets/art-seedance-fast.png?v=20260807",
+  std: "assets/art-seedance-std.png?v=20260807",
+  minimax: "assets/art-sprout.png",
 };
 const TIER_VENDOR = "ByteDance · Seedance";
+const VENDOR_BY_TIER = {
+  std: "ByteDance · Seedance",
+  fast: "ByteDance · Seedance",
+  mini: "ByteDance · Seedance",
+  minimax: "MiniMax · H3",
+};
 
 /* ---------- copy (EN / ZH) ---------- */
 const I18N = {
@@ -762,12 +776,13 @@ const I18N = {
     soonNoteImg: "in private preview",
     tryIt: "↗ Try it",
     vendorSeedance: "ByteDance · Seedance",
-    vendorMiniMax: "MiniMax · Hailuo",
+    vendorMiniMax: "MiniMax · H3",
     vendorKling: "Kuaishou · Kling",
     cardHintLive: "Text-to-video · 5s · 720p",
     cardHintCustom: "4–15s · pick resolution",
-    cardHintHailuo: "Text & image to video",
+    cardHintHailuo: "H3 · 5s 768P from $0.70 · custom 4–15s",
     cardHintKling: "Not scheduled yet",
+    cardHintMinimax: "Text-to-video · 5s · 768P / 2K",
     buyTitle: "How to buy",
     buyGuideLead: "New to x402? No wallet yet? Follow the",
     buyGuideLink: "zero-to-first-video guide ↗",
@@ -851,12 +866,13 @@ const I18N = {
     soonNoteImg: "私測中",
     tryIt: "↗ 試試看",
     vendorSeedance: "ByteDance · Seedance",
-    vendorMiniMax: "MiniMax · 海螺 Hailuo",
+    vendorMiniMax: "MiniMax · H3",
     vendorKling: "Kuaishou · Kling",
     cardHintLive: "文字生影片 · 5 秒 · 720p",
     cardHintCustom: "4–15 秒 · 自選解析度",
-    cardHintHailuo: "文字 / 圖片生影片",
+    cardHintHailuo: "H3 · 5 秒 768P 起 $0.70 · custom 4–15 秒",
     cardHintKling: "尚未排程",
+    cardHintMinimax: "文字生影片 · 5 秒 · 768P / 2K",
     buyTitle: "怎麼購買",
     buyGuideLead: "第一次接觸 x402、還沒有錢包?跟著",
     buyGuideLink: "五分鐘上手指南 ↗",
@@ -1166,7 +1182,9 @@ function perSecLabel(sku) {
 
 function modelLabelFromSku(sku) {
   const blob = String(sku.model || "") + " " + String(sku.sku || "");
-  if (/mini/i.test(blob)) return TIER_LABEL.mini;
+  // minimax contains "mini" — check before Seedance Mini
+  if (/minimax|hailuo/i.test(blob)) return TIER_LABEL.minimax;
+  if (/seedance-2\.0-mini|seedance-mini|mini-5s/i.test(blob)) return TIER_LABEL.mini;
   if (/fast/i.test(blob)) return TIER_LABEL.fast;
   return TIER_LABEL.std;
 }
@@ -1190,11 +1208,6 @@ function setPriceView(view) {
 
 /** Roadmap families for humans (SEO pages). Agents ignore this — they read GET /. */
 const ROADMAP_MODELS = [
-  {
-    name: "MiniMax Hailuo",
-    hint: "2.3 · Fast · 02 · text & image to video",
-    href: "/hailuo/",
-  },
   {
     name: "Kling",
     hint: "not scheduled yet",
@@ -1295,7 +1308,8 @@ function renderSkuList() {
 
 function tierKeyFromSku(sku) {
   const blob = String(sku.model || "") + " " + String(sku.sku || "");
-  if (/mini/i.test(blob)) return "mini";
+  if (/minimax|hailuo/i.test(blob)) return "minimax";
+  if (/seedance-2\.0-mini|seedance-mini|mini-5s/i.test(blob)) return "mini";
   if (/fast/i.test(blob)) return "fast";
   return "std";
 }
@@ -1313,16 +1327,25 @@ function renderSkuCards() {
   for (const s of skus) {
     const tier = tierKeyFromSku(s);
     const p = Number(s.price_usd);
+    const isMinimax = tier === "minimax";
+    const res = s.resolution || (isMinimax ? "768P" : "720p");
+    const hint = isMinimax
+      ? (dict.cardHintMinimax || "Text-to-video · 5s · 768P")
+      : dict.cardHintLive;
     cards.push({
       live: true,
-      vendor: dict.vendorSeedance,
+      vendor: VENDOR_BY_TIER[tier] || dict.vendorSeedance,
       name: modelLabelFromSku(s),
-      hint: dict.cardHintLive,
+      hint: hint.replace("720p", res).replace("768P", res),
       img: TIER_IMG[tier] || TIER_IMG.std,
       priceHtml: Number.isFinite(p)
         ? `<span class="model-price">$${p.toFixed(2)}</span><span class="model-per">${esc(dict.pricePerCall)}${esc(refMark)}</span>`
         : `<span class="model-price">—</span>`,
-      cta: { href: "#buy", label: dict.tryIt, ghost: false },
+      cta: {
+        href: isMinimax ? "/hailuo/" : "#buy",
+        label: dict.tryIt,
+        ghost: false,
+      },
     });
   }
 
@@ -1353,24 +1376,13 @@ function renderSkuCards() {
   // Roadmap families
   cards.push({
     live: false,
-    vendor: dict.vendorMiniMax,
-    name: "MiniMax Hailuo",
-    hint: dict.cardHintHailuo,
-    img: "assets/art-sprout.png",
-    priceHtml: `<span class="soon-pill">${esc(dict.statusSoon)}</span>`,
-    cta: { href: "/hailuo/", label: dict.learnMore, ghost: true },
-  });
-  cards.push({
-    live: false,
     vendor: dict.vendorKling,
     name: "Kling",
     hint: dict.cardHintKling,
     img: "assets/art-tree.png",
     priceHtml: `<span class="soon-pill">${esc(dict.statusSoon)}</span>`,
     cta: { href: "/kling/", label: dict.learnMore, ghost: true },
-  });
-
-  $("sku-cards").innerHTML = cards.map((c) => {
+  });  $("sku-cards").innerHTML = cards.map((c) => {
     const act = c.cta
       ? `<a class="try-btn${c.cta.ghost ? " ghost" : ""}" href="${esc(c.cta.href)}">${esc(c.cta.label)}</a>`
       : "";
