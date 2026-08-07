@@ -265,30 +265,28 @@
   .view-btn svg { width: 16px; height: 16px; display: block; }
   #sku-cards[hidden], #sku-list-wrap[hidden] { display: none !important; }
   .sku-list-wrap { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); overflow: hidden; margin-top: 14px; }
-  .sku-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .sku-table th { text-align: left; font-weight: 600; font-size: 12px; color: var(--tx3); letter-spacing: 0.02em; padding: 12px 16px; border-bottom: 1px solid var(--bd); background: var(--card2); white-space: nowrap; }
-  .sku-table td { padding: 14px 16px; border-bottom: 1px solid var(--bd2); vertical-align: middle; }
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  .sku-table th { text-align: left; font-weight: 600; font-size: 12px; color: var(--tx3); letter-spacing: 0.02em; padding: 12px 18px; border-bottom: 1px solid var(--bd); background: var(--card2); white-space: nowrap; }
+  .sku-table td { padding: 16px 18px; border-bottom: 1px solid var(--bd2); vertical-align: middle; }
   .sku-table tr:last-child td { border-bottom: none; }
   .sku-table tbody tr:hover td { background: var(--hov); }
-  .sku-table .sku-name { font-weight: 600; color: var(--tx); }
-  .sku-table .sku-mode { display: block; font-size: 12px; color: var(--tx3); font-weight: 500; margin-top: 2px; }
-  .sku-table .sku-ep { font-family: var(--mono); font-size: 12px; color: var(--tx2); word-break: break-all; }
-  .sku-table .sku-spec { font-size: 13px; color: var(--tx2); white-space: nowrap; }
-  .sku-table .sku-price { font-family: var(--mono); font-weight: 700; color: var(--ac); font-size: 14px; white-space: nowrap; }
-  .sku-table .sku-price .sub { display: block; font-weight: 500; font-size: 11.5px; color: var(--tx3); margin-top: 2px; }
-  .sku-table .sku-status { white-space: nowrap; }
-  .pill-live { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--ok); }
-  .pill-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
-  .pill-soon { display: inline-flex; font-size: 11.5px; font-weight: 600; color: var(--tx3); border: 1px solid var(--bd); border-radius: 999px; padding: 3px 9px; }
-  .sku-table .try-btn { padding: 6px 14px; font-size: 12.5px; }
+  .sku-table .sku-name { font-weight: 600; color: var(--tx); font-size: 15px; }
+  .sku-table .sku-hint { display: block; font-size: 12.5px; color: var(--tx3); font-weight: 500; margin-top: 3px; line-height: 1.35; }
+  .sku-table .sku-price { font-family: var(--mono); font-weight: 700; color: var(--ac); font-size: 16px; white-space: nowrap; }
+  .sku-table .sku-price .sub { display: block; font-weight: 500; font-size: 12px; color: var(--tx3); margin-top: 2px; }
+  .sku-table .sku-price.muted { color: var(--tx3); font-size: 14px; font-weight: 600; }
+  .pill-soon { display: inline-flex; font-size: 12px; font-weight: 600; color: var(--tx3); border: 1px solid var(--bd); border-radius: 999px; padding: 4px 10px; }
+  .sku-table .try-btn { padding: 7px 14px; font-size: 13px; }
   .sku-table .try-btn.ghost { background: transparent; color: var(--ac); border: 1px solid var(--acBd); }
   .sku-table .try-btn.ghost:hover { background: var(--acBg); }
-  .sku-table td.sku-act { text-align: right; width: 1%; }
-  .sku-table tr.sku-section td { background: var(--card2); font-size: 12px; font-weight: 700; color: var(--tx3); letter-spacing: 0.04em; text-transform: uppercase; padding: 10px 16px; border-bottom: 1px solid var(--bd); }
+  .sku-table td.sku-act { text-align: right; width: 1%; white-space: nowrap; }
+  .sku-table tr.sku-section td { background: var(--card2); font-size: 11.5px; font-weight: 700; color: var(--tx3); letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 18px; border-bottom: 1px solid var(--bd); }
   .sku-table tr.sku-section:hover td { background: var(--card2); }
-  @media (max-width: 720px) {
-    .sku-table th:nth-child(3), .sku-table td:nth-child(3) { display: none; } /* hide Spec on small */
-    .sku-table th, .sku-table td { padding: 12px 10px; }
+  .sku-agent-note { margin: 12px 0 0; font-size: 12.5px; color: var(--tx3); }
+  .sku-agent-note a { color: var(--tx2); }
+  @media (max-width: 560px) {
+    .sku-table th, .sku-table td { padding: 12px 12px; }
+    .sku-table .sku-name { font-size: 14px; }
   }
 
   /* ---------- how to buy ---------- */
@@ -537,22 +535,20 @@
     <p class="pr-sub" data-i18n="prSub">Programmatic pricing — upstream cost × markup + network fee. Prices track upstream price cards automatically.</p>
     <div class="ref-banner" id="ref-banner" hidden data-i18n="prRef">⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.</div>
 
-    <!-- List view: scannable SKU table (default) -->
+    <!-- List view: human-scannable (agents use api.x402video.com) -->
     <div class="sku-list-wrap" id="sku-list-wrap">
       <table class="sku-table" id="sku-table">
         <thead>
           <tr>
             <th data-i18n="colModel">Model</th>
-            <th data-i18n="colEndpoint">Endpoint</th>
-            <th data-i18n="colSpec">Output</th>
             <th data-i18n="colPrice">Price</th>
-            <th data-i18n="colStatus">Status</th>
             <th></th>
           </tr>
         </thead>
         <tbody id="sku-list-body"></tbody>
       </table>
     </div>
+    <p class="sku-agent-note" id="sku-agent-note">For agents / exact paths: <a href="https://api.x402video.com/">api.x402video.com</a> · <a href="https://api.x402video.com/llms.txt">llms.txt</a></p>
 
     <!-- Cards view: existing grid -->
     <div class="grid3" id="sku-cards" hidden>
@@ -858,12 +854,14 @@ const I18N = {
     prSub: "Programmatic pricing — upstream cost × markup. Prices track upstream price cards automatically.",
     prRef: "⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.",
     viewCards: "Cards", viewList: "List",
-    colModel: "Model", colEndpoint: "Endpoint", colSpec: "Output", colPrice: "Price", colStatus: "Status",
-    statusLive: "Live", statusSoon: "Coming soon", statusPreview: "Private preview",
-    priceFrom: "from", pricePerSec: "/sec", pricePerCall: "/call", priceCustom: "parametric",
-    secLive: "Live SKUs", secRoadmap: "Other video models — coming soon",
-    secSeedanceSoon: "Seedance modalities — coming soon", secImage: "Image generation",
-    learnMore: "Learn more",
+    colModel: "Model", colPrice: "Price",
+    statusSoon: "Coming soon",
+    priceFrom: "from", pricePerSec: "/sec", pricePerCall: "per 5s · 720p",
+    priceCustomHint: "pick duration & resolution",
+    secLive: "Available now", secRoadmap: "Coming soon",
+    learnMore: "Details",
+    customLabel: "Custom length / resolution",
+    prAgentNote: "For agents / exact paths: api.x402video.com · llms.txt",
     modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "Generate video from a text prompt — multi-shot narrative, cinematic motion.",
@@ -941,12 +939,14 @@ const I18N = {
     prSub: "公式定價 — 上游成本 × markup。價格自動跟隨上游價卡。",
     prRef: "⚠ 參考價 — gateway 離線。付款前請以即時 402 報價為準。",
     viewCards: "卡片", viewList: "列表",
-    colModel: "模型", colEndpoint: "端點", colSpec: "輸出", colPrice: "價格", colStatus: "狀態",
-    statusLive: "上線", statusSoon: "即將推出", statusPreview: "私測中",
-    priceFrom: "起價", pricePerSec: "/秒", pricePerCall: "/次", priceCustom: "參數化",
-    secLive: "已上線 SKU", secRoadmap: "其他視頻模型 — 即將上架",
-    secSeedanceSoon: "Seedance 模態 — 即將上架", secImage: "圖片生成",
-    learnMore: "了解更多",
+    colModel: "模型", colPrice: "價格",
+    statusSoon: "即將推出",
+    priceFrom: "起", pricePerSec: "/秒", pricePerCall: "每支 5 秒 · 720p",
+    priceCustomHint: "自選時長與解析度",
+    secLive: "現在可買", secRoadmap: "即將推出",
+    learnMore: "詳情",
+    customLabel: "自訂時長 / 解析度",
+    prAgentNote: "給 agent / 精確路徑：api.x402video.com · llms.txt",
     modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "文字 prompt 生成影片 — 多鏡頭敘事、電影感運鏡。",
@@ -1290,131 +1290,79 @@ function setPriceView(view) {
   applyPriceView();
 }
 
-/** Other families planned for the gateway (SEO + honest roadmap — not live SKUs). */
+/** Roadmap families for humans (SEO pages). Agents ignore this — they read GET /. */
 const ROADMAP_MODELS = [
   {
-    name: "MiniMax Hailuo 2.3",
-    mode: "text-to-video · image-to-video",
-    endpoint: "POST /generate/hailuo/… (planned)",
-    spec: "6s / 10s · 768p / 1080p",
-    href: "/hailuo/",
-  },
-  {
-    name: "MiniMax Hailuo 2.3 Fast",
-    mode: "text-to-video · image-to-video",
-    endpoint: "POST /generate/hailuo-fast/… (planned)",
-    spec: "6s / 10s · 768p / 1080p · lower latency",
-    href: "/hailuo/",
-  },
-  {
-    name: "MiniMax Hailuo 02",
-    mode: "text-to-video · image-to-video",
-    endpoint: "POST /generate/hailuo-02/… (planned)",
-    spec: "6s / 10s · 512p–1080p",
+    name: "MiniMax Hailuo",
+    hint: "2.3 · Fast · 02 · text & image to video",
     href: "/hailuo/",
   },
   {
     name: "Kling",
-    mode: "text-to-video · image-to-video",
-    endpoint: "—",
-    spec: "not scheduled",
+    hint: "not scheduled yet",
     href: "/kling/",
   },
 ];
 
-/** Build flat rows for the SKU list: live fixed + live custom + roadmap + coming-soon. */
+/**
+ * Human list: few rows, no API paths.
+ * Sort fixed SKUs cheapest → premium so the table reads as a price ladder.
+ */
 function buildSkuListRows(dict, ref) {
   const rows = [];
   const section = (label) => rows.push({ section: label });
+  const refMark = ref ? " " + dict.refMark : "";
 
-  // 1) Live fixed SKUs from storefront
   section(dict.secLive);
-  const skus = Array.isArray(state.skus) ? state.skus : [];
+
+  // Fixed 5s/720p SKUs only — one clean price per model
+  const skus = (Array.isArray(state.skus) ? state.skus.slice() : []).sort((a, b) => {
+    return (Number(a.price_usd) || 0) - (Number(b.price_usd) || 0);
+  });
   for (const s of skus) {
     const p = Number(s.price_usd);
-    const per = perSecLabel(s);
-    const name = modelLabelFromSku(s) + " · " + (dict.modeNames["text-to-video"] || "Text-to-Video");
+    const label = modelLabelFromSku(s);
+    const dur = s.duration_seconds != null ? s.duration_seconds + "s" : "5s";
+    const res = s.resolution || "720p";
     rows.push({
-      name,
-      mode: "text-to-video",
-      endpoint: s.endpoint || "",
-      spec: [s.duration_seconds != null ? s.duration_seconds + "s" : null, s.resolution, "MP4"].filter(Boolean).join(" · "),
+      name: label,
+      hint: dur + " · " + res + " · text-to-video",
       priceHtml: Number.isFinite(p)
-        ? `<span class="sku-price">$${p.toFixed(2)}<span class="sub">${esc(dict.pricePerCall)}${per ? " · " + per + " " + esc(dict.pricePerSec) : ""}${ref ? " " + esc(dict.refMark) : ""}</span></span>`
-        : `<span class="sku-price">—</span>`,
-      status: "live",
+        ? `<span class="sku-price">$${p.toFixed(2)}<span class="sub">${esc(dict.pricePerCall)}${esc(refMark)}</span></span>`
+        : `<span class="sku-price muted">—</span>`,
       cta: { href: "#buy", label: dict.tryIt, ghost: false },
     });
   }
 
-  // 2) Live parametric /custom endpoints
+  // One custom row (not 3) — point humans at the calculator
   const customs = Array.isArray(state.custom) ? state.custom : [];
+  let customLo = Infinity;
   for (const c of customs) {
     const rates = (c.pricing && c.pricing.retail_usd_per_second) || {};
-    const vals = Object.values(rates).map(Number).filter(Number.isFinite);
-    const lo = vals.length ? Math.min.apply(null, vals) : null;
-    const nameBlob = String(c.model || "") + " " + String(c.sku || "");
-    const tier = /mini/i.test(nameBlob) ? TIER_LABEL.mini : /fast/i.test(nameBlob) ? TIER_LABEL.fast : TIER_LABEL.std;
-    const resKeys = Object.keys(rates);
-    const resLabel = resKeys.length ? resKeys.join("/") : "480p–1080p";
+    for (const v of Object.values(rates)) {
+      const n = Number(v);
+      if (Number.isFinite(n) && n < customLo) customLo = n;
+    }
+  }
+  if (customs.length || Number.isFinite(customLo)) {
     rows.push({
-      name: tier + " · Custom",
-      mode: "text-to-video",
-      endpoint: c.endpoint || "",
-      spec: "4–15s · " + resLabel + " · parametric",
-      priceHtml: lo != null
-        ? `<span class="sku-price">$${Number(lo).toFixed(4)}<span class="sub">${esc(dict.priceFrom)} ${esc(dict.pricePerSec)} · ${esc(dict.priceCustom)}${ref ? " " + esc(dict.refMark) : ""}</span></span>`
-        : `<span class="sku-price">dynamic<span class="sub">${esc(dict.priceCustom)}</span></span>`,
-      status: "live",
+      name: dict.customLabel,
+      hint: "4–15s · 480p–1080p · any Seedance tier",
+      priceHtml: Number.isFinite(customLo) && customLo < Infinity
+        ? `<span class="sku-price">$${Number(customLo).toFixed(3)}<span class="sub">${esc(dict.priceFrom)} ${esc(dict.pricePerSec)} · ${esc(dict.priceCustomHint)}${esc(refMark)}</span></span>`
+        : `<span class="sku-price muted">${esc(dict.priceCustomHint)}</span>`,
       cta: { href: "/custom/", label: dict.tryIt, ghost: false },
     });
   }
 
-  // 3) Other families on the roadmap (SEO + honest "coming soon")
+  // Compact roadmap — one line per family
   section(dict.secRoadmap);
   for (const m of ROADMAP_MODELS) {
     rows.push({
       name: m.name,
-      mode: m.mode,
-      endpoint: m.endpoint,
-      spec: m.spec,
-      priceHtml: `<span class="sku-price" style="color:var(--tx3)">—</span>`,
-      status: "soon",
+      hint: m.hint,
+      priceHtml: `<span class="pill-soon">${esc(dict.statusSoon)}</span>`,
       cta: m.href ? { href: m.href, label: dict.learnMore, ghost: true } : null,
-    });
-  }
-
-  // 4) Seedance i2v / r2v coming soon
-  section(dict.secSeedanceSoon);
-  for (const card of MODEL_CARDS) {
-    if (card.type === "image") continue;
-    if (card.live && card.mode === "text-to-video") continue;
-    rows.push({
-      name: (TIER_LABEL[card.tier] || TIER_LABEL.std) + " · " + (dict.modeNames[card.mode] || card.mode),
-      mode: card.mode,
-      endpoint: "—",
-      spec: "—",
-      priceHtml: `<span class="sku-price" style="color:var(--tx3)">—</span>`,
-      status: "soon",
-      cta: null,
-    });
-  }
-
-  // 5) Image generation (preview / unlisted)
-  section(dict.secImage);
-  for (const card of MODEL_CARDS) {
-    if (card.type !== "image") continue;
-    const name = "Image Generation" + (card.tier === "fast" ? " Quality" : " Standard");
-    rows.push({
-      name,
-      mode: card.mode,
-      endpoint: card.live ? "POST /generate/" + card.endpoint : "—",
-      spec: "JPEG",
-      priceHtml: card.live
-        ? `<span class="sku-price">$${Number(card.price_usd).toFixed(2)}<span class="sub">/ image</span></span>`
-        : `<span class="sku-price" style="color:var(--tx3)">—</span>`,
-      status: card.live ? "live" : "preview",
-      cta: card.live ? { href: "/image/", label: "↗ Docs", ghost: false } : null,
     });
   }
 
@@ -1425,23 +1373,23 @@ function renderSkuList() {
   const dict = t();
   const ref = state.root === "fail";
   const rows = buildSkuListRows(dict, ref);
+  // Keep agent note i18n in sync
+  const note = document.querySelector(".sku-agent-note");
+  if (note) {
+    note.innerHTML = state.lang === "zh"
+      ? `給 agent / 精確路徑：<a href="https://api.x402video.com/">api.x402video.com</a> · <a href="https://api.x402video.com/llms.txt">llms.txt</a>`
+      : `For agents / exact paths: <a href="https://api.x402video.com/">api.x402video.com</a> · <a href="https://api.x402video.com/llms.txt">llms.txt</a>`;
+  }
   $("sku-list-body").innerHTML = rows.map((r) => {
     if (r.section) {
-      return `<tr class="sku-section"><td colspan="6">${esc(r.section)}</td></tr>`;
+      return `<tr class="sku-section"><td colspan="3">${esc(r.section)}</td></tr>`;
     }
-    let statusHtml = "";
-    if (r.status === "live") statusHtml = `<span class="pill-live">${esc(dict.statusLive)}</span>`;
-    else if (r.status === "preview") statusHtml = `<span class="pill-soon">${esc(dict.statusPreview)}</span>`;
-    else statusHtml = `<span class="pill-soon">${esc(dict.statusSoon)}</span>`;
     const act = r.cta
       ? `<a class="try-btn${r.cta.ghost ? " ghost" : ""}" href="${esc(r.cta.href)}">${esc(r.cta.label)}</a>`
       : "";
     return `<tr>
-      <td><span class="sku-name">${esc(r.name)}</span><span class="sku-mode">${esc(r.mode)}</span></td>
-      <td><span class="sku-ep" title="${esc(r.endpoint)}">${esc(r.endpoint)}</span></td>
-      <td class="sku-spec">${esc(r.spec)}</td>
+      <td><span class="sku-name">${esc(r.name)}</span>${r.hint ? `<span class="sku-hint">${esc(r.hint)}</span>` : ""}</td>
       <td>${r.priceHtml}</td>
-      <td class="sku-status">${statusHtml}</td>
       <td class="sku-act">${act}</td>
     </tr>`;
   }).join("");
