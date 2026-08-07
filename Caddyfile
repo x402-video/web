@@ -4,5 +4,15 @@ root * /srv
 encode gzip
 file_server
 
-header /assets/* Cache-Control "public, max-age=86400"
-header /favicon.svg Cache-Control "public, max-age=86400"
+# Only cache assets that exist — avoid Cloudflare caching 404s for 24h
+@cachedAsset {
+	path /assets/* /favicon.svg
+	file
+}
+header @cachedAsset Cache-Control "public, max-age=86400"
+# Short negative cache for missing assets
+@missingAsset {
+	path /assets/*
+	not file
+}
+header @missingAsset Cache-Control "public, max-age=60"
