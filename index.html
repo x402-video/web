@@ -284,6 +284,8 @@
   .sku-table .try-btn.ghost { background: transparent; color: var(--ac); border: 1px solid var(--acBd); }
   .sku-table .try-btn.ghost:hover { background: var(--acBg); }
   .sku-table td.sku-act { text-align: right; width: 1%; }
+  .sku-table tr.sku-section td { background: var(--card2); font-size: 12px; font-weight: 700; color: var(--tx3); letter-spacing: 0.04em; text-transform: uppercase; padding: 10px 16px; border-bottom: 1px solid var(--bd); }
+  .sku-table tr.sku-section:hover td { background: var(--card2); }
   @media (max-width: 720px) {
     .sku-table th:nth-child(3), .sku-table td:nth-child(3) { display: none; } /* hide Spec on small */
     .sku-table th, .sku-table td { padding: 12px 10px; }
@@ -770,6 +772,7 @@
           <a href="https://docs.x402.org">docs.x402.org ↗</a>
           <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
+          <a href="/hailuo/">Hailuo API</a>
           <a href="/kling/">Kling API</a>
           <a href="/custom/">Pricing calculator</a>
           <a href="/use-cases/">Use cases</a>
@@ -858,6 +861,9 @@ const I18N = {
     colModel: "Model", colEndpoint: "Endpoint", colSpec: "Output", colPrice: "Price", colStatus: "Status",
     statusLive: "Live", statusSoon: "Coming soon", statusPreview: "Private preview",
     priceFrom: "from", pricePerSec: "/sec", pricePerCall: "/call", priceCustom: "parametric",
+    secLive: "Live SKUs", secRoadmap: "Other video models — coming soon",
+    secSeedanceSoon: "Seedance modalities — coming soon", secImage: "Image generation",
+    learnMore: "Learn more",
     modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "Generate video from a text prompt — multi-shot narrative, cinematic motion.",
@@ -938,6 +944,9 @@ const I18N = {
     colModel: "模型", colEndpoint: "端點", colSpec: "輸出", colPrice: "價格", colStatus: "狀態",
     statusLive: "上線", statusSoon: "即將推出", statusPreview: "私測中",
     priceFrom: "起價", pricePerSec: "/秒", pricePerCall: "/次", priceCustom: "參數化",
+    secLive: "已上線 SKU", secRoadmap: "其他視頻模型 — 即將上架",
+    secSeedanceSoon: "Seedance 模態 — 即將上架", secImage: "圖片生成",
+    learnMore: "了解更多",
     modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "文字 prompt 生成影片 — 多鏡頭敘事、電影感運鏡。",
@@ -1281,11 +1290,45 @@ function setPriceView(view) {
   applyPriceView();
 }
 
-/** Build flat rows for the SKU list: live fixed + live custom + coming-soon cards. */
+/** Other families planned for the gateway (SEO + honest roadmap — not live SKUs). */
+const ROADMAP_MODELS = [
+  {
+    name: "MiniMax Hailuo 2.3",
+    mode: "text-to-video · image-to-video",
+    endpoint: "POST /generate/hailuo/… (planned)",
+    spec: "6s / 10s · 768p / 1080p",
+    href: "/hailuo/",
+  },
+  {
+    name: "MiniMax Hailuo 2.3 Fast",
+    mode: "text-to-video · image-to-video",
+    endpoint: "POST /generate/hailuo-fast/… (planned)",
+    spec: "6s / 10s · 768p / 1080p · lower latency",
+    href: "/hailuo/",
+  },
+  {
+    name: "MiniMax Hailuo 02",
+    mode: "text-to-video · image-to-video",
+    endpoint: "POST /generate/hailuo-02/… (planned)",
+    spec: "6s / 10s · 512p–1080p",
+    href: "/hailuo/",
+  },
+  {
+    name: "Kling",
+    mode: "text-to-video · image-to-video",
+    endpoint: "—",
+    spec: "not scheduled",
+    href: "/kling/",
+  },
+];
+
+/** Build flat rows for the SKU list: live fixed + live custom + roadmap + coming-soon. */
 function buildSkuListRows(dict, ref) {
   const rows = [];
+  const section = (label) => rows.push({ section: label });
 
   // 1) Live fixed SKUs from storefront
+  section(dict.secLive);
   const skus = Array.isArray(state.skus) ? state.skus : [];
   for (const s of skus) {
     const p = Number(s.price_usd);
@@ -1310,7 +1353,6 @@ function buildSkuListRows(dict, ref) {
     const rates = (c.pricing && c.pricing.retail_usd_per_second) || {};
     const vals = Object.values(rates).map(Number).filter(Number.isFinite);
     const lo = vals.length ? Math.min.apply(null, vals) : null;
-    // Rough floor for 4s cheapest res (matches openapi min ballpark when available)
     const nameBlob = String(c.model || "") + " " + String(c.sku || "");
     const tier = /mini/i.test(nameBlob) ? TIER_LABEL.mini : /fast/i.test(nameBlob) ? TIER_LABEL.fast : TIER_LABEL.std;
     const resKeys = Object.keys(rates);
@@ -1328,25 +1370,25 @@ function buildSkuListRows(dict, ref) {
     });
   }
 
-  // 3) Coming-soon / preview cards (not live text-to-video — those already listed)
+  // 3) Other families on the roadmap (SEO + honest "coming soon")
+  section(dict.secRoadmap);
+  for (const m of ROADMAP_MODELS) {
+    rows.push({
+      name: m.name,
+      mode: m.mode,
+      endpoint: m.endpoint,
+      spec: m.spec,
+      priceHtml: `<span class="sku-price" style="color:var(--tx3)">—</span>`,
+      status: "soon",
+      cta: m.href ? { href: m.href, label: dict.learnMore, ghost: true } : null,
+    });
+  }
+
+  // 4) Seedance i2v / r2v coming soon
+  section(dict.secSeedanceSoon);
   for (const card of MODEL_CARDS) {
-    if (card.live && card.mode === "text-to-video" && card.type !== "image") continue; // covered by skus
-    if (card.type === "image") {
-      const name = "Image Generation" + (card.tier === "fast" ? " Quality" : " Standard");
-      rows.push({
-        name,
-        mode: card.mode,
-        endpoint: card.live ? "POST /generate/" + card.endpoint : "—",
-        spec: "JPEG",
-        priceHtml: card.live
-          ? `<span class="sku-price">$${Number(card.price_usd).toFixed(2)}<span class="sub">/ image</span></span>`
-          : `<span class="sku-price" style="color:var(--tx3)">—</span>`,
-        status: card.live ? "live" : "preview",
-        cta: card.live ? { href: "/image/", label: "↗ Docs", ghost: false } : null,
-      });
-      continue;
-    }
-    // i2v / r2v coming soon
+    if (card.type === "image") continue;
+    if (card.live && card.mode === "text-to-video") continue;
     rows.push({
       name: (TIER_LABEL[card.tier] || TIER_LABEL.std) + " · " + (dict.modeNames[card.mode] || card.mode),
       mode: card.mode,
@@ -1358,6 +1400,24 @@ function buildSkuListRows(dict, ref) {
     });
   }
 
+  // 5) Image generation (preview / unlisted)
+  section(dict.secImage);
+  for (const card of MODEL_CARDS) {
+    if (card.type !== "image") continue;
+    const name = "Image Generation" + (card.tier === "fast" ? " Quality" : " Standard");
+    rows.push({
+      name,
+      mode: card.mode,
+      endpoint: card.live ? "POST /generate/" + card.endpoint : "—",
+      spec: "JPEG",
+      priceHtml: card.live
+        ? `<span class="sku-price">$${Number(card.price_usd).toFixed(2)}<span class="sub">/ image</span></span>`
+        : `<span class="sku-price" style="color:var(--tx3)">—</span>`,
+      status: card.live ? "live" : "preview",
+      cta: card.live ? { href: "/image/", label: "↗ Docs", ghost: false } : null,
+    });
+  }
+
   return rows;
 }
 
@@ -1366,6 +1426,9 @@ function renderSkuList() {
   const ref = state.root === "fail";
   const rows = buildSkuListRows(dict, ref);
   $("sku-list-body").innerHTML = rows.map((r) => {
+    if (r.section) {
+      return `<tr class="sku-section"><td colspan="6">${esc(r.section)}</td></tr>`;
+    }
     let statusHtml = "";
     if (r.status === "live") statusHtml = `<span class="pill-live">${esc(dict.statusLive)}</span>`;
     else if (r.status === "preview") statusHtml = `<span class="pill-soon">${esc(dict.statusPreview)}</span>`;

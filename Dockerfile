@@ -4,6 +4,7 @@ COPY index.html llms.txt favicon.svg robots.txt sitemap.xml /srv/
 COPY assets /srv/assets
 COPY seedance /srv/seedance
 COPY kling /srv/kling
+COPY hailuo /srv/hailuo
 COPY custom /srv/custom
 COPY use-cases /srv/use-cases
 COPY what-is-x402 /srv/what-is-x402
