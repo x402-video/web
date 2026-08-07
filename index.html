@@ -255,6 +255,40 @@
   .try-btn:hover { opacity: 0.9; }
   .pr-note { margin: 14px 0 0; font-size: 13px; color: var(--tx3); max-width: 90ch; text-wrap: pretty; }
 
+  /* ---------- pricing view toggle + SKU list ---------- */
+  .pr-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 4px; }
+  .pr-head .sec-title { margin: 0; }
+  .view-toggle { display: inline-flex; gap: 2px; border: 1px solid var(--bd); border-radius: 9px; padding: 3px; background: var(--card); }
+  .view-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 40px; height: 34px; padding: 0 12px; border: none; border-radius: 7px; background: transparent; color: var(--tx3); cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 600; }
+  .view-btn:hover { color: var(--tx); background: var(--hov); }
+  .view-btn.on { color: var(--ac); background: var(--acBg); }
+  .view-btn svg { width: 16px; height: 16px; display: block; }
+  #sku-cards[hidden], #sku-list-wrap[hidden] { display: none !important; }
+  .sku-list-wrap { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); overflow: hidden; margin-top: 14px; }
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .sku-table th { text-align: left; font-weight: 600; font-size: 12px; color: var(--tx3); letter-spacing: 0.02em; padding: 12px 16px; border-bottom: 1px solid var(--bd); background: var(--card2); white-space: nowrap; }
+  .sku-table td { padding: 14px 16px; border-bottom: 1px solid var(--bd2); vertical-align: middle; }
+  .sku-table tr:last-child td { border-bottom: none; }
+  .sku-table tbody tr:hover td { background: var(--hov); }
+  .sku-table .sku-name { font-weight: 600; color: var(--tx); }
+  .sku-table .sku-mode { display: block; font-size: 12px; color: var(--tx3); font-weight: 500; margin-top: 2px; }
+  .sku-table .sku-ep { font-family: var(--mono); font-size: 12px; color: var(--tx2); word-break: break-all; }
+  .sku-table .sku-spec { font-size: 13px; color: var(--tx2); white-space: nowrap; }
+  .sku-table .sku-price { font-family: var(--mono); font-weight: 700; color: var(--ac); font-size: 14px; white-space: nowrap; }
+  .sku-table .sku-price .sub { display: block; font-weight: 500; font-size: 11.5px; color: var(--tx3); margin-top: 2px; }
+  .sku-table .sku-status { white-space: nowrap; }
+  .pill-live { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--ok); }
+  .pill-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+  .pill-soon { display: inline-flex; font-size: 11.5px; font-weight: 600; color: var(--tx3); border: 1px solid var(--bd); border-radius: 999px; padding: 3px 9px; }
+  .sku-table .try-btn { padding: 6px 14px; font-size: 12.5px; }
+  .sku-table .try-btn.ghost { background: transparent; color: var(--ac); border: 1px solid var(--acBd); }
+  .sku-table .try-btn.ghost:hover { background: var(--acBg); }
+  .sku-table td.sku-act { text-align: right; width: 1%; }
+  @media (max-width: 720px) {
+    .sku-table th:nth-child(3), .sku-table td:nth-child(3) { display: none; } /* hide Spec on small */
+    .sku-table th, .sku-table td { padding: 12px 10px; }
+  }
+
   /* ---------- how to buy ---------- */
   .buy-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr); gap: 36px; align-items: start; margin-top: 20px; }
   .steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; }
@@ -485,10 +519,41 @@
 
   <!-- pricing -->
   <section class="section" id="pricing">
-    <h2 class="sec-title" style="margin-bottom: 4px;" data-i18n="prTitle">Models &amp; pricing</h2>
+    <div class="pr-head">
+      <h2 class="sec-title" data-i18n="prTitle">Models &amp; pricing</h2>
+      <div class="view-toggle" role="group" aria-label="Pricing view">
+        <button type="button" class="view-btn" id="view-cards" data-view="cards" title="Cards" aria-pressed="false">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="5.5" height="5.5" rx="1.2" stroke="currentColor" stroke-width="1.4"/></svg>
+          <span data-i18n="viewCards">Cards</span>
+        </button>
+        <button type="button" class="view-btn on" id="view-list" data-view="list" title="List" aria-pressed="true">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3.5h12M2 8h12M2 12.5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span data-i18n="viewList">List</span>
+        </button>
+      </div>
+    </div>
     <p class="pr-sub" data-i18n="prSub">Programmatic pricing — upstream cost × markup + network fee. Prices track upstream price cards automatically.</p>
     <div class="ref-banner" id="ref-banner" hidden data-i18n="prRef">⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.</div>
-    <div class="grid3" id="sku-cards">
+
+    <!-- List view: scannable SKU table (default) -->
+    <div class="sku-list-wrap" id="sku-list-wrap">
+      <table class="sku-table" id="sku-table">
+        <thead>
+          <tr>
+            <th data-i18n="colModel">Model</th>
+            <th data-i18n="colEndpoint">Endpoint</th>
+            <th data-i18n="colSpec">Output</th>
+            <th data-i18n="colPrice">Price</th>
+            <th data-i18n="colStatus">Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="sku-list-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Cards view: existing grid -->
+    <div class="grid3" id="sku-cards" hidden>
       <div class="model-card">
         <div class="model-media"><img src="assets/art-portrait.png" alt="Seedance 2.0 Text-to-Video — illustration" loading="lazy" /></div>
         <div class="model-body">
@@ -789,6 +854,10 @@ const I18N = {
     prTitle: "Models & pricing",
     prSub: "Programmatic pricing — upstream cost × markup. Prices track upstream price cards automatically.",
     prRef: "⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.",
+    viewCards: "Cards", viewList: "List",
+    colModel: "Model", colEndpoint: "Endpoint", colSpec: "Output", colPrice: "Price", colStatus: "Status",
+    statusLive: "Live", statusSoon: "Coming soon", statusPreview: "Private preview",
+    priceFrom: "from", pricePerSec: "/sec", pricePerCall: "/call", priceCustom: "parametric",
     modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "Generate video from a text prompt — multi-shot narrative, cinematic motion.",
@@ -865,6 +934,10 @@ const I18N = {
     prTitle: "模型與價格",
     prSub: "公式定價 — 上游成本 × markup。價格自動跟隨上游價卡。",
     prRef: "⚠ 參考價 — gateway 離線。付款前請以即時 402 報價為準。",
+    viewCards: "卡片", viewList: "列表",
+    colModel: "模型", colEndpoint: "端點", colSpec: "輸出", colPrice: "價格", colStatus: "狀態",
+    statusLive: "上線", statusSoon: "即將推出", statusPreview: "私測中",
+    priceFrom: "起價", pricePerSec: "/秒", pricePerCall: "/次", priceCustom: "參數化",
     modeNames: { "text-to-video": "Text-to-Video", "image-to-video": "Image-to-Video", "reference-to-video": "Reference-to-Video", "text-to-image": "Text-to-Image" },
     modeDescs: {
       "text-to-video": "文字 prompt 生成影片 — 多鏡頭敘事、電影感運鏡。",
@@ -1025,6 +1098,7 @@ function readPref(key, allowed, dflt) {
 const state = {
   theme: readPref("xv-theme", ["dark", "light"], "light"),
   lang: readPref("xv-lang", ["en", "zh"], "en"),
+  priceView: readPref("xv-price-view", ["list", "cards"], "list"),
   tab: "ts",
   openFaq: -1,
   stage: 0,
@@ -1033,6 +1107,7 @@ const state = {
   root: "loading",    // loading | ok | fail   (GET /)
   status: "loading",  // loading | ok | fail   (GET /status)
   skus: null,
+  custom: null,       // custom_endpoints from GET /
   stats: null,
 };
 
@@ -1174,7 +1249,7 @@ function renderTrust() {
   }
 }
 
-/* ---------- pricing (6-category cards + image cards) ---------- */
+/* ---------- pricing (cards + list) ---------- */
 function perSecLabel(sku) {
   const p = Number(sku && sku.price_usd);
   const d = Number(sku && sku.duration_seconds);
@@ -1182,10 +1257,139 @@ function perSecLabel(sku) {
   return "$" + String(+(p / d).toFixed(4));
 }
 
+function modelLabelFromSku(sku) {
+  const blob = String(sku.model || "") + " " + String(sku.sku || "");
+  if (/mini/i.test(blob)) return TIER_LABEL.mini;
+  if (/fast/i.test(blob)) return TIER_LABEL.fast;
+  return TIER_LABEL.std;
+}
+
+function applyPriceView() {
+  const isList = state.priceView === "list";
+  $("sku-list-wrap").hidden = !isList;
+  $("sku-cards").hidden = isList;
+  $("view-list").classList.toggle("on", isList);
+  $("view-cards").classList.toggle("on", !isList);
+  $("view-list").setAttribute("aria-pressed", isList ? "true" : "false");
+  $("view-cards").setAttribute("aria-pressed", isList ? "false" : "true");
+}
+
+function setPriceView(view) {
+  if (view !== "list" && view !== "cards") return;
+  state.priceView = view;
+  try { localStorage.setItem("xv-price-view", view); } catch (e) {}
+  applyPriceView();
+}
+
+/** Build flat rows for the SKU list: live fixed + live custom + coming-soon cards. */
+function buildSkuListRows(dict, ref) {
+  const rows = [];
+
+  // 1) Live fixed SKUs from storefront
+  const skus = Array.isArray(state.skus) ? state.skus : [];
+  for (const s of skus) {
+    const p = Number(s.price_usd);
+    const per = perSecLabel(s);
+    const name = modelLabelFromSku(s) + " · " + (dict.modeNames["text-to-video"] || "Text-to-Video");
+    rows.push({
+      name,
+      mode: "text-to-video",
+      endpoint: s.endpoint || "",
+      spec: [s.duration_seconds != null ? s.duration_seconds + "s" : null, s.resolution, "MP4"].filter(Boolean).join(" · "),
+      priceHtml: Number.isFinite(p)
+        ? `<span class="sku-price">$${p.toFixed(2)}<span class="sub">${esc(dict.pricePerCall)}${per ? " · " + per + " " + esc(dict.pricePerSec) : ""}${ref ? " " + esc(dict.refMark) : ""}</span></span>`
+        : `<span class="sku-price">—</span>`,
+      status: "live",
+      cta: { href: "#buy", label: dict.tryIt, ghost: false },
+    });
+  }
+
+  // 2) Live parametric /custom endpoints
+  const customs = Array.isArray(state.custom) ? state.custom : [];
+  for (const c of customs) {
+    const rates = (c.pricing && c.pricing.retail_usd_per_second) || {};
+    const vals = Object.values(rates).map(Number).filter(Number.isFinite);
+    const lo = vals.length ? Math.min.apply(null, vals) : null;
+    // Rough floor for 4s cheapest res (matches openapi min ballpark when available)
+    const nameBlob = String(c.model || "") + " " + String(c.sku || "");
+    const tier = /mini/i.test(nameBlob) ? TIER_LABEL.mini : /fast/i.test(nameBlob) ? TIER_LABEL.fast : TIER_LABEL.std;
+    const resKeys = Object.keys(rates);
+    const resLabel = resKeys.length ? resKeys.join("/") : "480p–1080p";
+    rows.push({
+      name: tier + " · Custom",
+      mode: "text-to-video",
+      endpoint: c.endpoint || "",
+      spec: "4–15s · " + resLabel + " · parametric",
+      priceHtml: lo != null
+        ? `<span class="sku-price">$${Number(lo).toFixed(4)}<span class="sub">${esc(dict.priceFrom)} ${esc(dict.pricePerSec)} · ${esc(dict.priceCustom)}${ref ? " " + esc(dict.refMark) : ""}</span></span>`
+        : `<span class="sku-price">dynamic<span class="sub">${esc(dict.priceCustom)}</span></span>`,
+      status: "live",
+      cta: { href: "/custom/", label: dict.tryIt, ghost: false },
+    });
+  }
+
+  // 3) Coming-soon / preview cards (not live text-to-video — those already listed)
+  for (const card of MODEL_CARDS) {
+    if (card.live && card.mode === "text-to-video" && card.type !== "image") continue; // covered by skus
+    if (card.type === "image") {
+      const name = "Image Generation" + (card.tier === "fast" ? " Quality" : " Standard");
+      rows.push({
+        name,
+        mode: card.mode,
+        endpoint: card.live ? "POST /generate/" + card.endpoint : "—",
+        spec: "JPEG",
+        priceHtml: card.live
+          ? `<span class="sku-price">$${Number(card.price_usd).toFixed(2)}<span class="sub">/ image</span></span>`
+          : `<span class="sku-price" style="color:var(--tx3)">—</span>`,
+        status: card.live ? "live" : "preview",
+        cta: card.live ? { href: "/image/", label: "↗ Docs", ghost: false } : null,
+      });
+      continue;
+    }
+    // i2v / r2v coming soon
+    rows.push({
+      name: (TIER_LABEL[card.tier] || TIER_LABEL.std) + " · " + (dict.modeNames[card.mode] || card.mode),
+      mode: card.mode,
+      endpoint: "—",
+      spec: "—",
+      priceHtml: `<span class="sku-price" style="color:var(--tx3)">—</span>`,
+      status: "soon",
+      cta: null,
+    });
+  }
+
+  return rows;
+}
+
+function renderSkuList() {
+  const dict = t();
+  const ref = state.root === "fail";
+  const rows = buildSkuListRows(dict, ref);
+  $("sku-list-body").innerHTML = rows.map((r) => {
+    let statusHtml = "";
+    if (r.status === "live") statusHtml = `<span class="pill-live">${esc(dict.statusLive)}</span>`;
+    else if (r.status === "preview") statusHtml = `<span class="pill-soon">${esc(dict.statusPreview)}</span>`;
+    else statusHtml = `<span class="pill-soon">${esc(dict.statusSoon)}</span>`;
+    const act = r.cta
+      ? `<a class="try-btn${r.cta.ghost ? " ghost" : ""}" href="${esc(r.cta.href)}">${esc(r.cta.label)}</a>`
+      : "";
+    return `<tr>
+      <td><span class="sku-name">${esc(r.name)}</span><span class="sku-mode">${esc(r.mode)}</span></td>
+      <td><span class="sku-ep" title="${esc(r.endpoint)}">${esc(r.endpoint)}</span></td>
+      <td class="sku-spec">${esc(r.spec)}</td>
+      <td>${r.priceHtml}</td>
+      <td class="sku-status">${statusHtml}</td>
+      <td class="sku-act">${act}</td>
+    </tr>`;
+  }).join("");
+}
+
 function renderPricing() {
   const dict = t();
   $("ref-banner").hidden = state.root !== "fail";
   const ref = state.root === "fail";
+  applyPriceView();
+  renderSkuList();
 
   $("sku-cards").innerHTML = MODEL_CARDS.map((card) => {
     // Image cards (type:"image") use hardcoded prices — not live SKU lookup
@@ -1479,12 +1683,18 @@ fetchJson("/")
     if (!info || !Array.isArray(info.skus) || !info.skus.length) throw new Error("bad storefront");
     state.root = "ok";
     state.skus = info.skus;
+    state.custom = Array.isArray(info.custom_endpoints) ? info.custom_endpoints : [];
   })
   .catch(() => {
     state.root = "fail";
     state.skus = FALLBACK_SKUS;
+    state.custom = [];
   })
   .then(() => { syncFromPriceBadge(); renderPricing(); renderFeatured(); renderTrust(); });
+
+/* pricing view toggle */
+$("view-list").addEventListener("click", () => setPriceView("list"));
+$("view-cards").addEventListener("click", () => setPriceView("cards"));
 
 fetchJson("/status")
   .then((s) => {
