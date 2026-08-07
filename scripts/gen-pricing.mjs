@@ -88,14 +88,8 @@ const rule = (label, find, replace, expectMin = 1) => ({ label, find, replace, e
 const range = (lo, hi) => `$${usd(lo)}${DASH}$${usd(hi)}`;
 
 function homeRules(c) {
-  const foot = (price, ps) =>
-    `<div class="model-foot"><div><span class="model-price">$${perSec(ps)}</span>` +
-    `<span class="model-per">/ sec</span><span class="model-call">$${usd(price)} · 5s 720p per call</span>` +
-    `</div><a class="try-btn" href="#buy">↗ Try it</a></div>`;
+  // Cards + list prices are filled live from GET / via JS. Only static anchors remain.
   return [
-    rule("card-std", /(<!-- x402-pricing:start card-std -->)[\s\S]*?(<!-- x402-pricing:end card-std -->)/, (_m, a, b) => a + foot(c.std.price, c.std.perSec) + b),
-    rule("card-fast", /(<!-- x402-pricing:start card-fast -->)[\s\S]*?(<!-- x402-pricing:end card-fast -->)/, (_m, a, b) => a + foot(c.fast.price, c.fast.perSec) + b),
-    rule("card-mini", /(<!-- x402-pricing:start card-mini -->)[\s\S]*?(<!-- x402-pricing:end card-mini -->)/, (_m, a, b) => a + foot(c.mini.price, c.mini.perSec) + b),
     rule("jsonld-low", /("lowPrice": )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.min)),
     rule("jsonld-high", /("highPrice": )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.max)),
     rule("badge-en", /(from \$)\d+(?:\.\d+)?(\/call · USDC on Base · no signup)/g, (_m, a, b) => a + usd(c.min) + b, 2),

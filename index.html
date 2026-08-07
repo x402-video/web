@@ -242,17 +242,20 @@
   .model-card { border: 1px solid var(--bd); border-radius: 12px; background: var(--card); overflow: hidden; display: flex; flex-direction: column; }
   .model-media { width: 100%; aspect-ratio: 16 / 9; background: var(--card2); }
   .model-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .model-card.soon .model-media img { filter: grayscale(0.4); opacity: 0.75; }
-  .model-body { padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
-  .model-name { font-weight: 600; font-size: 15px; }
+  .model-card.soon .model-media img { filter: grayscale(0.45); opacity: 0.72; }
+  .model-body { padding: 16px 16px 4px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .model-vendor { font-size: 12px; font-weight: 600; color: var(--tx3); letter-spacing: 0.02em; }
+  .model-name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
   .model-desc { margin: 0; font-size: 13px; color: var(--tx2); text-wrap: pretty; }
-  .model-ep { font-family: var(--mono); font-size: 11.5px; color: var(--tx3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .model-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--bd3); min-height: 58px; }
-  .model-price { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--ac); }
-  .model-per { font-size: 12px; color: var(--tx3); margin-left: 3px; }
-  .model-call { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--tx3); margin-top: 1px; }
+  .model-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--bd3); min-height: 58px; }
+  .model-price { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--ac); letter-spacing: -0.02em; }
+  .model-per { font-size: 12.5px; color: var(--tx3); margin-left: 4px; }
+  .model-call { display: block; font-size: 12px; color: var(--tx3); margin-top: 2px; }
+  .soon-pill { display: inline-flex; font-size: 12px; font-weight: 600; color: var(--tx3); border: 1px solid var(--bd); border-radius: 999px; padding: 5px 11px; }
   .try-btn { text-decoration: none; background: var(--ac); color: #fff; font-weight: 600; border-radius: 7px; padding: 7px 16px; font-size: 13px; white-space: nowrap; flex-shrink: 0; }
   .try-btn:hover { opacity: 0.9; }
+  .try-btn.ghost { background: transparent; color: var(--ac); border: 1px solid var(--acBd); }
+  .try-btn.ghost:hover { background: var(--acBg); }
   .pr-note { margin: 14px 0 0; font-size: 13px; color: var(--tx3); max-width: 90ch; text-wrap: pretty; }
 
   /* ---------- pricing view toggle + SKU list ---------- */
@@ -535,7 +538,7 @@
     <p class="pr-sub" data-i18n="prSub">Programmatic pricing — upstream cost × markup + network fee. Prices track upstream price cards automatically.</p>
     <div class="ref-banner" id="ref-banner" hidden data-i18n="prRef">⚠ Reference prices — gateway offline. Verify against the live 402 quote before paying.</div>
 
-    <!-- List view: human-scannable (agents use api.x402video.com) -->
+    <!-- List view: human-scannable -->
     <div class="sku-list-wrap" id="sku-list-wrap">
       <table class="sku-table" id="sku-table">
         <thead>
@@ -548,114 +551,11 @@
         <tbody id="sku-list-body"></tbody>
       </table>
     </div>
-    <p class="sku-agent-note" id="sku-agent-note">For agents / exact paths: <a href="https://api.x402video.com/">api.x402video.com</a> · <a href="https://api.x402video.com/llms.txt">llms.txt</a></p>
 
-    <!-- Cards view: existing grid -->
-    <div class="grid3" id="sku-cards" hidden>
-      <div class="model-card">
-        <div class="model-media"><img src="assets/art-portrait.png" alt="Seedance 2.0 Text-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">text-to-video</span>
-          <span class="model-name">Seedance 2.0 Text-to-Video</span>
-          <p class="model-desc">Generate video from a text prompt — multi-shot narrative, cinematic motion.</p>
-          <span class="model-ep" title="POST /generate/seedance/5s-720p">POST /generate/seedance/5s-720p</span>
-        </div>
-        <!-- x402-pricing:start card-std --><div class="model-foot"><div><span class="model-price">$0.266</span><span class="model-per">/ sec</span><span class="model-call">$1.33 · 5s 720p per call</span></div><a class="try-btn" href="#buy">↗ Try it</a></div><!-- x402-pricing:end card-std -->
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-tree.png" alt="Seedance 2.0 Image-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">image-to-video</span>
-          <span class="model-name">Seedance 2.0 Image-to-Video</span>
-          <p class="model-desc">Animate a first-frame image (optional last-frame) into video.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-meadow.png" alt="Seedance 2.0 Reference-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">reference-to-video</span>
-          <span class="model-name">Seedance 2.0 Reference-to-Video</span>
-          <p class="model-desc">Character-driven video from reference images and clips.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card">
-        <div class="model-media"><img src="assets/art-denim.png" alt="Seedance 2.0 Fast Text-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">text-to-video</span>
-          <span class="model-name">Seedance 2.0 Fast Text-to-Video</span>
-          <p class="model-desc">Generate video from a text prompt — multi-shot narrative, cinematic motion.</p>
-          <span class="model-ep" title="POST /generate/seedance-fast/5s-720p">POST /generate/seedance-fast/5s-720p</span>
-        </div>
-        <!-- x402-pricing:start card-fast --><div class="model-foot"><div><span class="model-price">$0.21</span><span class="model-per">/ sec</span><span class="model-call">$1.05 · 5s 720p per call</span></div><a class="try-btn" href="#buy">↗ Try it</a></div><!-- x402-pricing:end card-fast -->
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-sprout.png" alt="Seedance 2.0 Fast Image-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">image-to-video</span>
-          <span class="model-name">Seedance 2.0 Fast Image-to-Video</span>
-          <p class="model-desc">Animate a first-frame image (optional last-frame) into video.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-pasture.png" alt="Seedance 2.0 Fast Reference-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">reference-to-video</span>
-          <span class="model-name">Seedance 2.0 Fast Reference-to-Video</span>
-          <p class="model-desc">Character-driven video from reference images and clips.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card">
-        <div class="model-media"><img src="assets/art-hills.png" alt="Seedance 2.0 Mini Text-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">text-to-video</span>
-          <span class="model-name">Seedance 2.0 Mini Text-to-Video</span>
-          <p class="model-desc">Cheapest tier — generate video from a text prompt.</p>
-          <span class="model-ep" title="POST /generate/seedance-mini/5s-720p">POST /generate/seedance-mini/5s-720p</span>
-        </div>
-        <!-- x402-pricing:start card-mini --><div class="model-foot"><div><span class="model-price">$0.134</span><span class="model-per">/ sec</span><span class="model-call">$0.67 · 5s 720p per call</span></div><a class="try-btn" href="#buy">↗ Try it</a></div><!-- x402-pricing:end card-mini -->
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-sprout.png" alt="Seedance 2.0 Mini Image-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">image-to-video</span>
-          <span class="model-name">Seedance 2.0 Mini Image-to-Video</span>
-          <p class="model-desc">Animate a first-frame image (optional last-frame) into video.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-pasture.png" alt="Seedance 2.0 Mini Reference-to-Video — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">reference-to-video</span>
-          <span class="model-name">Seedance 2.0 Mini Reference-to-Video</span>
-          <p class="model-desc">Character-driven video from reference images and clips.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-hills.png" alt="Image Generation Standard Text-to-Image — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">text-to-image</span>
-          <span class="model-name">Image Generation Standard Text-to-Image</span>
-          <p class="model-desc">Generate a JPEG image from a text prompt — powered by Grok Imagine.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">in private preview</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-      <div class="model-card soon">
-        <div class="model-media"><img src="assets/art-sprout.png" alt="Image Generation Quality Text-to-Image — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">text-to-image</span>
-          <span class="model-name">Image Generation Quality Text-to-Image</span>
-          <p class="model-desc">Generate a JPEG image from a text prompt — powered by Grok Imagine.</p>
-        </div>
-        <div class="model-foot"><span class="model-per">in private preview</span><span class="soon-pill">Coming soon</span></div>
-      </div>
-    </div>
-    <p class="pr-note" data-i18n="prRoadmap">image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.</p>
+    <!-- Cards view: vendor + model + price only (filled by JS) -->
+    <div class="grid3" id="sku-cards" hidden></div>
+
+    <p class="sku-agent-note" id="sku-agent-note">For agents / exact paths: <a href="https://api.x402video.com/">api.x402video.com</a> · <a href="https://api.x402video.com/llms.txt">llms.txt</a></p>
   </section>
 
   <!-- how to buy -->
@@ -800,28 +700,14 @@ const FALLBACK_SKUS = [
   { sku: "seedance-mini-5s-720p", model: "Seedance 2.0 Mini", endpoint: "POST /generate/seedance-mini/5s-720p", price_usd: 0.67, duration_seconds: 5, resolution: "720p" },
 ];
 
-/* 3 tiers × 3 modalities — the catalog grid. Only text-to-video is sold today
-   (image inputs wait for image moderation); the rest render as coming-soon. */
+/* Human pricing: vendor + model name + sticker price. Agents use GET / instead. */
 const TIER_LABEL = { std: "Seedance 2.0", fast: "Seedance 2.0 Fast", mini: "Seedance 2.0 Mini" };
-const MODEL_CARDS = [
-  { tier: "std", mode: "text-to-video", img: "assets/art-portrait.png", live: true },
-  { tier: "std", mode: "image-to-video", img: "assets/art-tree.png", live: false },
-  { tier: "std", mode: "reference-to-video", img: "assets/art-meadow.png", live: false },
-  { tier: "fast", mode: "text-to-video", img: "assets/art-denim.png", live: true },
-  { tier: "fast", mode: "image-to-video", img: "assets/art-sprout.png", live: false },
-  { tier: "fast", mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
-  { tier: "mini", mode: "text-to-video", img: "assets/art-hills.png", live: true },
-  { tier: "mini", mode: "image-to-video", img: "assets/art-sprout.png", live: false },
-  { tier: "mini", mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
-  // Grok Imagine text-to-image is an UNLISTED preview in the gateway: the routes work,
-  // but they are deliberately absent from GET / skus[] and /.well-known/x402, so no agent
-  // can discover them. Selling them here as `live` advertised a product the buyers this
-  // site is built for cannot find. Two things must be true before flipping back to
-  // `live: true`: the gateway lists them in skus[]/.well-known, AND /image/ actually
-  // ships (the Dockerfile COPY allowlist omits it, so the "↗ Docs" link 404s today).
-  { tier: "std", mode: "text-to-image", img: "assets/art-hills.png", live: false, type: "image", endpoint: "grok-imagine/image", price_usd: 0.05 },
-  { tier: "fast", mode: "text-to-image", img: "assets/art-sprout.png", live: false, type: "image", endpoint: "grok-imagine/image-quality", price_usd: 0.10 },
-];
+const TIER_IMG = {
+  mini: "assets/art-hills.png",
+  fast: "assets/art-denim.png",
+  std: "assets/art-portrait.png",
+};
+const TIER_VENDOR = "ByteDance · Seedance";
 
 /* ---------- copy (EN / ZH) ---------- */
 const I18N = {
@@ -875,7 +761,13 @@ const I18N = {
     // Text-to-image is gated on the gateway listing it publicly, not on input moderation.
     soonNoteImg: "in private preview",
     tryIt: "↗ Try it",
-    prRoadmap: "image-to-video and reference-to-video are wired upstream and launch once image-input moderation ships — image inputs face the same red lines as prompts. Longer durations and 1080p are available today via the parametric /custom endpoints.",
+    vendorSeedance: "ByteDance · Seedance",
+    vendorMiniMax: "MiniMax · Hailuo",
+    vendorKling: "Kuaishou · Kling",
+    cardHintLive: "Text-to-video · 5s · 720p",
+    cardHintCustom: "4–15s · pick resolution",
+    cardHintHailuo: "Text & image to video",
+    cardHintKling: "Not scheduled yet",
     buyTitle: "How to buy",
     buyGuideLead: "New to x402? No wallet yet? Follow the",
     buyGuideLink: "zero-to-first-video guide ↗",
@@ -958,7 +850,13 @@ const I18N = {
     soonNote: "影像審核上線後開賣",
     soonNoteImg: "私測中",
     tryIt: "↗ 試試看",
-    prRoadmap: "image-to-video 與 reference-to-video 上游已接通，等影像輸入審核上線即開賣 — 圖片輸入適用與 prompt 相同的紅線。更長時長與 1080p 現在就可透過 /custom 參數端點購買。",
+    vendorSeedance: "ByteDance · Seedance",
+    vendorMiniMax: "MiniMax · 海螺 Hailuo",
+    vendorKling: "Kuaishou · Kling",
+    cardHintLive: "文字生影片 · 5 秒 · 720p",
+    cardHintCustom: "4–15 秒 · 自選解析度",
+    cardHintHailuo: "文字 / 圖片生影片",
+    cardHintKling: "尚未排程",
     buyTitle: "怎麼購買",
     buyGuideLead: "第一次接觸 x402、還沒有錢包?跟著",
     buyGuideLink: "五分鐘上手指南 ↗",
@@ -1395,65 +1293,107 @@ function renderSkuList() {
   }).join("");
 }
 
-function renderPricing() {
+function tierKeyFromSku(sku) {
+  const blob = String(sku.model || "") + " " + String(sku.sku || "");
+  if (/mini/i.test(blob)) return "mini";
+  if (/fast/i.test(blob)) return "fast";
+  return "std";
+}
+
+/** Cards: same data as list — vendor, model, big price. No API paths. */
+function renderSkuCards() {
   const dict = t();
-  $("ref-banner").hidden = state.root !== "fail";
   const ref = state.root === "fail";
-  applyPriceView();
-  renderSkuList();
+  const refMark = ref ? " " + dict.refMark : "";
+  const cards = [];
 
-  $("sku-cards").innerHTML = MODEL_CARDS.map((card) => {
-    // Image cards (type:"image") use hardcoded prices — not live SKU lookup
-    if (card.type === "image") {
-      const name = "Image Generation" + (card.tier === "fast" ? " Quality" : " Standard") + " " + dict.modeNames[card.mode];
-      const desc = dict.modeDescs[card.mode];
-      const price = "$" + Number(card.price_usd).toFixed(2);
-      const epPath = "POST /generate/" + card.endpoint;
-      const foot = card.live
-        ? `<div>
-            <span class="model-price">${esc(price)}</span><span class="model-per">/ image${ref ? " " + esc(dict.refMark) : ""}</span>
-          </div>
-          <a class="try-btn" href="/image/">↗ Docs</a>`
-        : `<span class="model-per">${esc(dict.soonNoteImg)}</span>
-          <span class="soon-pill">${esc(dict.gaSoon)}</span>`;
-      return `<div class="model-card${card.live ? "" : " soon"}">
-        <div class="model-media"><img src="${card.img}" alt="${esc(name)} — illustration" loading="lazy" /></div>
-        <div class="model-body">
-          <span class="feat-tag">${card.mode}</span>
-          <span class="model-name">${esc(name)}</span>
-          <p class="model-desc">${esc(desc)}</p>
-          ${card.live ? `<span class="model-ep" title="${esc(epPath)}">${esc(epPath)}</span>` : ""}
-        </div>
-        <div class="model-foot">${foot}</div>
-      </div>`;
+  const skus = (Array.isArray(state.skus) ? state.skus.slice() : []).sort(
+    (a, b) => (Number(a.price_usd) || 0) - (Number(b.price_usd) || 0),
+  );
+  for (const s of skus) {
+    const tier = tierKeyFromSku(s);
+    const p = Number(s.price_usd);
+    cards.push({
+      live: true,
+      vendor: dict.vendorSeedance,
+      name: modelLabelFromSku(s),
+      hint: dict.cardHintLive,
+      img: TIER_IMG[tier] || TIER_IMG.std,
+      priceHtml: Number.isFinite(p)
+        ? `<span class="model-price">$${p.toFixed(2)}</span><span class="model-per">${esc(dict.pricePerCall)}${esc(refMark)}</span>`
+        : `<span class="model-price">—</span>`,
+      cta: { href: "#buy", label: dict.tryIt, ghost: false },
+    });
+  }
+
+  // Custom as one card
+  const customs = Array.isArray(state.custom) ? state.custom : [];
+  let customLo = Infinity;
+  for (const c of customs) {
+    const rates = (c.pricing && c.pricing.retail_usd_per_second) || {};
+    for (const v of Object.values(rates)) {
+      const n = Number(v);
+      if (Number.isFinite(n) && n < customLo) customLo = n;
     }
+  }
+  if (customs.length) {
+    cards.push({
+      live: true,
+      vendor: dict.vendorSeedance,
+      name: dict.customLabel,
+      hint: dict.cardHintCustom,
+      img: "assets/art-meadow.png",
+      priceHtml: Number.isFinite(customLo) && customLo < Infinity
+        ? `<span class="model-price">$${Number(customLo).toFixed(3)}</span><span class="model-per">${esc(dict.priceFrom)} ${esc(dict.pricePerSec)}${esc(refMark)}</span>`
+        : `<span class="model-price">—</span>`,
+      cta: { href: "/custom/", label: dict.tryIt, ghost: false },
+    });
+  }
 
-    const name = (TIER_LABEL[card.tier] || TIER_LABEL.std) + " " + dict.modeNames[card.mode];
-    const desc = dict.modeDescs[card.mode];
-    const sku = card.live ? tierSku(card.tier) : null;
-    const perSec = sku && perSecLabel(sku);
-    const callP = sku && Number.isFinite(Number(sku.price_usd))
-      ? "$" + Number(sku.price_usd).toFixed(2) + " · " + (sku.duration_seconds || 5) + "s " + (sku.resolution || "720p")
-      : null;
-    const foot = card.live
-      ? `<div>
-          <span class="model-price">${perSec ? esc(perSec) : "$—"}</span><span class="model-per">/ ${esc(dict.sec)}${ref ? " " + esc(dict.refMark) : ""}</span>
-          ${callP ? `<span class="model-call">${esc(callP)} ${esc(dict.perCallShort)}</span>` : ""}
-        </div>
-        <a class="try-btn" href="#buy">${esc(dict.tryIt)}</a>`
-      : `<span class="model-per">${esc(dict.soonNote)}</span>
-        <span class="soon-pill">${esc(dict.gaSoon)}</span>`;
-    return `<div class="model-card${card.live ? "" : " soon"}">
-      <div class="model-media"><img src="${card.img}" alt="${esc(name)} — illustration" loading="lazy" /></div>
+  // Roadmap families
+  cards.push({
+    live: false,
+    vendor: dict.vendorMiniMax,
+    name: "MiniMax Hailuo",
+    hint: dict.cardHintHailuo,
+    img: "assets/art-sprout.png",
+    priceHtml: `<span class="soon-pill">${esc(dict.statusSoon)}</span>`,
+    cta: { href: "/hailuo/", label: dict.learnMore, ghost: true },
+  });
+  cards.push({
+    live: false,
+    vendor: dict.vendorKling,
+    name: "Kling",
+    hint: dict.cardHintKling,
+    img: "assets/art-tree.png",
+    priceHtml: `<span class="soon-pill">${esc(dict.statusSoon)}</span>`,
+    cta: { href: "/kling/", label: dict.learnMore, ghost: true },
+  });
+
+  $("sku-cards").innerHTML = cards.map((c) => {
+    const act = c.cta
+      ? `<a class="try-btn${c.cta.ghost ? " ghost" : ""}" href="${esc(c.cta.href)}">${esc(c.cta.label)}</a>`
+      : "";
+    return `<div class="model-card${c.live ? "" : " soon"}">
+      <div class="model-media"><img src="${esc(c.img)}" alt="${esc(c.name)}" loading="lazy" /></div>
       <div class="model-body">
-        <span class="feat-tag">${card.mode}</span>
-        <span class="model-name">${esc(name)}</span>
-        <p class="model-desc">${esc(desc)}</p>
-        ${card.live && sku ? `<span class="model-ep" title="${esc(sku.endpoint)}">${esc(sku.endpoint)}</span>` : ""}
+        <span class="model-vendor">${esc(c.vendor)}</span>
+        <span class="model-name">${esc(c.name)}</span>
+        <p class="model-desc">${esc(c.hint)}</p>
       </div>
-      <div class="model-foot">${foot}</div>
+      <div class="model-foot">
+        <div>${c.priceHtml}</div>
+        ${act}
+      </div>
     </div>`;
   }).join("");
+}
+
+function renderPricing() {
+  $("ref-banner").hidden = state.root !== "fail";
+  applyPriceView();
+  renderSkuList();
+  renderSkuCards();
 }
 
 function buildFeatured() {
