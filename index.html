@@ -28,9 +28,9 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "USD",
-    "lowPrice": 1.05,
+    "lowPrice": 0.67,
     "highPrice": 1.33,
-    "offerCount": 2
+    "offerCount": 3
   }
 }
 </script>
@@ -391,7 +391,7 @@
   <!-- hero -->
   <section class="hero">
     <div class="hero-left">
-      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $1.05/call · USDC on Base · no signup</span></div>
+      <div class="badge"><span class="dot ok"></span><span data-i18n="badge">from $0.67/call · USDC on Base · no signup</span></div>
       <h1 class="hero-title" data-i18n="heroTitle">Your AI agent pays for video. No signup, no API key.</h1>
       <p class="hero-sub" data-i18n="heroSub">Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.</p>
       <div class="hero-endpoint"><code>POST https://api.x402video.com/generate/seedance-fast/5s-720p</code> · $1.05/call</div>
@@ -541,6 +541,34 @@
         <div class="model-body">
           <span class="feat-tag">reference-to-video</span>
           <span class="model-name">Seedance 2.0 Fast Reference-to-Video</span>
+          <p class="model-desc">Character-driven video from reference images and clips.</p>
+        </div>
+        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
+      </div>
+      <div class="model-card">
+        <div class="model-media"><img src="assets/art-hills.png" alt="Seedance 2.0 Mini Text-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">text-to-video</span>
+          <span class="model-name">Seedance 2.0 Mini Text-to-Video</span>
+          <p class="model-desc">Cheapest tier — generate video from a text prompt.</p>
+          <span class="model-ep" title="POST /generate/seedance-mini/5s-720p">POST /generate/seedance-mini/5s-720p</span>
+        </div>
+        <!-- x402-pricing:start card-mini --><div class="model-foot"><div><span class="model-price">$0.134</span><span class="model-per">/ sec</span><span class="model-call">$0.67 · 5s 720p per call</span></div><a class="try-btn" href="#buy">↗ Try it</a></div><!-- x402-pricing:end card-mini -->
+      </div>
+      <div class="model-card soon">
+        <div class="model-media"><img src="assets/art-sprout.png" alt="Seedance 2.0 Mini Image-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">image-to-video</span>
+          <span class="model-name">Seedance 2.0 Mini Image-to-Video</span>
+          <p class="model-desc">Animate a first-frame image (optional last-frame) into video.</p>
+        </div>
+        <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
+      </div>
+      <div class="model-card soon">
+        <div class="model-media"><img src="assets/art-pasture.png" alt="Seedance 2.0 Mini Reference-to-Video — illustration" loading="lazy" /></div>
+        <div class="model-body">
+          <span class="feat-tag">reference-to-video</span>
+          <span class="model-name">Seedance 2.0 Mini Reference-to-Video</span>
           <p class="model-desc">Character-driven video from reference images and clips.</p>
         </div>
         <div class="model-foot"><span class="model-per">after image moderation ships</span><span class="soon-pill">Coming soon</span></div>
@@ -705,32 +733,37 @@ const GATEWAY = apiParam && /^https?:\/\//i.test(apiParam)
 const FALLBACK_SKUS = [
   { sku: "seedance-5s-720p", model: "Seedance 2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 1.33, duration_seconds: 5, resolution: "720p" },
   { sku: "seedance-fast-5s-720p", model: "Seedance 2.0 Fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 1.05, duration_seconds: 5, resolution: "720p" },
+  { sku: "seedance-mini-5s-720p", model: "Seedance 2.0 Mini", endpoint: "POST /generate/seedance-mini/5s-720p", price_usd: 0.67, duration_seconds: 5, resolution: "720p" },
 ];
 
-/* 2 tiers × 3 modalities — the catalog grid. Only text-to-video is sold today
+/* 3 tiers × 3 modalities — the catalog grid. Only text-to-video is sold today
    (image inputs wait for image moderation); the rest render as coming-soon. */
+const TIER_LABEL = { std: "Seedance 2.0", fast: "Seedance 2.0 Fast", mini: "Seedance 2.0 Mini" };
 const MODEL_CARDS = [
-  { fast: false, mode: "text-to-video", img: "assets/art-portrait.png", live: true },
-  { fast: false, mode: "image-to-video", img: "assets/art-tree.png", live: false },
-  { fast: false, mode: "reference-to-video", img: "assets/art-meadow.png", live: false },
-  { fast: true, mode: "text-to-video", img: "assets/art-denim.png", live: true },
-  { fast: true, mode: "image-to-video", img: "assets/art-sprout.png", live: false },
-  { fast: true, mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
+  { tier: "std", mode: "text-to-video", img: "assets/art-portrait.png", live: true },
+  { tier: "std", mode: "image-to-video", img: "assets/art-tree.png", live: false },
+  { tier: "std", mode: "reference-to-video", img: "assets/art-meadow.png", live: false },
+  { tier: "fast", mode: "text-to-video", img: "assets/art-denim.png", live: true },
+  { tier: "fast", mode: "image-to-video", img: "assets/art-sprout.png", live: false },
+  { tier: "fast", mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
+  { tier: "mini", mode: "text-to-video", img: "assets/art-hills.png", live: true },
+  { tier: "mini", mode: "image-to-video", img: "assets/art-sprout.png", live: false },
+  { tier: "mini", mode: "reference-to-video", img: "assets/art-pasture.png", live: false },
   // Grok Imagine text-to-image is an UNLISTED preview in the gateway: the routes work,
   // but they are deliberately absent from GET / skus[] and /.well-known/x402, so no agent
   // can discover them. Selling them here as `live` advertised a product the buyers this
   // site is built for cannot find. Two things must be true before flipping back to
   // `live: true`: the gateway lists them in skus[]/.well-known, AND /image/ actually
   // ships (the Dockerfile COPY allowlist omits it, so the "↗ Docs" link 404s today).
-  { fast: false, mode: "text-to-image", img: "assets/art-hills.png", live: false, type: "image", endpoint: "grok-imagine/image", price_usd: 0.05 },
-  { fast: true,  mode: "text-to-image", img: "assets/art-sprout.png", live: false, type: "image", endpoint: "grok-imagine/image-quality", price_usd: 0.10 },
+  { tier: "std", mode: "text-to-image", img: "assets/art-hills.png", live: false, type: "image", endpoint: "grok-imagine/image", price_usd: 0.05 },
+  { tier: "fast", mode: "text-to-image", img: "assets/art-sprout.png", live: false, type: "image", endpoint: "grok-imagine/image-quality", price_usd: 0.10 },
 ];
 
 /* ---------- copy (EN / ZH) ---------- */
 const I18N = {
   en: {
     navPricing: "Pricing", navPolicy: "Policy",
-    badge: "from $1.05/call · USDC on Base · no signup",
+    badge: "from $0.67/call · USDC on Base · no signup",
     heroTitle: "Your AI agent pays for video. No signup, no API key.",
     heroSub: "Drop in @x402/fetch and the 402 → pay → retry loop is automatic: exact USDC quote up front, paid on Base, first video in under 5 minutes.",
     ctaCode: "See the code", ctaWhat: "What is x402? ↗",
@@ -806,7 +839,7 @@ const I18N = {
   },
   zh: {
     navPricing: "價格", navPolicy: "政策",
-    badge: "每次 $1.05 起 · Base 上的 USDC · 免註冊",
+    badge: "每次 $0.67 起 · Base 上的 USDC · 免註冊",
     heroTitle: "讓你的 AI agent 直接付款生成影片。免註冊、免 API key。",
     heroSub: "接上 @x402/fetch,402 → 付款 → 重試全自動:付款前先拿到精確 USDC 報價,在 Base 上結算,5 分鐘內出第一支影片。",
     ctaCode: "看程式碼", ctaWhat: "什麼是 x402?↗",
@@ -1157,7 +1190,7 @@ function renderPricing() {
   $("sku-cards").innerHTML = MODEL_CARDS.map((card) => {
     // Image cards (type:"image") use hardcoded prices — not live SKU lookup
     if (card.type === "image") {
-      const name = "Image Generation" + (card.fast ? " Quality" : " Standard") + " " + dict.modeNames[card.mode];
+      const name = "Image Generation" + (card.tier === "fast" ? " Quality" : " Standard") + " " + dict.modeNames[card.mode];
       const desc = dict.modeDescs[card.mode];
       const price = "$" + Number(card.price_usd).toFixed(2);
       const epPath = "POST /generate/" + card.endpoint;
@@ -1180,9 +1213,9 @@ function renderPricing() {
       </div>`;
     }
 
-    const name = (card.fast ? "Seedance 2.0 Fast" : "Seedance 2.0") + " " + dict.modeNames[card.mode];
+    const name = (TIER_LABEL[card.tier] || TIER_LABEL.std) + " " + dict.modeNames[card.mode];
     const desc = dict.modeDescs[card.mode];
-    const sku = card.live ? tierSku(card.fast) : null;
+    const sku = card.live ? tierSku(card.tier) : null;
     const perSec = sku && perSecLabel(sku);
     const callP = sku && Number.isFinite(Number(sku.price_usd))
       ? "$" + Number(sku.price_usd).toFixed(2) + " · " + (sku.duration_seconds || 5) + "s " + (sku.resolution || "720p")
@@ -1218,9 +1251,41 @@ function buildFeatured() {
     ).join("")}</div>`;
 }
 
-function tierSku(fast) {
+function tierSku(tier) {
   if (!state.skus) return null;
-  return state.skus.find((s) => /fast/i.test(String(s.model) + String(s.sku)) === fast) || state.skus[fast ? 1 : 0] || null;
+  // Accept legacy boolean: true=fast, false=std
+  if (tier === true) tier = "fast";
+  if (tier === false) tier = "std";
+  const key = String(tier || "std");
+  const hit = (s) => {
+    const blob = String(s.model || "") + " " + String(s.sku || "");
+    if (key === "mini") return /mini/i.test(blob);
+    if (key === "fast") return /fast/i.test(blob) && !/mini/i.test(blob);
+    return !/fast/i.test(blob) && !/mini/i.test(blob);
+  };
+  return state.skus.find(hit) || null;
+}
+
+/** Cheapest live fixed SKU — drives "from $X/call" badge after storefront load. */
+function minLivePrice() {
+  if (!state.skus || !state.skus.length) return null;
+  let min = Infinity;
+  for (const s of state.skus) {
+    const p = Number(s.price_usd);
+    if (Number.isFinite(p) && p > 0 && p < min) min = p;
+  }
+  return Number.isFinite(min) && min < Infinity ? min : null;
+}
+
+function syncFromPriceBadge() {
+  const p = minLivePrice();
+  if (p == null) return;
+  const usd = p.toFixed(2);
+  I18N.en.badge = `from $${usd}/call · USDC on Base · no signup`;
+  I18N.zh.badge = `每次 $${usd} 起 · Base 上的 USDC · 免註冊`;
+  // Also patch static hero endpoint line if it still advertises a higher floor
+  const badgeEl = document.querySelector("[data-i18n='badge']");
+  if (badgeEl) badgeEl.textContent = t().badge;
 }
 
 function renderFeatured() {
@@ -1229,9 +1294,10 @@ function renderFeatured() {
   document.querySelectorAll("#feat-media .feat-slide").forEach((el, i) => el.classList.toggle("on", i === state.featIdx));
   document.querySelectorAll("#feat-media .feat-dot").forEach((el, i) => el.classList.toggle("on", i === state.featIdx));
   $("feat-tag").textContent = slide.mode;
-  const sku = tierSku(slide.fast);
+  const tier = slide.tier || (slide.fast ? "fast" : "std");
+  const sku = tierSku(tier);
   const p = sku ? Number(sku.price_usd) : NaN;
-  $("feat-name").textContent = (sku && sku.model) || (slide.fast ? "Seedance 2.0 Fast" : "Seedance 2.0");
+  $("feat-name").textContent = (sku && sku.model) || TIER_LABEL[tier] || TIER_LABEL.std;
   $("feat-spec").textContent = sku
     ? [sku.duration_seconds != null ? sku.duration_seconds + "s" : null, sku.resolution, "MP4"].filter(Boolean).join(" · ")
     : "5s · 720p · MP4";
@@ -1418,7 +1484,7 @@ fetchJson("/")
     state.root = "fail";
     state.skus = FALLBACK_SKUS;
   })
-  .then(() => { renderPricing(); renderFeatured(); renderTrust(); });
+  .then(() => { syncFromPriceBadge(); renderPricing(); renderFeatured(); renderTrust(); });
 
 fetchJson("/status")
   .then((s) => {

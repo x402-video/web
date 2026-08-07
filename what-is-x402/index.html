@@ -47,7 +47,7 @@
     {
       "@type": "Question",
       "name": "What is x402video?",
-      "acceptedAnswer": { "@type": "Answer", "text": "x402video is an agent-native, pay-per-call AI video and image generation gateway built on the x402 protocol. There is no account and no API key: each call is quoted via HTTP 402 and paid in USDC on Base, starting around $1.05 per 5-second 720p video." }
+      "acceptedAnswer": { "@type": "Answer", "text": "x402video is an agent-native, pay-per-call AI video and image generation gateway built on the x402 protocol. There is no account and no API key: each call is quoted via HTTP 402 and paid in USDC on Base, starting around $0.67 per 5-second 720p video." }
     },
     {
       "@type": "Question",
@@ -168,7 +168,7 @@
 
     <section id="how-x402video-uses-it">
       <h2>How does x402video use x402?</h2>
-      <p class="answer">x402video puts AI video and image models behind x402 endpoints. You POST a prompt; the gateway screens it and replies with a 402 quote; your client pays in USDC on Base; the video generates. A 5-second 720p clip starts around <span class="price">$1.05</span>. Here is the flow, step by step:</p>
+      <p class="answer">x402video puts AI video and image models behind x402 endpoints. You POST a prompt; the gateway screens it and replies with a 402 quote; your client pays in USDC on Base; the video generates. A 5-second 720p clip starts around <span class="price">$0.67</span>. Here is the flow, step by step:</p>
       <ol>
         <li><strong>POST your prompt</strong> to a generation endpoint. The gateway screens the prompt and replies <code>402</code> with a signed quote.</li>
         <li><strong>Pay &amp; retry — automatically.</strong> <code>@x402/fetch</code> signs the USDC transfer and retries the request for you. One line of setup.</li>
@@ -218,7 +218,7 @@
         </div>
         <div class="faq-item">
           <p class="faq-q">What is x402video?</p>
-          <p class="faq-a">x402video is an agent-native, pay-per-call AI video and image generation gateway built on the x402 protocol. There is no account and no API key: each call is quoted via HTTP 402 and paid in USDC on Base, starting around $1.05 per 5-second 720p video.</p>
+          <p class="faq-a">x402video is an agent-native, pay-per-call AI video and image generation gateway built on the x402 protocol. There is no account and no API key: each call is quoted via HTTP 402 and paid in USDC on Base, starting around $0.67 per 5-second 720p video.</p>
         </div>
         <div class="faq-item">
           <p class="faq-q">How is x402 different from an API key?</p>

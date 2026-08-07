@@ -54,6 +54,7 @@ async function fetchCatalog() {
   };
   const std = fixed("seedance-5s-720p");
   const fast = fixed("seedance-fast-5s-720p");
+  const mini = fixed("seedance-mini-5s-720p");
 
   // Parametric ranges: authoritative min/max straight from the gateway's openapi.
   const api = await getJson("/openapi.json");
@@ -67,8 +68,18 @@ async function fetchCatalog() {
   };
   const stdCustom = dyn("/generate/seedance/custom");
   const fastCustom = dyn("/generate/seedance-fast/custom");
+  const miniCustom = dyn("/generate/seedance-mini/custom");
 
-  return { std, fast, min: Math.min(std.price, fast.price), max: Math.max(std.price, fast.price), stdCustom, fastCustom };
+  return {
+    std,
+    fast,
+    mini,
+    min: Math.min(std.price, fast.price, mini.price),
+    max: Math.max(std.price, fast.price, mini.price),
+    stdCustom,
+    fastCustom,
+    miniCustom,
+  };
 }
 
 // One replacement rule. `find` must match BOTH the original literal and any prior
@@ -84,6 +95,7 @@ function homeRules(c) {
   return [
     rule("card-std", /(<!-- x402-pricing:start card-std -->)[\s\S]*?(<!-- x402-pricing:end card-std -->)/, (_m, a, b) => a + foot(c.std.price, c.std.perSec) + b),
     rule("card-fast", /(<!-- x402-pricing:start card-fast -->)[\s\S]*?(<!-- x402-pricing:end card-fast -->)/, (_m, a, b) => a + foot(c.fast.price, c.fast.perSec) + b),
+    rule("card-mini", /(<!-- x402-pricing:start card-mini -->)[\s\S]*?(<!-- x402-pricing:end card-mini -->)/, (_m, a, b) => a + foot(c.mini.price, c.mini.perSec) + b),
     rule("jsonld-low", /("lowPrice": )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.min)),
     rule("jsonld-high", /("highPrice": )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.max)),
     rule("badge-en", /(from \$)\d+(?:\.\d+)?(\/call · USDC on Base · no signup)/g, (_m, a, b) => a + usd(c.min) + b, 2),
@@ -95,6 +107,7 @@ function homeRules(c) {
     rule("trace-total", /(total cost \$)\d+(?:\.\d+)?/g, (_m, a) => a + usd(c.std.price), 2),
     rule("fallback-std", /(sku: "seedance-5s-720p"[^}]*price_usd: )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.std.price)),
     rule("fallback-fast", /(sku: "seedance-fast-5s-720p"[^}]*price_usd: )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.fast.price)),
+    rule("fallback-mini", /(sku: "seedance-mini-5s-720p"[^}]*price_usd: )\d+(?:\.\d+)?/, (_m, a) => a + usd(c.mini.price)),
   ];
 }
 
@@ -112,8 +125,10 @@ function seedanceRules(c) {
     rule("ld-std-chigh", /("name": "Seedance 2\.0 · Custom"[\s\S]{0,150}?"highPrice": ")\d+(?:\.\d+)?/, (_m, a) => a + usd(c.stdCustom.max)),
     rule("tbl-fast-fixed", /(seedance-fast\/5s-720p<\/code><\/td>[\s\S]{0,120}?<span class="price">~\$)\d+(?:\.\d+)?/, (_m, a) => a + usd(c.fast.price)),
     rule("tbl-std-fixed", /(generate\/seedance\/5s-720p<\/code><\/td>[\s\S]{0,120}?<span class="price">~\$)\d+(?:\.\d+)?/, (_m, a) => a + usd(c.std.price)),
+    rule("tbl-mini-fixed", /(seedance-mini\/5s-720p<\/code><\/td>[\s\S]{0,120}?<span class="price">~\$)\d+(?:\.\d+)?/, (_m, a) => a + usd(c.mini.price)),
     rule("tbl-fast-custom", /(seedance-fast\/custom<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?–\$\d+(?:\.\d+)?/, (_m, a) => a + usd(c.fastCustom.min) + DASH + "$" + usd(c.fastCustom.max)),
     rule("tbl-std-custom", /(generate\/seedance\/custom<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?–\$\d+(?:\.\d+)?/, (_m, a) => a + usd(c.stdCustom.min) + DASH + "$" + usd(c.stdCustom.max)),
+    rule("tbl-mini-custom", /(seedance-mini\/custom<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?–\$\d+(?:\.\d+)?/, (_m, a) => a + usd(c.miniCustom.min) + DASH + "$" + usd(c.miniCustom.max)),
   ];
 }
 
@@ -155,11 +170,13 @@ function llmsRules(c) {
   // llms.txt is plain text — uses ASCII hyphen for ranges (not en-dash).
   const mdRange = (lo, hi) => `$${usd(lo)}-$${usd(hi)}`;
   return [
-    // Pricing table rows (lines 11-14 of llms.txt)
+    // Pricing table rows
     rule("tbl-fast-fixed",  /(seedance-fast\/5s-720p \| 5s 720p MP4 \| ~\$)\d+(?:\.\d+)?( \/ call \|)/, (_m, a, b) => a + usd(c.fast.price) + b),
     rule("tbl-std-fixed",   /(seedance\/5s-720p \| 5s 720p MP4 \(highest quality\) \| ~\$)\d+(?:\.\d+)?( \/ call \|)/, (_m, a, b) => a + usd(c.std.price) + b),
+    rule("tbl-mini-fixed",  /(seedance-mini\/5s-720p \| 5s 720p MP4 \(cheapest\) \| ~\$)\d+(?:\.\d+)?( \/ call \|)/, (_m, a, b) => a + usd(c.mini.price) + b),
     rule("tbl-fast-custom", /(seedance-fast\/custom \| 4-15s, 480p\/720p, optional audio \| )\$\d+(?:\.\d+)?-\$\d+(?:\.\d+)?( \|)/, (_m, a, b) => a + mdRange(c.fastCustom.min, c.fastCustom.max) + b),
     rule("tbl-std-custom",  /(seedance\/custom \| 4-15s, up to 1080p, optional audio \| )\$\d+(?:\.\d+)?-\$\d+(?:\.\d+)?( \|)/, (_m, a, b) => a + mdRange(c.stdCustom.min, c.stdCustom.max) + b),
+    rule("tbl-mini-custom", /(seedance-mini\/custom \| 4-15s, 480p\/720p, optional audio \| )\$\d+(?:\.\d+)?-\$\d+(?:\.\d+)?( \|)/, (_m, a, b) => a + mdRange(c.miniCustom.min, c.miniCustom.max) + b),
     // Use-case lines: seedance-fast/5s-720p appears on two separate lines (~$N.NN/clip)
     rule("uc-fast-fixed", /(generate\/seedance-fast\/5s-720p \(~\$)\d+(?:\.\d+)?(\/clip\))/g, (_m, a, b) => a + usd(c.fast.price) + b, 2),
     // Use-case line: seedance/5s-720p (~$N.NN/clip)
@@ -220,8 +237,8 @@ async function applyRules(relPath, rules) {
 (async () => {
   const c = await fetchCatalog();
   console.log(
-    `live: std $${usd(c.std.price)} ($${perSec(c.std.perSec)}/s) · fast $${usd(c.fast.price)} ($${perSec(c.fast.perSec)}/s) · from $${usd(c.min)}` +
-      ` · custom std ${range(c.stdCustom.min, c.stdCustom.max)} fast ${range(c.fastCustom.min, c.fastCustom.max)}`,
+    `live: std $${usd(c.std.price)} · fast $${usd(c.fast.price)} · mini $${usd(c.mini.price)} · from $${usd(c.min)}` +
+      ` · custom std ${range(c.stdCustom.min, c.stdCustom.max)} fast ${range(c.fastCustom.min, c.fastCustom.max)} mini ${range(c.miniCustom.min, c.miniCustom.max)}`,
   );
   let anyChanged = false;
   for (const [file, build] of Object.entries(FILES)) {
