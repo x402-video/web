@@ -713,7 +713,19 @@ const TIER_IMG = {
   mini: "assets/art-seedance-mini.png?v=20260807",
   fast: "assets/art-seedance-fast.png?v=20260807",
   std: "assets/art-seedance-std.png?v=20260807",
-  minimax: "assets/art-sprout.png",
+  minimax: "assets/art-minimax-h3-768.png?v=20260807b",
+};
+/** Per-SKU card art — keeps MiniMax 768 / 2K and Seedance tiers distinct. */
+const SKU_IMG = {
+  "seedance-mini-5s-720p": "assets/art-seedance-mini.png?v=20260807",
+  "seedance-fast-5s-720p": "assets/art-seedance-fast.png?v=20260807",
+  "seedance-5s-720p": "assets/art-seedance-std.png?v=20260807",
+  "minimax-h3-5s-768P": "assets/art-minimax-h3-768.png?v=20260807b",
+  "minimax-h3-5s-2K": "assets/art-minimax-h3-2k.png?v=20260807b",
+};
+const CARD_IMG = {
+  custom: "assets/art-meadow.png",
+  kling: "assets/art-tree.png",
 };
 const TIER_VENDOR = "ByteDance · Seedance";
 const VENDOR_BY_TIER = {
@@ -722,6 +734,18 @@ const VENDOR_BY_TIER = {
   mini: "ByteDance · Seedance",
   minimax: "MiniMax · H3",
 };
+/** Display order: Seedance ladder → MiniMax ladder → custom → roadmap (not pure $ sort). */
+function cardFamilyRank(sku) {
+  const blob = String(sku.model || "") + " " + String(sku.sku || "");
+  if (/minimax|hailuo/i.test(blob)) return 20;
+  if (/seedance|mini-5s|fast-5s/i.test(blob) || /seedance/i.test(blob)) return 10;
+  return 15;
+}
+function cardArtForSku(s, tier) {
+  const id = String(s.sku || "");
+  if (SKU_IMG[id]) return SKU_IMG[id];
+  return TIER_IMG[tier] || TIER_IMG.std;
+}
 
 /* ---------- copy (EN / ZH) ---------- */
 const I18N = {
@@ -1314,30 +1338,41 @@ function tierKeyFromSku(sku) {
   return "std";
 }
 
-/** Cards: same data as list — vendor, model, big price. No API paths. */
+/** Cards: vendor + model + big price. Ordered by family, then price within family. */
 function renderSkuCards() {
   const dict = t();
   const ref = state.root === "fail";
   const refMark = ref ? " " + dict.refMark : "";
   const cards = [];
 
-  const skus = (Array.isArray(state.skus) ? state.skus.slice() : []).sort(
-    (a, b) => (Number(a.price_usd) || 0) - (Number(b.price_usd) || 0),
-  );
+  // Family groups (Seedance → MiniMax) then price within group — not a mixed $ ladder.
+  const skus = (Array.isArray(state.skus) ? state.skus.slice() : []).sort((a, b) => {
+    const fa = cardFamilyRank(a);
+    const fb = cardFamilyRank(b);
+    if (fa !== fb) return fa - fb;
+    return (Number(a.price_usd) || 0) - (Number(b.price_usd) || 0);
+  });
   for (const s of skus) {
     const tier = tierKeyFromSku(s);
     const p = Number(s.price_usd);
     const isMinimax = tier === "minimax";
     const res = s.resolution || (isMinimax ? "768P" : "720p");
-    const hint = isMinimax
+    const baseHint = isMinimax
       ? (dict.cardHintMinimax || "Text-to-video · 5s · 768P")
       : dict.cardHintLive;
+    // Prefer resolution from SKU in the hint line.
+    const hint = isMinimax
+      ? `Text-to-video · 5s · ${res}`
+      : baseHint.replace(/720p|768P|2K/g, res);
+    const name = isMinimax
+      ? `MiniMax H3 · ${res}`
+      : modelLabelFromSku(s);
     cards.push({
       live: true,
       vendor: VENDOR_BY_TIER[tier] || dict.vendorSeedance,
-      name: modelLabelFromSku(s),
-      hint: hint.replace("720p", res).replace("768P", res),
-      img: TIER_IMG[tier] || TIER_IMG.std,
+      name,
+      hint,
+      img: cardArtForSku(s, tier),
       priceHtml: Number.isFinite(p)
         ? `<span class="model-price">$${p.toFixed(2)}</span><span class="model-per">${esc(dict.pricePerCall)}${esc(refMark)}</span>`
         : `<span class="model-price">—</span>`,
@@ -1365,7 +1400,7 @@ function renderSkuCards() {
       vendor: dict.vendorSeedance,
       name: dict.customLabel,
       hint: dict.cardHintCustom,
-      img: "assets/art-meadow.png",
+      img: CARD_IMG.custom,
       priceHtml: Number.isFinite(customLo) && customLo < Infinity
         ? `<span class="model-price">$${Number(customLo).toFixed(3)}</span><span class="model-per">${esc(dict.priceFrom)} ${esc(dict.pricePerSec)}${esc(refMark)}</span>`
         : `<span class="model-price">—</span>`,
@@ -1379,15 +1414,17 @@ function renderSkuCards() {
     vendor: dict.vendorKling,
     name: "Kling",
     hint: dict.cardHintKling,
-    img: "assets/art-tree.png",
+    img: CARD_IMG.kling,
     priceHtml: `<span class="soon-pill">${esc(dict.statusSoon)}</span>`,
     cta: { href: "/kling/", label: dict.learnMore, ghost: true },
-  });  $("sku-cards").innerHTML = cards.map((c) => {
+  });
+
+  $("sku-cards").innerHTML = cards.map((c) => {
     const act = c.cta
       ? `<a class="try-btn${c.cta.ghost ? " ghost" : ""}" href="${esc(c.cta.href)}">${esc(c.cta.label)}</a>`
       : "";
     return `<div class="model-card${c.live ? "" : " soon"}">
-      <div class="model-media"><img src="${esc(c.img)}" alt="${esc(c.name)}" loading="lazy" /></div>
+      <div class="model-media"><img src="${esc(c.img)}" alt="${esc(c.name)}" loading="lazy" width="384" height="206" /></div>
       <div class="model-body">
         <span class="model-vendor">${esc(c.vendor)}</span>
         <span class="model-name">${esc(c.name)}</span>
