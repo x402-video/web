@@ -13,8 +13,7 @@
 //
 // Sources: GET / (fixed-SKU prices) + GET /openapi.json (parametric custom min/max).
 // When the gateway ships GET /catalog.v1.json, fold both into that one read.
-// Image SKUs are unlisted in the video gateway but ARE managed here via constants
-// (IMAGE_STD_USD / IMAGE_QUAL_USD). Update those two values if Grok Imagine pricing changes.
+// Image generation (Grok Imagine) is Coming soon: no image prices are published or managed here.
 
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -24,12 +23,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = (process.env.SOURCE || "https://api.x402video.com/").replace(/\/+$/, "");
 const CHECK = process.argv.includes("--check");
 const DASH = "–"; // en-dash used in "$0.26–$3.42"
-
-// Image generation prices are unlisted in the video gateway; hand-maintained here.
-// These are the SINGLE source of truth for image/index.html prices.
-// Update here if Grok Imagine pricing changes; the generator propagates the new values.
-const IMAGE_STD_USD = "0.05";  // POST /generate/grok-imagine/image
-const IMAGE_QUAL_USD = "0.10"; // POST /generate/grok-imagine/image-quality
 
 const usd = (n) => Number(n).toFixed(2); // "3.04"
 const perSec = (n) => Number(Number(n).toFixed(4)).toString(); // 0.608 -> "0.608", 0.48 -> "0.48"
@@ -180,24 +173,6 @@ function llmsRules(c) {
   ];
 }
 
-function imageRules(_c) {
-  // Image prices come from constants IMAGE_STD_USD / IMAGE_QUAL_USD (not the video gateway).
-  return [
-    // meta description + og:description "From $N.NN/call" — appears twice
-    rule("meta-from", /(From \$)\d+(?:\.\d+)?(\/call)/g, (_m, a, b) => a + IMAGE_STD_USD + b, 2),
-    // hero badge "from $N.NN/call"
-    rule("badge-from", /(from \$)\d+(?:\.\d+)?(\/call)/, (_m, a, b) => a + IMAGE_STD_USD + b),
-    // JSON-LD: standard offer price
-    rule("ld-std",  /("name": "Image Generation — Standard"[\s\S]{0,90}?"price": ")\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_STD_USD),
-    // JSON-LD: quality offer price
-    rule("ld-qual", /("name": "Image Generation — Quality"[\s\S]{0,90}?"price": ")\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_QUAL_USD),
-    // pricing table: grok-imagine/image row (note: /image must NOT match /image-quality)
-    rule("tbl-std",  /(grok-imagine\/image<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_STD_USD),
-    // pricing table: grok-imagine/image-quality row
-    rule("tbl-qual", /(grok-imagine\/image-quality<\/code><\/td>[\s\S]{0,120}?<span class="price">\$)\d+(?:\.\d+)?/, (_m, a) => a + IMAGE_QUAL_USD),
-  ];
-}
-
 const FILES = {
   "index.html": homeRules,
   "seedance/index.html": seedanceRules,
@@ -206,7 +181,6 @@ const FILES = {
   "compare/index.html": compareRules,
   "kling/index.html": klingRules,
   "llms.txt": llmsRules,
-  "image/index.html": imageRules,
 };
 
 async function applyRules(relPath, rules) {

@@ -668,7 +668,7 @@
           <a href="https://docs.x402.org">docs.x402.org ↗</a>
           <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
-          <a href="/hailuo/">Hailuo API</a>
+          <a href="/hailuo/">Hailuo API (coming soon)</a>
           <a href="/kling/">Kling API</a>
           <a href="/custom/">Pricing calculator</a>
           <a href="/use-cases/">Use cases</a>
@@ -698,8 +698,6 @@ const FALLBACK_SKUS = [
   { sku: "seedance-5s-720p", model: "seedance-2.0", endpoint: "POST /generate/seedance/5s-720p", price_usd: 1.33, duration_seconds: 5, resolution: "720p" },
   { sku: "seedance-fast-5s-720p", model: "seedance-2.0-fast", endpoint: "POST /generate/seedance-fast/5s-720p", price_usd: 1.05, duration_seconds: 5, resolution: "720p" },
   { sku: "seedance-mini-5s-720p", model: "seedance-2.0-mini", endpoint: "POST /generate/seedance-mini/5s-720p", price_usd: 0.67, duration_seconds: 5, resolution: "720p" },
-  { sku: "minimax-h3-5s-768P", model: "minimax-h3", endpoint: "POST /generate/minimax-h3/5s-768P", price_usd: 0.70, duration_seconds: 5, resolution: "768P" },
-  { sku: "minimax-h3-5s-2K", model: "minimax-h3", endpoint: "POST /generate/minimax-h3/5s-2K", price_usd: 1.14, duration_seconds: 5, resolution: "2K" },
 ];
 
 /* Human pricing: vendor + model name + sticker price. Agents use GET / instead. */
@@ -791,7 +789,7 @@ const I18N = {
       "text-to-video": "Generate video from a text prompt — multi-shot narrative, cinematic motion.",
       "image-to-video": "Animate a first-frame image (optional last-frame) into video.",
       "reference-to-video": "Character-driven video from reference images and clips.",
-      "text-to-image": "Generate a JPEG image from a text prompt — powered by Grok Imagine.",
+      "text-to-image": "Text-to-image · Coming soon",
     },
     sec: "sec", refMark: "(ref)", perCallShort: "per call",
     soonNote: "after image moderation ships",
@@ -804,7 +802,7 @@ const I18N = {
     vendorKling: "Kuaishou · Kling",
     cardHintLive: "Text-to-video · 5s · 720p",
     cardHintCustom: "4–15s · pick resolution",
-    cardHintHailuo: "H3 · 5s 768P from $0.70 · custom 4–15s",
+    cardHintHailuo: "MiniMax H3 · Coming soon",
     cardHintKling: "Not scheduled yet",
     cardHintMinimax: "Text-to-video · 5s · 768P / 2K",
     buyTitle: "How to buy",
@@ -883,7 +881,7 @@ const I18N = {
       "text-to-video": "文字 prompt 生成影片 — 多鏡頭敘事、電影感運鏡。",
       "image-to-video": "以首幀圖片（可選尾幀）生成動態影片。",
       "reference-to-video": "以參考圖片與影片驅動角色生成。",
-      "text-to-image": "文字 prompt 生成 JPEG 圖片 — 由 Grok Imagine 驅動。",
+      "text-to-image": "文字生圖 · 即將推出",
     },
     sec: "秒", refMark: "(參考)", perCallShort: "/ 次",
     soonNote: "影像審核上線後開賣",
@@ -894,7 +892,7 @@ const I18N = {
     vendorKling: "Kuaishou · Kling",
     cardHintLive: "文字生影片 · 5 秒 · 720p",
     cardHintCustom: "4–15 秒 · 自選解析度",
-    cardHintHailuo: "H3 · 5 秒 768P 起 $0.70 · custom 4–15 秒",
+    cardHintHailuo: "MiniMax H3 · 即將推出",
     cardHintKling: "尚未排程",
     cardHintMinimax: "文字生影片 · 5 秒 · 768P / 2K",
     buyTitle: "怎麼購買",

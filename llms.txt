@@ -35,7 +35,6 @@ and capacity rejections (503) are never charged.
 ## Roadmap (not live — do not POST these yet)
 
 - MiniMax Hailuo 2.3 / 2.3 Fast / 02 (text-to-video + image-to-video) — coming soon on the same x402 rails
-  Human page: https://x402video.com/hailuo/
 - Kling — not scheduled; page: https://x402video.com/kling/
 - Live catalog only: GET https://api.x402video.com/ and this file's table above
 
@@ -46,7 +45,6 @@ and capacity rejections (503) are never charged.
 - https://api.x402video.com/openapi.json — OpenAPI spec with x-payment-info pricing
 - https://api.x402video.com/.well-known/x402 — x402 discovery document
 - https://api.x402video.com/status — live success rate, p50 generation time, delivered count
-- https://x402video.com/hailuo/ — MiniMax Hailuo roadmap (SEO / human docs)
 
 
 ## What people build with this
