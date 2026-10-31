@@ -68,4 +68,5 @@ Full use-case page: https://x402video.com/use-cases/
 - https://x402video.com — landing page
 - https://github.com/x402-video/web/blob/main/GETTING-STARTED.md — zero to first video in 5 minutes
 - https://github.com/x402-video — source
-- https://makereel.xyz — MakeReel (questions, support, early users)
+- https://x402video.com/studio/ — Studio: connect a wallet and make a video in the browser (same 402 flow, no code)
+- https://github.com/x402-video/mcp#readme — MCP server setup (x402-video-mcp)

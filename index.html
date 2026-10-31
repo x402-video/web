@@ -44,7 +44,6 @@
   "description": "x402video is an agent-native pay-per-call AI video and image generation gateway built on the x402 payment protocol. No accounts, no API keys: each call is quoted via HTTP 402 and paid in USDC on Base.",
   "sameAs": [
     "https://github.com/x402-video",
-    "https://makereel.xyz",
     "https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca"
   ]
 }
@@ -404,6 +403,15 @@
   @media (prefers-reduced-motion: reduce) {
     .cursor { animation: none; }
   }
+.st-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px}
+.st-card{display:flex;flex-direction:column;gap:12px;border:1px solid var(--bd);border-radius:14px;background:var(--card);padding:28px;text-decoration:none;color:var(--tx)}
+.st-card.main{background:linear-gradient(180deg,var(--card),var(--card2,#f4f5f6))}
+.st-card h3{margin:0;font-size:24px;letter-spacing:-.01em}.st-card:not(.main) h3{font-size:19px}.st-card p{margin:0;color:var(--tx2);line-height:1.6}
+.st-row{display:flex;gap:14px;align-items:center;margin-top:auto;padding-top:6px}.st-meta{font-size:12px;color:var(--tx3)}
+.st-links{list-style:none;margin:0;padding:0;font-size:12.5px;color:var(--tx2);display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.uc-tag.alt{align-self:flex-start}.st-card .uc-tag{align-self:flex-start}
+.st-links a{color:inherit}.st-row .btn-outline{text-decoration:none;font-size:14px;padding:8px 16px}
+@media (max-width:760px){.st-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -418,7 +426,7 @@
         <a class="nav-link" href="#pricing" data-i18n="navPricing">Pricing</a>
         <a class="nav-link" href="#buy">API</a>
         <a class="nav-link" href="#policy" data-i18n="navPolicy">Policy</a>
-        <a class="nav-link" href="https://makereel.xyz">MakeReel ↗</a>
+        <a class="nav-link" href="/studio/">Studio</a>
         <button class="tgl" id="theme-btn" aria-label="Toggle theme">☀</button>
         <a class="gh-btn" href="https://github.com/x402-video">GitHub ↗</a>
       </nav>
@@ -622,35 +630,22 @@
     </div>
   </section>
 
-  <!-- built on x402video — consumer (toC) example app -->
-  <section class="section last" id="built">
-    <div class="sec-head" style="margin-bottom: 18px;">
-      <h2 class="sec-title" data-i18n="ucTitle">Built on this gateway</h2>
-      <span class="st-src" data-i18n="ucKicker">The same 402 rails, with a human front-end</span>
-    </div>
-    <div class="uc-card">
-      <div class="uc-media">
-        <div class="uc-frame">
-          <div class="uc-bar">
-            <span class="uc-tlight"></span><span class="uc-tlight"></span><span class="uc-tlight"></span>
-            <span class="uc-url mono">makereel.xyz</span>
-          </div>
-          <div class="uc-shot"><img src="assets/makereel-app.png?v=1" alt="MakeReel — consumer AI video app built on x402video" loading="lazy" /></div>
-        </div>
-      </div>
-      <div class="uc-body">
-        <span class="uc-tag mono" data-i18n="ucTag">CONSUMER APP · toC</span>
-        <h3 class="uc-name">MakeReel.xyz</h3>
-        <p class="uc-desc" data-i18n="ucDesc">MakeReel is the consumer-facing app built on x402video. People — not agents — type a prompt and get a video, while the same HTTP 402 → pay USDC → generate flow runs underneath. It is the human front-end to the exact rails on this page.</p>
-        <ul class="uc-points">
-          <li data-i18n="ucP1">No signup — your wallet signs in and pays per clip.</li>
-          <li data-i18n="ucP2">Same Seedance models, same per-call pricing you see above.</li>
-          <li data-i18n="ucP3">A working reference for what you can build on the 402 protocol.</li>
-        </ul>
-        <div class="uc-ctas">
-          <a class="btn-primary" href="https://makereel.xyz" data-i18n="ucCta">Open MakeReel ↗</a>
-          <span class="uc-note mono" data-i18n="ucMeta">same models · same prices · no API key</span>
-        </div>
+  <!-- Studio entry (no-code) + API / MCP docs -->
+  <section class="section last" id="studio">
+    <div class="sec-head" style="margin-bottom:18px"><h2 class="sec-title" data-i18n="stTitle">Make a video without writing code</h2><span class="st-src" data-i18n="stKicker">Same gateway, same prices, in your browser</span></div>
+    <div class="st-grid">
+      <a class="st-card main" href="/studio/">
+        <span class="uc-tag mono">STUDIO · x402video.com/studio</span>
+        <h3 data-i18n="stMainH">No code needed. Connect a wallet and try it.</h3>
+        <p data-i18n="stMainP">Pick a preset or write your own prompt, see the exact USDC quote, approve it, and get your MP4. No signup and no API key.</p>
+        <div class="st-row"><span class="btn-primary" data-i18n="stMainCta">Open Studio</span><span class="mono st-meta" data-i18n="stMainMeta">from $0.67/clip · USDC on Base · gasless</span></div>
+      </a>
+      <div class="st-card">
+        <span class="uc-tag mono alt" data-i18n="stDevTag">DEVELOPERS AND AGENTS</span>
+        <h3 data-i18n="stDevH">Automate it with the API or MCP</h3>
+        <p data-i18n="stDevP">Call the same endpoints from code or let an agent pay per call through x402. Read the docs, then point your client at the gateway.</p>
+        <ul class="st-links mono"><li><a href="/llms.txt">/llms.txt</a></li><li><a href="https://api.x402video.com/openapi.json">/openapi.json</a></li><li><a href="https://api.x402video.com/.well-known/x402">/.well-known/x402</a></li><li><a href="https://github.com/x402-video/mcp#readme" data-i18n="stDevMcp">MCP setup ↗</a></li></ul>
+        <div class="st-row"><a class="btn-outline" href="/studio/?tab=api" data-i18n="stDevCta">API docs →</a><a class="btn-outline" href="https://github.com/x402-video/mcp#readme" data-i18n="stDevMcpCta">MCP docs ↗</a></div>
       </div>
     </div>
   </section>
@@ -659,7 +654,7 @@
     <div class="footer-in">
       <div class="foot-meta">
         <div class="foot-links">
-          <a href="https://makereel.xyz">MakeReel ↗</a>
+          <a href="/studio/">Studio</a>
           <a href="https://github.com/x402-video">GitHub ↗</a>
           <a class="mono" id="foot-llms" href="#">/llms.txt</a>
           <a class="mono" id="foot-status" href="#">api.x402video.com/status (live JSON)</a>
@@ -669,7 +664,7 @@
           <a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a>
           <a href="/seedance/">Seedance API</a>
           <a href="/hailuo/">Hailuo API (coming soon)</a>
-          <a href="/kling/">Kling API</a>
+          <a href="/kling/">Kling API (coming soon)</a>
           <a href="/custom/">Pricing calculator</a>
           <a href="/use-cases/">Use cases</a>
         </div>
@@ -829,15 +824,18 @@ const I18N = {
     ],
     footNote: "x402video.com is an independent gateway. Not affiliated with ByteDance or any model vendor. USDC on Base mainnet; payments are gasless for the buyer. Signed video URLs expire ~24h after delivery.",
     langLabel: "Language",
-    ucTitle: "Built on this gateway",
-    ucKicker: "The same 402 rails, with a human front-end",
-    ucTag: "CONSUMER APP · toC",
-    ucDesc: "MakeReel is the consumer-facing app built on x402video. People — not agents — type a prompt and get a video, while the same HTTP 402 → pay USDC → generate flow runs underneath. It's the human front-end to the exact rails on this page.",
-    ucP1: "No signup — your wallet signs in and pays per clip.",
-    ucP2: "Same Seedance models, same per-call pricing you see above.",
-    ucP3: "A working reference for what you can build on the 402 protocol.",
-    ucCta: "Open MakeReel ↗",
-    ucMeta: "same models · same prices · no API key",
+    stTitle: "Make a video without writing code",
+    stKicker: "Same gateway, same prices, in your browser",
+    stMainH: "No code needed. Connect a wallet and try it.",
+    stMainP: "Pick a preset or write your own prompt, see the exact USDC quote, approve it, and get your MP4. No signup and no API key.",
+    stMainCta: "Open Studio",
+    stMainMeta: "from $0.67/clip · USDC on Base · gasless",
+    stDevTag: "DEVELOPERS AND AGENTS",
+    stDevH: "Automate it with the API or MCP",
+    stDevP: "Call the same endpoints from code or let an agent pay per call through x402. Read the docs, then point your client at the gateway.",
+    stDevMcp: "MCP setup ↗",
+    stDevCta: "API docs →",
+    stDevMcpCta: "MCP docs ↗",
   },
   zh: {
     navPricing: "價格", navPolicy: "政策",
@@ -919,15 +917,18 @@ const I18N = {
     ],
     footNote: "x402video.com 是獨立 gateway,與 ByteDance 或任何模型廠商無關。使用 Base 主網上的 USDC,買方付款免 gas。簽名影片連結交付後約 24 小時過期。",
     langLabel: "語言",
-    ucTitle: "用這個 gateway 打造的產品",
-    ucKicker: "同一套 402 rails,加上給人用的介面",
-    ucTag: "消費級應用 · toC",
-    ucDesc: "MakeReel 是建在 x402video 上的消費級應用。由真人(不是 agent)輸入 prompt 取得影片,底層跑的是同一套 HTTP 402 → 付 USDC → 生成 流程。它就是這頁這套 rails 的人類版前端。",
-    ucP1: "免註冊 — 錢包即登入,逐支付費。",
-    ucP2: "相同的 Seedance 模型,相同的單次計價。",
-    ucP3: "一個可運作的範例,示範你能在 402 協議上做出什麼。",
-    ucCta: "開啟 MakeReel ↗",
-    ucMeta: "相同模型 · 相同價格 · 免 API key",
+    stTitle: "不寫程式也能做影片",
+    stKicker: "同一個 gateway、同樣價格，直接在瀏覽器用",
+    stMainH: "不用寫程式，連上錢包就能試。",
+    stMainP: "選一個範例或自己寫 prompt，先看到確切的 USDC 報價，確認後付款，拿到 MP4。免註冊，也不用 API key。",
+    stMainCta: "開啟 Studio",
+    stMainMeta: "每支 $0.67 起 · Base 上的 USDC · 免 gas",
+    stDevTag: "開發者與 AGENT",
+    stDevH: "用 API 或 MCP 自動化",
+    stDevP: "從程式呼叫同一組 endpoint，或讓 agent 透過 x402 逐次付費。先看文件，再把你的 client 指向 gateway。",
+    stDevMcp: "MCP 設定 ↗",
+    stDevCta: "API 文件 →",
+    stDevMcpCta: "MCP 文件 ↗",
   },
 };
 
