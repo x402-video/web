@@ -1,0 +1,49 @@
+name: Report an issue
+description: A payment, quote, or video generation problem on x402video.com or api.x402video.com
+title: "[Issue] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!CAUTION]
+        > **Never paste private keys, seed phrases, or API keys.** We will never ask for them. A tx hash and job id are public and enough for us to trace a call.
+  - type: input
+    id: endpoint
+    attributes:
+      label: Endpoint
+      description: The URL or route you called.
+      placeholder: POST https://api.x402video.com/generate/seedance-2-0-fast/5s-720p
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error message
+      description: What you saw. HTTP status and response body if you have them.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: tx_hash
+    attributes:
+      label: Payment tx hash
+      description: Base transaction hash, if a payment was made.
+      placeholder: 0x...
+  - type: input
+    id: job_id
+    attributes:
+      label: Job id
+      description: Returned after the paid retry (status_url /jobs/:id).
+  - type: input
+    id: time
+    attributes:
+      label: Time (with timezone)
+      placeholder: 2026-10-31 13:24 UTC+8
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Anything else
+      description: Wallet or client used, steps to reproduce. No secrets.
