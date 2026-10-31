@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MiniMax H3 API via x402 — Live | x402video.com</title>
-<meta name="description" content="Buy MiniMax H3 video generation pay-per-call over x402. HTTP 402 → USDC on Base → generate. Fixed SKUs from $0.70/call (5s 768P). No API key, no signup." />
+<title>MiniMax H3 API via x402 — Coming soon | x402video.com</title>
+<meta name="robots" content="noindex, follow" />
+<meta name="description" content="MiniMax H3 video generation over x402 is coming soon. Seedance 2.0 is available today, pay-per-call in USDC on Base." />
 <link rel="canonical" href="https://x402video.com/hailuo/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="x402video.com" />
-<meta property="og:title" content="MiniMax H3 API via x402 — Live" />
-<meta property="og:description" content="MiniMax H3 text-to-video on the same x402 rails as Seedance. From $0.70 per 5s 768P call. USDC on Base." />
+<meta property="og:title" content="MiniMax H3 API via x402 — Coming soon" />
+<meta property="og:description" content="MiniMax H3 text-to-video on x402 is coming soon. Seedance 2.0 is available today." />
 <meta property="og:url" content="https://x402video.com/hailuo/" />
 <meta property="og:image" content="https://x402video.com/assets/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -19,9 +20,9 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "MiniMax H3 API via x402 — Live",
+  "name": "MiniMax H3 API via x402 — Coming soon",
   "url": "https://x402video.com/hailuo/",
-  "description": "MiniMax H3 video generation on x402video.com — pay-per-call USDC on Base.",
+  "description": "MiniMax H3 video generation on x402video.com is coming soon.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -34,14 +35,7 @@
     "name": "MiniMax H3",
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Web / API",
-    "description": "MiniMax H3 text-to-video via x402 pay-per-call.",
-    "offers": {
-      "@type": "Offer",
-      "availability": "https://schema.org/InStock",
-      "priceCurrency": "USD",
-      "price": "0.70",
-      "description": "From $0.70 per 5s 768P call — exact USDC quote via HTTP 402."
-    }
+    "description": "MiniMax H3 text-to-video via x402. Coming soon."
   }
 }
 </script>
@@ -71,6 +65,7 @@
   th { background: #f4f5f6; color: var(--tx3); font-size: 12px; font-weight: 600; }
   tr:last-child td { border-bottom: none; }
   .avail { color: var(--ok); font-weight: 600; }
+  .unavail { color: var(--tx3); font-weight: 600; }
   .soon { color: var(--tx3); font-weight: 600; }
   .cta-box { margin: 28px 0; padding: 22px; border: 1px solid var(--bd); background: var(--card); border-radius: 12px; }
   .btn-primary, .btn-outline { display: inline-block; margin: 8px 10px 0 0; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; }
@@ -97,60 +92,41 @@
   <div class="wrap">
 
     <div class="notice">
-      <div class="notice-label">LIVE — MINIMAX H3</div>
+      <div class="notice-label">COMING SOON — MINIMAX H3</div>
       <h1>MiniMax H3 API via x402</h1>
       <p>
-        Pay-per-call MiniMax H3 on the same rails as Seedance:
-        <strong>HTTP 402 → pay USDC on Base → generate</strong>. No API key. No signup. Exact quote before you pay.
+        MiniMax H3 is not available to buy yet. When it ships it will use the same rails as Seedance:
+        <strong>HTTP 402 → pay USDC on Base → generate</strong>. Today you can buy <a href="/seedance/">Seedance 2.0</a>.
       </p>
     </div>
 
-    <h2>Live SKUs</h2>
+    <h2>Planned SKUs</h2>
     <table>
       <thead>
         <tr>
           <th>SKU</th>
           <th>Output</th>
-          <th>Retail (agent)</th>
-          <th>Endpoint</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>minimax-h3-5s-768P</code></td>
           <td>5s · 768P · T2V</td>
-          <td class="avail">$0.70 / call</td>
-          <td><code>POST /generate/minimax-h3/5s-768P</code></td>
+          <td class="unavail">Coming soon</td>
         </tr>
         <tr>
           <td><code>minimax-h3-5s-2K</code></td>
           <td>5s · 2K · T2V</td>
-          <td class="avail">$1.14 / call</td>
-          <td><code>POST /generate/minimax-h3/5s-2K</code></td>
+          <td class="unavail">Coming soon</td>
         </tr>
         <tr>
           <td><code>minimax-h3-custom</code></td>
           <td>4–15s · 768P / 2K · T2V</td>
-          <td class="avail">from $0.14 / sec (768P)</td>
-          <td><code>POST /generate/minimax-h3/custom</code></td>
+          <td class="unavail">Coming soon</td>
         </tr>
       </tbody>
     </table>
-    <p class="src-note">
-      Pricing = official MiniMax paygo cost × 1.75 markup (768P $0.08/s, 2K $0.13/s).
-      Body for custom: <code>{ "prompt", "duration", "resolution": "768P"|"2K", "ratio" }</code> —
-      t2v requires a concrete ratio (not <code>adaptive</code>).
-      Machine catalog: <a href="https://api.x402video.com/">GET /</a> · <a href="https://api.x402video.com/llms.txt">llms.txt</a>.
-    </p>
-
-    <h2>Quick call shape</h2>
-<pre>POST https://api.x402video.com/generate/minimax-h3/5s-768P
-Content-Type: application/json
-
-{ "prompt": "A cat walks through a sunlit garden", "ratio": "16:9" }
-
-→ HTTP 402 with USDC quote → pay with @x402/fetch → poll GET /jobs/:id</pre>
-
     <h2>MiniMax H3 vs Seedance</h2>
     <table>
       <thead>
@@ -173,7 +149,7 @@ Content-Type: application/json
         </tr>
         <tr>
           <td>Fixed 5s sticker</td>
-          <td>from $0.70 (768P)</td>
+          <td>Coming soon</td>
           <td>from $0.67 (Mini)</td>
         </tr>
         <tr>
@@ -183,7 +159,7 @@ Content-Type: application/json
         </tr>
         <tr>
           <td>On x402video.com</td>
-          <td><span class="avail">Live</span></td>
+          <td><span class="unavail">Coming soon</span></td>
           <td><span class="avail">Live</span></td>
         </tr>
         <tr>
@@ -193,16 +169,9 @@ Content-Type: application/json
       </tbody>
     </table>
 
-    <h2>Unlisted previews</h2>
-    <p>
-      Image-to-video and reference-to-video for H3 are payable but unlisted:
-      <code>/generate/minimax-h3/i2v</code>, <code>/generate/minimax-h3/ref</code>
-      (max 5 reference images until image surcharges are in the quote path).
-    </p>
-
     <div class="cta-box">
-      <h2>Buy a clip</h2>
-      <p>Use the fixed 5s SKUs or parametric custom. Same x402 loop as Seedance.</p>
+      <h2>Buy a clip today</h2>
+      <p>MiniMax H3 is coming soon. Seedance 2.0 is available now on the same x402 loop.</p>
       <a class="btn-primary" href="/#pricing">All pricing</a>
       <a class="btn-outline" href="/#buy">How to buy</a>
       <a class="btn-outline" href="https://api.x402video.com/llms.txt">llms.txt</a>
@@ -210,9 +179,9 @@ Content-Type: application/json
 
     <h2>FAQ</h2>
     <p><strong>Is this MiniMax Hailuo 2.3?</strong><br />
-      Live SKUs are <strong>MiniMax H3</strong> (model id <code>MiniMax-H3</code>). Older Hailuo 2.x packages are not listed yet.</p>
+      Planned SKUs are <strong>MiniMax H3</strong> (model id <code>MiniMax-H3</code>). Not available yet.</p>
     <p><strong>Why 768P not 720p?</strong><br />
-      MiniMax bills H3 in 768P / 2K tiers. We sell those tiers as-is so quotes match upstream cost.</p>
+      MiniMax bills H3 in 768P / 2K tiers. We plan to sell those tiers as-is so quotes match upstream cost.</p>
     <p><strong>Do I need a MiniMax API key?</strong><br />
       No. You pay USDC on Base through HTTP 402; we hold the upstream key.</p>
 
