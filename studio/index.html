@@ -43,6 +43,7 @@ textarea{width:100%;height:104px;border:1px solid var(--bd);border-radius:10px;p
 .rc .http{background:var(--card2);border-radius:8px;padding:8px 10px;margin-bottom:12px;color:var(--warn)}
 .rc-foot{padding:16px 20px;border-top:1px solid var(--bd2);display:flex;flex-direction:column;gap:10px}
 .rc-foot .btn-primary{width:100%}.note{font-size:12.5px;color:var(--tx3);text-align:center}
+.rep{color:var(--tx2);text-decoration:underline;text-underline-offset:2px}.rep:hover{color:var(--tx)}
 .empty{padding:28px 20px;text-align:center;color:var(--tx3);font-size:14px}.empty .lock{font-size:22px}
 .steps{display:flex;gap:0;margin:0 0 4px;font:12px var(--mono);color:var(--tx3)}.steps div{flex:1;padding:12px 16px;border-right:1px solid var(--bd2)}.steps div:last-child{border:0}.steps .on{color:var(--tx)}.steps .d{color:var(--ok)}
 .res{margin-top:24px}.media{aspect-ratio:16/9;max-height:420px;width:100%;background:var(--card2);display:flex;align-items:center;justify-content:center;color:var(--tx3);position:relative;overflow:hidden}
@@ -190,6 +191,7 @@ h2.big{font-size:28px;letter-spacing:-.01em;margin:0 0 6px}.lede{color:var(--tx2
  <aside class="card" id="quote"></aside>
 </div>
 <section class="card res" id="res"></section>
+<p class="note" style="margin:12px 0 0">Payment or generation not working? <a class="rep" id="rep-main" href="https://github.com/x402-video/web/issues/new?template=report-issue.yml" target="_blank" rel="noopener">Report an issue ↗</a></p>
 </div>
 <div id="api" hidden></div>
 <section class="auto" id="automate"><h2 class="big">Automate video publishing</h2>
@@ -230,7 +232,7 @@ h2.big{font-size:28px;letter-spacing:-.01em;margin:0 0 6px}.lede{color:var(--tx2
 </section>
 
 </main>
-<footer class="footer"><div class="footer-in"><div class="foot-links"><a href="/studio/">Studio</a><a href="https://github.com/x402-video">GitHub ↗</a><a class="mono" href="/llms.txt">/llms.txt</a><a class="mono" href="https://api.x402video.com/status">api.x402video.com/status (live JSON)</a><a href="/what-is-x402/">What is x402?</a><a href="/compare/">Compare</a><a href="https://docs.x402.org">docs.x402.org ↗</a><a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a><a href="/seedance/">Seedance API</a><a href="/hailuo/">Hailuo API (coming soon)</a><a href="/kling/">Kling API (coming soon)</a><a href="/custom/">Pricing calculator</a><a href="/use-cases/">Use cases</a></div>
+<footer class="footer"><div class="footer-in"><div class="foot-links"><a href="https://github.com/x402-video/web/issues/new?template=report-issue.yml">Report an issue ↗</a><a href="/studio/">Studio</a><a href="https://github.com/x402-video">GitHub ↗</a><a class="mono" href="/llms.txt">/llms.txt</a><a class="mono" href="https://api.x402video.com/status">api.x402video.com/status (live JSON)</a><a href="/what-is-x402/">What is x402?</a><a href="/compare/">Compare</a><a href="https://docs.x402.org">docs.x402.org ↗</a><a href="https://www.x402scan.com/server/0b749e8f-dea9-4808-b089-880350c6faca">x402scan ↗</a><a href="/seedance/">Seedance API</a><a href="/hailuo/">Hailuo API (coming soon)</a><a href="/kling/">Kling API (coming soon)</a><a href="/custom/">Pricing calculator</a><a href="/use-cases/">Use cases</a></div>
 <p class="foot-note">x402video.com is an independent gateway. Not affiliated with any model vendor. USDC on Base mainnet; payments are gasless for the buyer. Signed video URLs expire about 24h after delivery.</p></div></footer>
 <div class="modal" id="modal"><div class="mc"><div class="card-head"><span class="card-label">Connect wallet</span><span class="meta">esc</span></div><div class="mb">
 <h2>Connect a wallet to pay per video</h2><p>You only sign when you approve a quote. Nothing is charged on connect.</p>
@@ -253,9 +255,11 @@ $('models').innerHTML=Object.entries(M).map(([id,[n,p]])=>`<a class="m${id===k?'
 $('ep').textContent='POST /generate/'+slug+'/5s-720p';
 function hw(){$('hw').innerHTML=W.addr?`<span class="wallet-chip"><span class="dot"></span>${short(W.addr)}${W.bal!=null?' · '+W.bal.toFixed(2)+' USDC':''}</span>`:'<button class="btn-primary sm" data-connect>Connect wallet</button>';}
 function counter(){const h=document.querySelector('#pg .hint span:last-child');if(h)h.textContent=ta.value.length+' / 800';}
+function rep(err,job){const p=new URLSearchParams({template:'report-issue.yml',title:'[Issue] '+(err?String(err).slice(0,80):'Studio'),endpoint:'POST '+ENDPOINT});if(err)p.set('error',String(err).slice(0,1500));if(job)p.set('job_id',job);p.set('time',new Date().toISOString()+' (UTC)');return 'https://github.com/x402-video/web/issues/new?'+p}
+function repLink(err,job){return `<a class="rep" href="${esc(rep(err,job))}" target="_blank" rel="noopener">Report an issue ↗</a>`}
 function resIdle(msg){$('res').innerHTML=`<div class="card-head"><span class="card-label">Result</span><span class="meta">signed URL · 24h</span></div><div class="media">${msg||'Your video will appear here'}</div>`;}
 function quoteCard(){
- if(W.err){$('quote').innerHTML=`<div class="card-head"><span class="card-label">402 quote</span><span class="rc-status">error</span></div><div class="empty">${esc(W.err)}</div><div class="rc-foot"><button class="btn-primary" ${W.addr?'data-quote':'data-connect'}>Try again</button></div>`;return}
+ if(W.err){$('quote').innerHTML=`<div class="card-head"><span class="card-label">402 quote</span><span class="rc-status">error</span></div><div class="empty">${esc(W.err)}</div><div class="rc-foot"><button class="btn-primary" ${W.addr?'data-quote':'data-connect'}>Try again</button><div class="note">Still stuck? ${repLink(W.err,W.job&&W.job.id)}</div></div>`;return}
  if(!W.addr){$('quote').innerHTML=`<div class="card-head"><span class="card-label">402 quote</span><span class="rc-status">waiting</span></div><div class="empty"><div class="lock">⌁</div>Connect a wallet to get an exact quote for<br><b style="color:var(--tx)">${name} · $${price} USDC</b></div><div class="rc-foot"><button class="btn-primary" data-connect>Connect wallet</button><div class="note">Base · USDC · nothing is charged on connect</div></div>`;return}
  const a=W.quote&&W.quote.accept;
  if(!a){$('quote').innerHTML=`<div class="card-head"><span class="card-label">402 quote</span><span class="rc-status">loading</span></div><div class="empty">Asking the gateway for a quote…</div>`;return}
@@ -308,7 +312,7 @@ async function poll(){
  $('res').innerHTML=`<div class="card-head"><span class="card-label">Result</span><span class="meta">signed URL · 24h</span></div><div class="media"><div class="gen"><b>Generating your video</b><span>About 2 to 5 minutes · ${Math.floor(el/60)}:${String(el%60).padStart(2,'0')} elapsed · ${esc(W.job.status)}</span></div><div class="bar"><i></i></div></div>`;
  try{const j=await (await fetch(API+'/jobs/'+W.job.id)).json();W.job.status=j.status;
   if(j.status==='succeeded'&&j.video_url){quoteCard();$('res').innerHTML=`<div class="card-head"><span class="card-label">Result</span><span class="meta">signed URL · 24h</span></div><div class="media done" style="padding:0"><video src="${esc(j.video_url)}" controls autoplay muted playsinline style="width:100%;height:100%;object-fit:contain"></video></div><div class="res-foot"><span class="meta">${name} · 5s · 720p · job ${esc(W.job.id.slice(0,8))}</span><span class="acts"><a class="btn-outline" href="${esc(j.video_url)}" download style="text-decoration:none">Download MP4</a></span></div>`;return}
-  if(j.status==='failed'||j.status==='cancelled'){resIdle('Job '+esc(j.status)+': '+esc(JSON.stringify(j.error||{})));quoteCard();return}
+  if(j.status==='failed'||j.status==='cancelled'){const m='Job '+j.status+': '+JSON.stringify(j.error||{});resIdle(esc(m)+'<div class="note" style="margin-top:10px">'+repLink(m,W.job.id)+'</div>');quoteCard();return}
  }catch(e){}
  setTimeout(poll,5000);
 }
@@ -321,7 +325,7 @@ $('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 let qt;ta.addEventListener('input',()=>{counter();if(W.addr&&!W.job){clearTimeout(qt);qt=setTimeout(getQuote,700)}});
 setInterval(()=>{if(W.quote&&!W.job)quoteCard()},1000);
 if(q.get('prompt'))ta.value=q.get('prompt');
-hw();quoteCard();resIdle();counter();
+hw();quoteCard();resIdle();counter();$('rep-main').href=rep();
 if(eth())eth().request({method:'eth_accounts'}).then(a=>{if(a&&a[0]){W.addr=a[0];hw();quoteCard()}}).catch(()=>{});
 ;(function(){
 const tab=q.get('tab')||'playground';$('t-pg').className=tab==='playground'?'on':'';$('t-api').className=tab==='api'?'on':'';

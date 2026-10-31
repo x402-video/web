@@ -69,4 +69,5 @@ Full use-case page: https://x402video.com/use-cases/
 - https://github.com/x402-video/web/blob/main/GETTING-STARTED.md — zero to first video in 5 minutes
 - https://github.com/x402-video — source
 - https://x402video.com/studio/ — Studio: connect a wallet and make a video in the browser (same 402 flow, no code)
+- https://github.com/x402-video/web/issues/new?template=report-issue.yml — Report an issue (endpoint, error, payment tx hash, job id, time). Never include private keys, seed phrases, or API keys.
 - https://github.com/x402-video/mcp#readme — MCP server setup (x402-video-mcp)
